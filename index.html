@@ -1,0 +1,1544 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
+<title>Lordium — Экзамен</title>
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#111823; --panel2:#0e141d; --field:#0b1119; --border:#1e2a38;
+    --text:#c7d2df; --dim:#7c8aa0; --faint:#55627a;
+    --accent:#38bdf8; --accent2:#22d3ee;
+    --good:#34d399; --bad:#f87171; --warn:#fbbf24; --mod:#c084fc;
+    --mono:'SF Mono','Cascadia Code','JetBrains Mono',Consolas,'Liberation Mono',monospace;
+    --bar:32px;
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none !important}
+  html,body{margin:0; height:100%; overscroll-behavior:none}
+  body{background:var(--bg); color:var(--text); font:13px/1.55 var(--mono); overflow:hidden; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; touch-action:manipulation; -webkit-tap-highlight-color:transparent}
+  #bar{position:fixed; z-index:30; inset:0 0 auto; height:var(--bar); display:flex; align-items:center; gap:12px; padding:0 12px; background:var(--panel); border-bottom:1px solid var(--border); font-size:12px; white-space:nowrap}
+  #section{color:#fff; font-weight:bold}
+  #counter{color:var(--dim)}
+  #remaining{color:var(--accent2)}
+  #notice{color:var(--warn)}
+  #bar button{padding:3px 8px; font-size:11px}
+  #bar a{color:var(--faint); text-decoration:none}
+  #bar a:hover{color:var(--accent)}
+  .progress{flex:1; height:6px; background:var(--field); border-radius:3px; overflow:hidden}
+  .progress > i{display:block; height:100%; width:0; background:var(--accent); transition:width .25s}
+  #stage{position:fixed; inset:0}
+  .screen{position:absolute; inset:var(--bar) 0 0; display:flex; padding:24px; overflow-y:auto}
+  .card{position:relative; margin:auto; width:min(680px,100%); padding:20px 22px; display:flex; flex-direction:column; gap:12px; background:var(--panel); border:1px solid var(--border); border-radius:8px}
+  .card h2{margin:0; font-size:15px; color:#fff}
+  .card p{margin:0}
+  b{color:var(--warn); font-weight:normal}
+  .hint{color:var(--dim)}
+  .actions{display:flex; justify-content:flex-end; align-items:center; gap:12px}
+  .msg{flex:1; color:var(--bad)}
+  .float{position:absolute}
+  .tip{position:absolute; top:calc(var(--bar) + 14px); left:50%; transform:translateX(-50%); padding:8px 14px; background:var(--panel); border:1px solid var(--border); border-radius:6px; color:#fff}
+  button{font:12px var(--mono); background:#16202e; color:var(--text); border:1px solid var(--border); border-radius:5px; padding:6px 12px; cursor:pointer}
+  button:hover{border-color:var(--accent); color:#fff}
+  button.on{background:var(--accent); color:#04121a; border-color:var(--accent); font-weight:bold}
+  button.big{font-size:14px; padding:10px 18px}
+  button:disabled{opacity:.4; cursor:not-allowed}
+  input,textarea{font:13px var(--mono); background:var(--field); color:#e6eef8; border:1px solid var(--border); border-radius:5px; padding:6px 9px; outline:none; user-select:text}
+  input:focus,textarea:focus{border-color:var(--accent)}
+  textarea{width:100%; resize:none}
+  .wrong{outline:1px solid var(--bad); outline-offset:3px; border-radius:5px}
+  .form{display:grid; grid-template-columns:auto 1fr; gap:10px 16px; align-items:center}
+  .form > span{color:var(--dim)}
+  .choices{display:flex; flex-wrap:wrap; gap:6px}
+  .chip{display:inline-flex; align-items:center; gap:6px; padding:5px 11px; border:1px solid var(--border); border-radius:20px; color:var(--dim); cursor:pointer}
+  .chip:has(input:checked){border-color:var(--accent); color:var(--accent)}
+  .chip input{margin:0; accent-color:var(--accent)}
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
+  .answers{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .answers button{padding:12px}
+  .phrase{padding:8px 10px; border:1px dashed var(--accent); border-radius:5px; color:var(--accent)}
+  .countdown{font-size:48px; color:#fff; text-align:center}
+  .spinner{width:28px; height:28px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .target{position:absolute; display:flex; align-items:center; justify-content:center; overflow:hidden; background:var(--accent); color:#04121a; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer}
+  .target.circle{border-radius:50%}
+  .target.double{background:var(--mod)}
+  .target.right{background:var(--warn)}
+  .dropdown{position:relative; width:280px}
+  .form .dropdown{width:auto}
+  .dropdown .current{padding:6px 9px; background:var(--field); border:1px solid var(--border); border-radius:5px; cursor:pointer}
+  .dropdown .current::after{content:'▾'; float:right; color:var(--dim)}
+  .dropdown .options{position:absolute; z-index:5; inset:100% 0 auto; margin-top:2px; max-height:200px; overflow-y:auto; background:var(--panel); border:1px solid var(--accent); border-radius:5px; box-shadow:0 6px 20px rgba(0,0,0,.5)}
+  .dropdown .options > div{padding:5px 10px; cursor:pointer}
+  .dropdown .options > div:hover{background:var(--accent); color:#04121a}
+  .menubar ul{list-style:none; margin:0; padding:4px 0; background:var(--panel); border:1px solid var(--border); border-radius:5px}
+  .menubar > ul{display:flex; padding:0}
+  .menubar li{position:relative; padding:6px 14px; white-space:nowrap; cursor:pointer}
+  .menubar ul ul{visibility:hidden; position:absolute; z-index:5; left:100%; top:-5px; min-width:170px; box-shadow:0 6px 20px rgba(0,0,0,.5); transition:visibility 0s .25s}
+  .menubar > ul > li > ul{left:0; top:100%}
+  .menubar li.open{background:#16202e}
+  .menubar li.open > span{color:#fff}
+  .menubar li.open > ul{visibility:visible; z-index:6; transition-delay:0s}
+  @media (hover:hover){
+    .target:hover{filter:brightness(1.25)}
+    .menubar li:hover{background:#16202e}
+    .menubar li:hover > span{color:#fff}
+    .menubar li:hover > ul{visibility:visible; z-index:6; transition-delay:0s}
+    .menubar ul ul li:hover > ul{transition-delay:.15s}
+  }
+  .menubar ul ul li.sub > span::after{content:' ▸'; color:var(--dim)}
+  .list{overflow-y:auto; overscroll-behavior:contain; background:var(--panel); border:1px solid var(--border); border-radius:6px}
+  .list .item{display:flex; align-items:center; gap:12px; padding:8px 12px; border-bottom:1px solid var(--border)}
+  .list .item span:first-child{flex:1; color:#fff}
+  .list .status{width:100px; color:var(--dim)}
+  .slider{height:28px; cursor:pointer; touch-action:none}
+  .slider::before{content:''; position:absolute; inset:12px 0 auto; height:4px; border-radius:2px; background:var(--border)}
+  .slider .handle{position:absolute; top:3px; width:22px; height:22px; margin-left:-11px; border-radius:50%; background:var(--accent)}
+  .cargo{width:64px; height:64px; display:flex; align-items:center; justify-content:center; background:var(--accent); color:#04121a; border-radius:6px; font-weight:bold; cursor:grab; touch-action:none}
+  .slot{width:88px; height:88px; border:2px dashed var(--good); border-radius:8px}
+  .paged, .paged body{height:auto}
+  .paged body{overflow:visible}
+  .paged #stage{position:static; height:auto !important}
+  .paged .tip{position:fixed; top:auto; bottom:14px; pointer-events:none}
+  .page{max-width:640px; margin:0 auto; padding:calc(var(--bar) + 24px) 24px 64px}
+  .page h1{margin:0 0 12px; font-size:18px; color:#fff}
+  .page h3{margin:28px 0 8px; font-size:15px; color:#fff; cursor:pointer}
+  .page p{margin:0 0 10px}
+  .page .actions{margin-top:24px}
+  .banner{margin:12px 0; padding:10px 14px; background:var(--panel); border:1px solid var(--border); border-radius:6px; color:#fff}
+  .scroller{overflow:auto; overscroll-behavior:contain; background:var(--field); border:1px solid var(--border); border-radius:6px}
+  .scroller .row{padding:8px 12px; border-bottom:1px solid var(--border); cursor:pointer}
+  .scroller .goal{background:var(--accent); color:#04121a; font-weight:bold}
+  .scroller.wide{display:flex; gap:10px; padding:10px; overflow-y:hidden}
+  .tile{flex:0 0 120px; height:110px; display:flex; align-items:center; justify-content:center; text-align:center; background:var(--panel); border:1px solid var(--border); border-radius:6px; cursor:pointer}
+  .scroller.thick::-webkit-scrollbar{width:16px; height:16px}
+  .scroller.thick::-webkit-scrollbar-thumb{background:#2b3a4e; border:3px solid var(--field); border-radius:8px}
+  .scroller.thick::-webkit-scrollbar-track{background:var(--field)}
+  .mobile #bar{gap:8px; padding:0 8px}
+  .mobile #counter, .mobile #notice, .mobile #bar button span{display:none}
+  .mobile .screen{padding:10px}
+  .mobile .card{padding:16px}
+  .mobile .page{padding:calc(var(--bar) + 12px) 14px 48px}
+  .mobile .form:not(.report){grid-template-columns:1fr; gap:6px}
+  .mobile .form:not(.report) > span:not([id], :first-child){margin-top:6px}
+  .mobile input, .mobile textarea{font-size:16px}
+  .mobile .chip{padding:8px 12px}
+  .mobile .answers{grid-template-columns:1fr}
+  .mobile .dropdown .current, .mobile .dropdown .options > div{padding:10px 12px}
+  .mobile .menubar li{padding:10px 14px}
+  .mobile .menubar ul ul ul{left:16px; top:100%}
+  .mobile .menubar > ul > li:last-child > ul{left:auto; right:0}
+  .mobile .tip{width:max-content; max-width:calc(100% - 20px); text-align:center}
+  .mobile .list .item{padding:10px 12px}
+  .mobile .slider .handle{top:-2px; width:32px; height:32px; margin-left:-16px}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div id="bar">
+  <span id="section"></span>
+  <span id="counter"></span>
+  <div class="progress"><i id="progress"></i></div>
+  <span id="remaining"></span>
+  <span id="notice" hidden>окно теряло фокус — лучше пройти задание заново</span>
+  <button id="restart">↻<span> задание заново</span></button>
+  <button id="fullscreen" hidden>⛶<span> полный экран</span></button>
+  <a id="export" href="#">сохранить отчёт</a>
+</div>
+<script>
+'use strict'
+
+const CHUNK_ROWS = 16384
+const BAR = 32
+const MARGIN = 10
+const DIRECTIONS = 16
+const distanceBins = [[20, 50], [50, 100], [100, 200], [200, 400], [400, 800], [800, 1200], [1200, Infinity]]
+const allBins = distanceBins.map((_, bin) => bin)
+
+const $ = id => document.getElementById(id)
+const stage = $('stage')
+const coarse = matchMedia('(pointer: coarse)').matches
+const either = (desktop, touch) => coarse ? touch : desktop
+document.documentElement.classList.toggle('mobile', coarse)
+const ms = value => Math.round(value * 100) / 100
+const px = value => Math.round(value * 256) / 256
+const uniform = (min, max) => min + Math.random() * (max - min)
+const integer = (min, max) => Math.floor(uniform(min, max + 1))
+const pick = items => items[integer(0, items.length - 1)]
+const shuffle = items => items.map(item => [Math.random(), item]).sort((a, b) => a[0] - b[0]).map(pair => pair[1])
+const sample = (items, count) => shuffle(items).slice(0, count)
+const clock = seconds => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`
+
+
+class Series {
+    constructor(stride) {
+        this.stride = stride
+        this.chunks = []
+        this.used = CHUNK_ROWS
+        this.count = 0
+    }
+
+    push(...values) {
+        if (this.used === CHUNK_ROWS) {
+            this.chunks.push(new Float64Array(CHUNK_ROWS * this.stride))
+            this.used = 0
+        }
+        this.chunks.at(-1).set(values, this.used++ * this.stride)
+        this.count++
+    }
+
+    json() {
+        const parts = ['[']
+        for (const [index, chunk] of this.chunks.entries()) {
+            const rows = index === this.chunks.length - 1 ? this.used : CHUNK_ROWS
+            const lines = new Array(rows)
+            for (let row = 0; row < rows; row++) {
+                const offset = row * this.stride
+                let line = `[${chunk[offset]}`
+                for (let column = 1; column < this.stride; column++) {
+                    line += `,${chunk[offset + column]}`
+                }
+                lines[row] = `${line}]`
+            }
+            parts.push((index ? ',' : '') + lines.join(','))
+        }
+        parts.push(']')
+        return parts
+    }
+}
+
+
+const raw = new Series(6)
+const frames = new Series(7)
+const touches = new Series(11)
+const touchEvents = new Series(10)
+const events = []
+const tasks = []
+const pointer = {x: innerWidth / 2, y: innerHeight / 2}
+const profile = {device: null, hand: null, pollingRate: null}
+const rawSource = 'onpointerrawupdate' in window ? 'pointerrawupdate' : 'pointermove'
+let displayHz = null
+let firstPointerType = null
+let dirty = false
+
+
+const pointerCodes = {mouse: 0, touch: 1, pen: 2}
+
+
+function pushRaw(samples) {
+    for (const sample of samples) {
+        raw.push(ms(sample.timeStamp), px(sample.clientX), px(sample.clientY), sample.buttons, pointerCodes[sample.pointerType] ?? -1, sample.pointerId)
+    }
+}
+
+
+function onRawUpdate(e) {
+    const coalesced = e.getCoalescedEvents()
+    pushRaw(coalesced.length ? coalesced : [e])
+}
+
+
+function onMove(e) {
+    const coalesced = e.getCoalescedEvents?.() ?? []
+    frames.push(ms(e.timeStamp), px(e.clientX), px(e.clientY), e.buttons, coalesced.length, pointerCodes[e.pointerType] ?? -1, e.pointerId)
+    pointer.x = e.clientX
+    pointer.y = e.clientY
+    if (rawSource === 'pointermove') {
+        pushRaw(coalesced.length ? coalesced : [e])
+    }
+}
+
+
+const pointerPhases = {pointerdown: 0, pointermove: 1, pointerup: 2, pointercancel: 3}
+const touchPhases = {touchstart: 0, touchmove: 1, touchend: 2, touchcancel: 3}
+const ratio = value => Math.round((value ?? 0) * 10000) / 10000
+
+
+function onPointer(e) {
+    if (e.type === 'pointerdown') {
+        firstPointerType ??= e.pointerType
+    }
+    if (e.pointerType === 'mouse') {
+        return
+    }
+    if (e.type !== 'pointermove') {
+        pointer.x = e.clientX
+        pointer.y = e.clientY
+    }
+    const coalesced = e.type === 'pointermove' ? e.getCoalescedEvents?.() ?? [] : []
+    for (const sample of coalesced.length ? coalesced : [e]) {
+        touches.push(ms(sample.timeStamp), e.pointerId, pointerPhases[e.type], px(sample.clientX), px(sample.clientY), px(sample.width ?? 0), px(sample.height ?? 0), ratio(sample.pressure), sample.tiltX ?? 0, sample.tiltY ?? 0, sample.twist ?? 0)
+    }
+}
+
+
+const touchTargets = new WeakSet()
+
+
+function onDetachedTouch(e) {
+    if (!e.target.isConnected) {
+        onTouch(e)
+    }
+}
+
+
+function onTouch(e) {
+    if (e.type === 'touchstart' && !touchTargets.has(e.target)) {
+        touchTargets.add(e.target)
+        for (const type of ['touchmove', 'touchend', 'touchcancel']) {
+            e.target.addEventListener(type, onDetachedTouch, {passive: true})
+        }
+    }
+    for (const touch of e.changedTouches) {
+        touchEvents.push(ms(e.timeStamp), touchPhases[e.type], touch.identifier, px(touch.clientX), px(touch.clientY), px(touch.radiusX ?? 0), px(touch.radiusY ?? 0), ratio(touch.rotationAngle), ratio(touch.force), e.touches.length)
+    }
+}
+
+
+const discreteTypes = ['pointerdown', 'pointerup', 'click', 'dblclick', 'contextmenu', 'wheel', 'keydown', 'keyup', 'focusin', 'focusout', 'scroll', 'visibilitychange', 'blur', 'focus', 'resize', 'fullscreenchange']
+
+const extras = {
+    wheel: e => [px(e.deltaX), px(e.deltaY), e.deltaMode],
+    focusin: e => describe(e.target),
+    focusout: e => describe(e.target),
+    scroll: e => {
+        const element = e.target === document ? document.scrollingElement : e.target
+        return [px(element.scrollLeft), px(element.scrollTop), e.target === document ? 'document' : describe(element)]
+    },
+    visibilitychange: () => document.visibilityState,
+    resize: () => [innerWidth, innerHeight],
+    fullscreenchange: () => Boolean(document.fullscreenElement),
+}
+
+
+function describe(element) {
+    const mark = element.dataset.mark ? `[${element.dataset.mark}]` : ''
+    return element.tagName.toLowerCase() + (element.id ? `#${element.id}` : '') + (element.classList[0] ? `.${element.classList[0]}` : '') + mark
+}
+
+
+function onDiscrete(e) {
+    if ((e.type === 'blur' || e.type === 'focus') && e.target !== window) {
+        return
+    }
+    const mouse = e instanceof MouseEvent
+    events.push([
+        ms(e.timeStamp),
+        e.type,
+        mouse ? px(e.clientX) : null,
+        mouse ? px(e.clientY) : null,
+        mouse ? e.button : null,
+        mouse ? e.buttons : null,
+        extras[e.type]?.(e) ?? null,
+    ])
+}
+
+
+function listen() {
+    const options = {capture: true, passive: true}
+    if (rawSource === 'pointerrawupdate') {
+        addEventListener('pointerrawupdate', onRawUpdate, options)
+    }
+    addEventListener('pointermove', onMove, options)
+    for (const type of discreteTypes) {
+        addEventListener(type, onDiscrete, options)
+    }
+    for (const type of Object.keys(pointerPhases)) {
+        addEventListener(type, onPointer, options)
+    }
+    for (const type of Object.keys(touchPhases)) {
+        addEventListener(type, onTouch, options)
+    }
+    addEventListener('pointerdown', press, options)
+    addEventListener('blur', invalidate)
+    document.addEventListener('visibilitychange', () => document.hidden && invalidate())
+    addEventListener('contextmenu', e => e.preventDefault())
+    addEventListener('beforeunload', e => dirty && e.preventDefault())
+}
+
+
+function environment() {
+    return {
+        devicePixelRatio,
+        screen: [screen.width, screen.height],
+        availSize: [screen.availWidth, screen.availHeight],
+        innerSize: [innerWidth, innerHeight],
+        userAgent: navigator.userAgent,
+        platform: navigator.userAgentData?.platform ?? navigator.platform,
+        displayHz,
+        ...profile,
+        rawSource,
+        coalescedSupported: 'getCoalescedEvents' in PointerEvent.prototype,
+        startedAt: new Date(performance.timeOrigin).toISOString(),
+        pointerType: firstPointerType,
+        coarse,
+        maxTouchPoints: navigator.maxTouchPoints,
+        exportVersion: 2,
+    }
+}
+
+
+function download() {
+    const head = JSON.stringify({version: 1, kind: 'cursory-dataset', exported: new Date().toISOString(), env: environment()})
+    const parts = [head.slice(0, -1), ',"raw":', ...raw.json(), ',"frames":', ...frames.json(), ',"events":', JSON.stringify(events), ',"tasks":', JSON.stringify(tasks), ',"touches":', ...touches.json(), ',"touchEvents":', ...touchEvents.json(), '}']
+    const url = URL.createObjectURL(new Blob(parts, {type: 'application/json'}))
+    const stamp = new Date().toISOString().slice(0, 19).replace(/[-:]/g, '').replace('T', '-')
+    Object.assign(document.createElement('a'), {href: url, download: `exam-report-${stamp}.json`}).click()
+    setTimeout(() => URL.revokeObjectURL(url), 60000)
+    dirty = false
+}
+
+
+let section = null
+let counter = ''
+let active = null
+
+
+function html(markup) {
+    const template = document.createElement('template')
+    template.innerHTML = markup.trim()
+    return template.content.firstElementChild
+}
+
+
+function add(markup) {
+    return stage.appendChild(html(markup))
+}
+
+
+function fullscreen() {
+    document.documentElement.requestFullscreen?.().catch(() => {})
+}
+
+
+function put(element, x, y) {
+    Object.assign(element.style, {left: `${x}px`, top: `${y}px`})
+}
+
+
+function card(markup, steady = false) {
+    const box = add(`<div class="screen"><div class="card">${markup}</div></div>`).firstElementChild
+    if (!steady) {
+        box.style.width = `min(${integer(520, 760)}px, 100%)`
+        box.querySelector('.actions')?.style.setProperty('justify-content', pick(['flex-start', 'center', 'flex-end']))
+    }
+    return box
+}
+
+
+const layoutSelector = '#bar, #bar button, #bar a, .screen, .page, .card, h1, h2, h3, p, .banner, .scroller, .scroller > *, .phrase, .tip, .form > span, .chip, input, textarea, button, .dropdown .current, .options, .options > div, .menubar, .menubar li > span, .list, .list .item, .slider, .handle, .slot, .cargo, .target, .countdown, .spinner'
+const textSelector = 'h1, h2, h3, p, .banner, .phrase, .tip, .form > span, .countdown'
+const scrollSelector = '.screen, .list, .options, .scroller'
+let layoutPending = false
+let lastLayout = null
+
+
+function lines(element) {
+    const range = document.createRange()
+    range.selectNodeContents(element)
+    const rows = []
+    for (const rect of range.getClientRects()) {
+        if (!rect.width) {
+            continue
+        }
+        const middle = rect.y + rect.height / 2
+        const row = rows.find(row => Math.abs(row[1] + row[3] / 2 - middle) < rect.height / 2)
+        if (row) {
+            const right = Math.max(row[0] + row[2], rect.right)
+            const bottom = Math.max(row[1] + row[3], rect.bottom)
+            row[0] = Math.min(row[0], rect.x)
+            row[1] = Math.min(row[1], rect.y)
+            row[2] = right - row[0]
+            row[3] = bottom - row[1]
+        } else {
+            rows.push([rect.x, rect.y, rect.width, rect.height])
+        }
+    }
+    return rows.map(row => row.map(px))
+}
+
+
+function metrics(element) {
+    return [px(element.scrollLeft), px(element.scrollTop), element.scrollWidth, element.scrollHeight, element.clientWidth, element.clientHeight]
+}
+
+
+function snapshot(record) {
+    const rects = [{tag: 'document', text: '', rect: [0, 0, innerWidth, innerHeight], scroll: metrics(document.scrollingElement)}]
+    for (const element of document.querySelectorAll(layoutSelector)) {
+        const rect = element.getBoundingClientRect()
+        if (!rect.width || !rect.height || !element.checkVisibility({visibilityProperty: true})) {
+            continue
+        }
+        const entry = {tag: describe(element), text: element.textContent.trim().slice(0, 80), rect: [px(rect.x), px(rect.y), px(rect.width), px(rect.height)]}
+        if (element.matches(textSelector)) {
+            entry.lines = lines(element)
+        }
+        if (element.matches(scrollSelector)) {
+            entry.scroll = metrics(element)
+        }
+        rects.push(entry)
+    }
+    const key = JSON.stringify(rects)
+    if (lastLayout?.record === record && lastLayout.key === key) {
+        return
+    }
+    lastLayout = {record, key}
+    record.layout.push({t: ms(performance.now()), rects})
+}
+
+
+function scheduleLayout() {
+    if (layoutPending) {
+        return
+    }
+    layoutPending = true
+    requestAnimationFrame(() => {
+        layoutPending = false
+        if (active) {
+            snapshot(active.record)
+        }
+    })
+}
+
+
+function later(signal, delay, callback) {
+    const id = setTimeout(callback, delay)
+    signal.addEventListener('abort', () => clearTimeout(id))
+}
+
+
+function every(signal, period, callback) {
+    const id = setInterval(callback, period)
+    signal.addEventListener('abort', () => clearInterval(id))
+}
+
+
+function register(record, element) {
+    const rect = element.getBoundingClientRect()
+    const id = record.targets.length
+    element.dataset.target = id
+    record.targets.push({
+        id,
+        x: px(rect.x),
+        y: px(rect.y),
+        w: px(rect.width),
+        h: px(rect.height),
+        shape: element.classList.contains('circle') ? 'circle' : 'rect',
+        label: element.dataset.mark || null,
+    })
+    return id
+}
+
+
+function mark(record, elements) {
+    for (const element of elements) {
+        if (element.checkVisibility({visibilityProperty: true})) {
+            register(record, element)
+        }
+    }
+}
+
+
+function press(e) {
+    if (!active || e.target.closest('#bar')) {
+        return
+    }
+    const {record} = active
+    const point = {t: ms(e.timeStamp), x: px(e.clientX), y: px(e.clientY)}
+    const element = e.target.closest('[data-mark]')
+    if (element) {
+        record.hits.push({...point, targetId: element.dataset.target === undefined ? register(record, element) : Number(element.dataset.target)})
+    } else {
+        record.misses.push(point)
+    }
+}
+
+
+function invalidate() {
+    if (active) {
+        active.record.valid = false
+    }
+}
+
+
+function task(kind, instruction, setup) {
+    return new Promise(resolve => {
+        const attempt = () => {
+            const controller = new AbortController()
+            const record = {
+                id: tasks.length,
+                kind,
+                section: section.title,
+                instruction,
+                tStart: ms(performance.now()),
+                tEnd: null,
+                targets: [],
+                hits: [],
+                misses: [],
+                valid: !document.hidden && document.hasFocus(),
+                meta: {},
+                layout: [],
+            }
+            const finish = () => {
+                record.tEnd = ms(performance.now())
+                controller.abort()
+                stage.replaceChildren()
+                active = null
+                dirty = true
+            }
+            const done = () => {
+                if (!controller.signal.aborted) {
+                    finish()
+                    resolve(record)
+                }
+            }
+            const restart = () => {
+                record.meta.restarted = true
+                finish()
+                attempt()
+            }
+
+            tasks.push(record)
+            active = {record, restart}
+            setup({record, signal: controller.signal, done})
+            updateBar()
+            snapshot(record)
+        }
+        attempt()
+    })
+}
+
+
+async function sequence(runs) {
+    for (const [index, run] of runs.entries()) {
+        counter = `${index + 1} / ${runs.length}`
+        await run()
+    }
+}
+
+
+const coverage = distanceBins.map(() => new Array(DIRECTIONS).fill(0))
+
+
+function aim(from, bins, width, height) {
+    const left = MARGIN + width / 2
+    const right = innerWidth - MARGIN - width / 2
+    const top = BAR + MARGIN + height / 2
+    const bottom = innerHeight - MARGIN - height / 2
+    const clearance = Math.hypot(width, height) / 2 + 4
+    const reach = Math.hypot(innerWidth, innerHeight)
+    const cells = []
+
+    for (const bin of bins) {
+        const near = Math.max(distanceBins[bin][0], clearance)
+        const far = Math.min(distanceBins[bin][1], reach)
+        for (let direction = 0; direction < DIRECTIONS && near < far; direction++) {
+            for (let attempt = 0; attempt < 12; attempt++) {
+                const distance = uniform(near, far)
+                const angle = (direction + uniform(-0.5, 0.5)) * 2 * Math.PI / DIRECTIONS
+                const x = from.x + distance * Math.cos(angle)
+                const y = from.y + distance * Math.sin(angle)
+                if (x >= left && x <= right && y >= top && y <= bottom) {
+                    cells.push({bin, direction, x, y})
+                    break
+                }
+            }
+        }
+    }
+
+    if (!cells.length) {
+        return aim(from, allBins, width, height)
+    }
+    const fewest = Math.min(...cells.map(cell => coverage[cell.bin][cell.direction]))
+    return pick(cells.filter(cell => coverage[cell.bin][cell.direction] === fewest))
+}
+
+
+const clickKinds = either({
+    click: {button: 0, style: '', instruction: 'Кликнуть по цели', label: null},
+    dblclick: {button: 0, style: 'double', instruction: 'Двойной клик по цели', label: '2×'},
+    rightclick: {button: 2, style: 'right', instruction: 'Клик правой кнопкой по цели', label: 'ПКМ'},
+}, {
+    click: {button: 0, style: '', instruction: 'Нажать на цель', label: null},
+    dblclick: {button: 0, style: 'double', instruction: 'Двойное касание цели', label: '2×'},
+    rightclick: {button: 0, style: 'right', instruction: 'Долгое нажатие на цель', label: '0.5с'},
+})
+const buttonLabels = ['OK', 'Далее', 'Купить', 'Войти', 'Готово']
+
+
+function target(kind, bins, [smallest, largest]) {
+    const {button, style, instruction, label} = clickKinds[kind]
+    return task(kind, instruction, ({record, signal, done}) => {
+        const height = Math.round(smallest * (largest / smallest) ** Math.random())
+        const circle = Math.random() < 0.6
+        const width = circle ? height : Math.round(height * uniform(1, 2.5))
+        const from = {...pointer}
+        const spot = aim(from, bins, width, height)
+        const text = label ?? (circle || height < 24 || width < 56 ? '' : pick(buttonLabels))
+        const element = add(`<div class="target ${circle ? 'circle' : ''} ${style}" data-mark="${text}">${height < 24 ? '' : text}</div>`)
+        Object.assign(element.style, {width: `${width}px`, height: `${height}px`})
+        put(element, spot.x - width / 2, spot.y - height / 2)
+        mark(record, [element])
+        record.meta = {from: [px(from.x), px(from.y)], cell: [spot.bin, spot.direction]}
+
+        const complete = () => {
+            if (record.valid) {
+                coverage[spot.bin][spot.direction]++
+            }
+            done()
+        }
+        let armed = false
+        element.addEventListener('pointerdown', e => {
+            armed = e.button === button
+        })
+        if (coarse && kind === 'dblclick') {
+            let last = -Infinity
+            element.addEventListener('pointerup', e => {
+                if (e.timeStamp - last < 500) {
+                    complete()
+                }
+                last = e.timeStamp
+            })
+        } else if (coarse && kind === 'rightclick') {
+            let pressed = null
+            element.addEventListener('pointerdown', e => {
+                pressed = e.timeStamp
+            })
+            const release = e => {
+                if (pressed !== null && e.timeStamp - pressed >= 500) {
+                    complete()
+                }
+                pressed = null
+            }
+            addEventListener('pointerup', release, {signal})
+            addEventListener('pointercancel', release, {signal})
+        } else if (kind === 'dblclick') {
+            element.addEventListener('dblclick', complete)
+        } else {
+            addEventListener('pointerup', e => armed && e.button === button && complete(), {signal})
+        }
+    })
+}
+
+
+const clicks = (count, bins, sizes, kinds) => sequence(Array.from({length: count}, () => () => target(pick(kinds), bins, sizes)))
+
+
+function read(title, paragraphs, action) {
+    return task('read', paragraphs.join(' '), ({record, done}) => {
+        const box = card(`<h2>${title}</h2>${paragraphs.map(text => `<p>${text}</p>`).join('')}<div class="actions"><button class="on big" data-mark="${action}">${action}</button></div>`)
+        mark(record, box.querySelectorAll('[data-mark]'))
+        box.querySelector('button').addEventListener('click', done)
+    })
+}
+
+
+function chips(name, options, type, checked = null) {
+    return options.map(([value, label]) => `<label class="chip" data-mark="${label}"><input type="${type}" name="${name}" value="${value}"${value === checked ? ' checked' : ''}>${label}</label>`).join('')
+}
+
+
+function dropdown(name, values, signal) {
+    const element = html(`<div class="dropdown"><div class="current" data-mark="${name}">— выберите —</div><div class="options" hidden>${values.map(value => `<div data-mark="${value}">${value}</div>`).join('')}</div></div>`)
+    const [current, list] = element.children
+    current.addEventListener('click', () => {
+        list.hidden = !list.hidden
+    })
+    list.addEventListener('click', e => {
+        if (e.target === list) {
+            return
+        }
+        element.dataset.value = current.textContent = e.target.dataset.mark
+        list.hidden = true
+        element.dispatchEvent(new Event('change'))
+    })
+    addEventListener('pointerdown', e => element.contains(e.target) || (list.hidden = true), {signal})
+    return element
+}
+
+
+const devices = either([['mouse', 'мышь'], ['touchpad', 'тачпад'], ['trackball', 'трекбол'], ['other', 'другое']], [['touchscreen', 'сенсорный экран'], ['stylus', 'стилус'], ['mouse', 'мышь'], ['other', 'другое']])
+const hands = [['right', 'правая'], ['left', 'левая']]
+const pollingRates = [['', 'не знаю'], ['125', '125 Гц'], ['250', '250 Гц'], ['500', '500 Гц'], ['1000', '1000 Гц'], ['2000', '2000 Гц'], ['4000', '4000 Гц'], ['8000', '8000 Гц']]
+
+
+function setup() {
+    return task('form', 'Настройка: устройство, рука, частота опроса мыши', ({record, done}) => {
+        record.meta = {setup: true}
+        const box = card(`
+            <h2>Онлайн-экзамен</h2>
+            <p>Около 10 минут простых заданий: клики по целям, форма, чтение, ожидание, меню, прокрутка, перетаскивание. Работайте в обычном темпе, как на любом сайте: не нужно спешить или целиться идеально.</p>
+            <p class="hint">Введённый текст не сохраняется. Ничего никуда не отправляется: в конце вы сами скачаете отчёт.</p>
+            <p class="hint">Если отвлеклись — «↻ задание заново» вверху.${document.fullscreenEnabled ? ' Вышли из полноэкранного режима — верните кнопкой «⛶».' : ''} «сохранить отчёт» вверху работает в любой момент.</p>
+            <div class="form">
+                <span>Чем вы пользуетесь</span><div class="choices">${chips('device', devices, 'radio', either(null, 'touchscreen'))}</div>
+                <span>Ведущая рука</span><div class="choices">${chips('hand', hands, 'radio')}</div>
+                ${coarse ? '' : `<span>Частота мыши</span><div class="choices">${chips('polling', pollingRates, 'radio')}</div>`}
+                <span>Частота экрана</span><span id="hz">${displayHz ? `${displayHz} Гц` : 'измеряется…'}</span>
+            </div>
+            <div class="actions"><button class="on big" data-mark="Начать" disabled>${document.fullscreenEnabled ? 'Начать в полноэкранном режиме' : 'Начать'}</button></div>`, true)
+        const start = box.querySelector('button')
+        const value = name => box.querySelector(`input[name=${name}]:checked`)?.value
+        mark(record, box.querySelectorAll('[data-mark]'))
+        box.addEventListener('change', () => {
+            start.disabled = !value('device') || !value('hand')
+        })
+        start.addEventListener('click', () => {
+            Object.assign(profile, {device: value('device'), hand: value('hand'), pollingRate: Number(value('polling')) || null})
+            fullscreen()
+            done()
+        })
+    })
+}
+
+
+const products = ['чайник', 'лампа', 'рюкзак', 'зонт', 'кружка', 'плед']
+const colors = ['зелёный', 'синий', 'белый', 'чёрный', 'красный']
+const deliveries = ['Курьер', 'Самовывоз', 'Почта', 'Постамат']
+const payments = ['Картой', 'Наличными', 'Онлайн']
+const extrasOptions = ['Подарочная упаковка', 'Позвонить заранее', 'Оставить у двери', 'Согласен с условиями']
+
+
+function orderForm() {
+    const delivery = pick(deliveries)
+    const payment = pick(payments)
+    const wanted = [...sample(extrasOptions.slice(0, 3), integer(1, 2)), extrasOptions[3]]
+    const pairs = values => values.map(value => [value, value])
+    return task('form', `Заполнить форму заказа: доставка «${delivery}», оплата «${payment}», опции: ${wanted.join(', ')}`, ({record, signal, done}) => {
+        record.meta = {submits: 0}
+        const box = card(`
+            <h2>Оформление заказа</h2>
+            <div class="form">
+                <span>Товар <b>«${pick(products)}»</b></span><input class="text" id="product" data-mark="Товар" autocomplete="off" spellcheck="false">
+                <span>Цвет <b>«${pick(colors)}»</b></span><input class="text" id="color" data-mark="Цвет" autocomplete="off" spellcheck="false">
+                <span>Количество <b>«${integer(2, 9)}»</b></span><input class="text" id="amount" data-mark="Количество" autocomplete="off" inputmode="numeric">
+                <span>Доставка <b>${delivery}</b></span><div id="delivery"></div>
+                <span>Оплата <b>${payment}</b></span><div class="choices" id="payment">${chips('payment', pairs(payments), 'radio')}</div>
+                <span>Опции <b>${wanted.join(', ')}</b></span><div class="choices" id="options">${chips('option', pairs(extrasOptions), 'checkbox')}</div>
+            </div>
+            <div class="actions"><span class="msg"></span><button class="on big" data-mark="Оформить заказ">Оформить заказ</button></div>`, true)
+        const select = dropdown('Доставка', deliveries, signal)
+        box.querySelector('#delivery').replaceWith(select)
+        mark(record, box.querySelectorAll('[data-mark]'))
+
+        const chosen = name => [...box.querySelectorAll(`input[name=${name}]:checked`)].map(input => input.value)
+        box.querySelector('button').addEventListener('click', () => {
+            record.meta.submits++
+            const options = chosen('option')
+            const checks = [
+                ...[...box.querySelectorAll('.text')].map(input => [input, input.value.trim() !== '']),
+                [select, select.dataset.value === delivery],
+                [box.querySelector('#payment'), chosen('payment')[0] === payment],
+                [box.querySelector('#options'), options.length === wanted.length && wanted.every(option => options.includes(option))],
+            ]
+            for (const [element, ok] of checks) {
+                element.classList.toggle('wrong', !ok)
+            }
+            if (checks.every(([, ok]) => ok)) {
+                done()
+            } else {
+                box.querySelector('.msg').textContent = 'Проверьте отмеченные поля'
+            }
+        })
+    })
+}
+
+
+function checkboxes() {
+    const evens = Array.from({length: 49}, (_, index) => 2 * index + 2)
+    const odds = Array.from({length: 50}, (_, index) => 2 * index + 1)
+    const numbers = shuffle([...sample(evens, 6), ...sample(odds, 6)])
+    return task('checkbox', 'Отметить все чётные числа и нажать «Готово»', ({record, done}) => {
+        record.meta = {submits: 0}
+        const box = card(`
+            <h2>Флажки</h2>
+            <p>Отметьте все <b>чётные</b> числа и нажмите «Готово».</p>
+            <div class="grid">${chips('number', numbers.map(number => [number, number]), 'checkbox')}</div>
+            <div class="actions"><span class="msg"></span><button class="on big" data-mark="Готово">Готово</button></div>`)
+        mark(record, box.querySelectorAll('[data-mark]'))
+        box.querySelector('button').addEventListener('click', () => {
+            record.meta.submits++
+            if ([...box.querySelectorAll('input')].every(input => input.checked === (input.value % 2 === 0))) {
+                done()
+            } else {
+                box.querySelector('.msg').textContent = 'Не совсем — проверьте ещё раз'
+            }
+        })
+    })
+}
+
+
+const cities = ['Архангельск', 'Барнаул', 'Владивосток', 'Волгоград', 'Екатеринбург', 'Иркутск', 'Казань', 'Калининград', 'Мурманск', 'Новосибирск', 'Омск', 'Пермь', 'Самара', 'Сочи', 'Томск', 'Тула', 'Уфа', 'Ярославль']
+
+
+function select() {
+    const goal = pick(cities)
+    return task('select', `Выбрать в списке «${goal}»`, ({record, signal, done}) => {
+        record.meta = {wrong: 0}
+        const box = card(`<h2>Выбор города</h2><p>Выберите в выпадающем списке: <b>${goal}</b></p><div id="city"></div>`)
+        const list = dropdown('Город', cities, signal)
+        box.querySelector('#city').replaceWith(list)
+        mark(record, box.querySelectorAll('[data-mark]'))
+        list.addEventListener('change', () => {
+            if (list.dataset.value === goal) {
+                done()
+            } else {
+                record.meta.wrong++
+            }
+        })
+    })
+}
+
+
+function wait(countdown) {
+    const seconds = Math.round(uniform(2, 8) * 10) / 10
+    return task('wait', countdown ? `Кнопка появится через ${seconds} с` : 'Дождаться загрузки и нажать кнопку', ({record, signal, done}) => {
+        record.meta = {delay: seconds, countdown, shown: null}
+        const box = card(countdown
+            ? `<h2>Подождите</h2><p>Кнопка «Продолжить» появится через <b class="left">${seconds.toFixed(1)}</b> с.</p>`
+            : `<h2>Загрузка…</h2><div class="spinner"></div><p class="hint">Кнопка «Продолжить» появится, когда всё загрузится.</p>`)
+        const deadline = performance.now() + seconds * 1000
+        if (countdown) {
+            every(signal, 100, () => {
+                box.querySelector('.left').textContent = Math.max(0, (deadline - performance.now()) / 1000).toFixed(1)
+            })
+        }
+        later(signal, seconds * 1000, () => {
+            const button = add('<button class="on big float" data-mark="Продолжить">Продолжить</button>')
+            put(button, uniform(MARGIN, innerWidth - MARGIN - button.offsetWidth), uniform(BAR + MARGIN, innerHeight - MARGIN - button.offsetHeight))
+            record.meta.shown = ms(performance.now())
+            mark(record, [button])
+            button.addEventListener('click', done)
+        })
+    })
+}
+
+
+const article = {
+    title: 'Первая мышь',
+    text: [
+        'В 1964 году инженер Билл Инглиш по замыслу Дугласа Энгельбарта собрал первую компьютерную мышь. Корпус у неё был деревянный, а снизу стояли два металлических колёсика под прямым углом: одно считывало движение по горизонтали, другое — по вертикали. Сверху была всего одна кнопка.',
+        'Публике устройство показали в декабре 1968 года в Сан-Франциско, и эту демонстрацию потом назвали «матерью всех демо». Название «мышь» появилось из-за провода, который торчал сзади, как хвост. Шарик вместо колёсиков появился позже, а оптические мыши стали массовыми только к концу 1990-х.',
+    ],
+    question: 'Из чего был сделан корпус первой мыши?',
+    answers: ['Из дерева', 'Из металла', 'Из пластика', 'Из стекла'],
+}
+
+
+async function reading({title, text, question, answers}) {
+    await read(title, text, 'Прочитано')
+    await ask(question, answers)
+}
+
+
+function ask(question, answers) {
+    return task('question', question, ({record, done}) => {
+        const box = card(`<h2>Вопрос</h2><p>${question}</p><div class="answers">${shuffle(answers).map(answer => `<button data-mark="${answer}">${answer}</button>`).join('')}</div>`)
+        mark(record, box.querySelectorAll('[data-mark]'))
+        box.querySelector('.answers').addEventListener('click', e => {
+            const answer = e.target.closest('button')
+            if (answer) {
+                record.meta = {correct: answer.dataset.mark === answers[0]}
+                done()
+            }
+        })
+    })
+}
+
+
+const menuTree = {
+    'Файл': {'Новый': null, 'Открыть': null, 'Недавние': {'отчёт.txt': null, 'план.md': null, 'фото.png': null}, 'Экспорт': {'PDF': null, 'PNG': null, 'CSV': null}, 'Выход': null},
+    'Правка': {'Отменить': null, 'Повторить': null, 'Вставить': {'Текст': null, 'Изображение': null, 'Специальная': {'Без форматирования': null, 'Как ссылку': null}}, 'Найти': null},
+    'Вид': {'Масштаб': {'50%': null, '100%': null, '150%': null, '200%': null}, 'Тема': {'Светлая': null, 'Тёмная': null, 'Системная': null}, 'Боковая панель': null},
+    'Справка': {'Документация': null, 'О программе': {'Версия': null, 'Лицензии': null}},
+}
+
+
+function menuPaths(tree, prefix) {
+    return Object.entries(tree).flatMap(([label, children]) => {
+        const path = [...prefix, label]
+        if (children) {
+            return menuPaths(children, path)
+        }
+        return path.length > 2 ? [path] : []
+    })
+}
+
+
+function menuList(tree) {
+    const items = Object.entries(tree).map(([label, children]) => `<li data-mark="${label}"${children ? ' class="sub"' : ''}><span>${label}</span>${children ? menuList(children) : ''}</li>`)
+    return `<ul>${items.join('')}</ul>`
+}
+
+
+function menu(path) {
+    const route = path.join(' → ')
+    return task('menu', `Выбрать в меню: ${route}`, ({record, done}) => {
+        record.meta = {path, wrong: 0}
+        add(`<div class="tip">Выберите в меню: <b>${route}</b></div>`)
+        const bar = add(`<nav class="menubar float">${menuList(menuTree)}</nav>`)
+        put(bar, uniform(MARGIN, Math.max(MARGIN, innerWidth - 760)), uniform(BAR + 70, innerHeight * 0.45))
+        mark(record, bar.querySelectorAll('[data-mark]'))
+        bar.addEventListener('click', e => {
+            const item = e.target.closest('li')
+            if (item?.classList.contains('sub') && coarse) {
+                const opened = item.classList.contains('open')
+                for (const open of item.parentElement.querySelectorAll('.open')) {
+                    open.classList.remove('open')
+                }
+                item.classList.toggle('open', !opened)
+            }
+            if (!item || item.classList.contains('sub')) {
+                return
+            }
+            if (item.dataset.mark === path.at(-1)) {
+                done()
+            } else {
+                record.meta.wrong++
+            }
+        })
+    })
+}
+
+
+const statuses = ['новый', 'оплачен', 'в пути', 'доставлен', 'отменён']
+
+
+const scrollKeys = ['PageDown', 'PageUp', ' ', 'ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Home', 'End']
+
+
+function scrollVia(record, signal, container) {
+    const via = record.meta.via = {wheel: 0, keys: 0, thumb: 0, touch: 0}
+    addEventListener('wheel', () => via.wheel++, {signal, passive: true})
+    addEventListener('keydown', e => scrollKeys.includes(e.key) && via.keys++, {signal})
+    addEventListener('pointerdown', e => {
+        if (e.pointerType !== 'mouse') {
+            via.touch++
+            return
+        }
+        const rect = container === document.documentElement ? {left: 0, top: 0} : container.getBoundingClientRect()
+        if (container.contains(e.target) && (e.clientX >= rect.left + container.clientLeft + container.clientWidth || e.clientY >= rect.top + container.clientTop + container.clientHeight)) {
+            via.thumb++
+        }
+    }, {signal})
+}
+
+
+function scrollList() {
+    const numbers = sample(Array.from({length: 9000}, (_, index) => 1000 + index), 80).sort((a, b) => a - b)
+    const goal = integer(35, numbers.length - 5)
+    return task('scroll', `Найти заказ №${numbers[goal]} и нажать «Открыть»`, ({record, signal, done}) => {
+        record.meta = {subkind: 'list', rows: numbers.length, goal, wrong: 0}
+        const tip = add(`<div class="tip">Найдите заказ <b>№${numbers[goal]}</b> и нажмите в его строке «Открыть»</div>`)
+        const list = add(`<div class="list float">${numbers.map(number => `<div class="item"><span>Заказ №${number}</span><span class="status">${pick(statuses)}</span><button data-mark="Открыть ${number}">Открыть</button></div>`).join('')}</div>`)
+        const width = Math.min(480, innerWidth - 2 * MARGIN)
+        const top = Math.max(BAR + 66, tip.getBoundingClientRect().bottom + 10)
+        Object.assign(list.style, {width: `${width}px`, height: `${innerHeight - top - 24}px`})
+        put(list, uniform(MARGIN, innerWidth - MARGIN - width), top)
+        const buttons = list.querySelectorAll('button')
+        mark(record, [buttons[goal]])
+        scrollVia(record, signal, list)
+        list.addEventListener('click', e => {
+            const button = e.target.closest('button')
+            if (button === buttons[goal]) {
+                done()
+            } else if (button) {
+                record.meta.wrong++
+            }
+        })
+    })
+}
+
+
+const senders = ['Анна', 'Борис', 'Вера', 'Глеб', 'Дина', 'Егор', 'Жанна', 'Илья', 'Кира', 'Лев']
+const snippets = ['Созвон в пять, не забудь', 'Отправил файлы, посмотри', 'Купить хлеб и молоко', 'Перенесли встречу на четверг', 'Спасибо, всё получил', 'Где ключи от гаража?', 'Скинь адрес, пожалуйста', 'Буду через десять минут', 'Отличная идея, давай', 'Счёт оплачен']
+
+
+function pickGoal(scroller, goal, record, signal, done) {
+    mark(record, [goal])
+    scrollVia(record, signal, scroller)
+    scroller.addEventListener('click', e => {
+        const item = e.target.closest('.row, .tile')
+        if (item === goal) {
+            done()
+        } else if (item) {
+            record.meta.wrong++
+        }
+    })
+}
+
+
+function nested(distance) {
+    const goal = distance === 'short' ? integer(9, 16) : integer(60, 100)
+    const rows = goal + integer(2, 6)
+    return task('scroll', `Прокрутить окно сообщений и нажать на выделенную строку (${distance === 'short' ? 'близко' : 'далеко'})`, ({record, signal, done}) => {
+        record.meta = {subkind: 'nested', distance, rows, goal, wrong: 0}
+        const items = Array.from({length: rows}, (_, index) => `<div class="row${index === goal ? ' goal" data-mark="Цель' : ''}">${pick(senders)}: ${pick(snippets)}</div>`)
+        const box = card(`<h2>Сообщения</h2><p>Прокрутите окно и нажмите на <b>выделенную строку</b>.</p><div class="scroller" style="height:${integer(220, 320)}px">${items.join('')}</div>`)
+        const scroller = box.querySelector('.scroller')
+        pickGoal(scroller, scroller.querySelector('.goal'), record, signal, done)
+    })
+}
+
+
+function sideways() {
+    const count = integer(18, 26)
+    const goal = integer(count - 8, count - 2)
+    return task('scroll', 'Прокрутить ряд карточек вбок и нажать на выделенную', ({record, signal, done}) => {
+        record.meta = {subkind: 'sideways', count, goal, wrong: 0}
+        const tiles = Array.from({length: count}, (_, index) => `<div class="tile${index === goal ? ' goal" data-mark="Цель' : ''}">${pick(products)}<br>${pick(colors)}</div>`)
+        const box = card(`<h2>Подборка</h2><p>${either('Прокрутите ряд вбок: Shift + колесо, свайп вбок на тачпаде или полоса прокрутки.', 'Пролистайте ряд пальцем вбок.')} Нажмите на <b>выделенную карточку</b>.</p><div class="scroller wide thick">${tiles.join('')}</div>`)
+        const scroller = box.querySelector('.scroller')
+        pickGoal(scroller, scroller.querySelector('.goal'), record, signal, done)
+    })
+}
+
+
+function longList() {
+    const rows = 400
+    const goal = integer(330, 390)
+    return task('scroll', `Найти в длинном списке строку №${goal + 1} и нажать на неё`, ({record, signal, done}) => {
+        record.meta = {subkind: 'long-list', rows, goal, wrong: 0}
+        const items = Array.from({length: rows}, (_, index) => `<div class="row" data-mark="№${index + 1}">№${index + 1} · ${pick(snippets)}</div>`)
+        const box = card(`<h2>Длинный список</h2><p>Найдите строку <b>№${goal + 1}</b> и нажмите на неё. ${either('Удобнее всего тянуть за полосу прокрутки справа.', 'Листайте быстрыми движениями пальца.')}</p><div class="scroller thick" style="height:${Math.min(360, innerHeight - BAR - 260)}px">${items.join('')}</div>`)
+        const scroller = box.querySelector('.scroller')
+        pickGoal(scroller, scroller.children[goal], record, signal, done)
+    })
+}
+
+
+function slider() {
+    const goal = integer(5, 95)
+    return task('drag', `Установить ползунок на ${goal}`, ({record, done}) => {
+        record.meta = {subkind: 'slider', goal, releases: 0}
+        const tip = add(`<div class="tip">Установите ползунок на <b>${goal}</b> — сейчас <span></span></div>`)
+        const track = add('<div class="slider float" data-mark="Ползунок"><div class="handle" data-mark="Ручка"></div></div>')
+        const handle = track.firstElementChild
+        const width = Math.min(integer(360, 640), innerWidth - 2 * MARGIN - 22)
+        track.style.width = `${width}px`
+        put(track, uniform(MARGIN + 11, innerWidth - MARGIN - 11 - width), uniform(BAR + 90, innerHeight - 60))
+
+        let value = goal < 50 ? integer(goal + 30, 100) : integer(0, goal - 30)
+        let dragging = false
+        const show = () => {
+            handle.style.left = `${value}%`
+            tip.querySelector('span').textContent = value
+        }
+        const move = e => {
+            const rect = track.getBoundingClientRect()
+            value = Math.round(Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1) * 100)
+            show()
+        }
+        show()
+        mark(record, [track, handle])
+
+        track.addEventListener('pointerdown', e => {
+            if (e.button === 0) {
+                dragging = true
+                track.setPointerCapture(e.pointerId)
+                move(e)
+            }
+        })
+        track.addEventListener('pointermove', e => dragging && move(e))
+        track.addEventListener('pointerup', () => {
+            if (!dragging) {
+                return
+            }
+            dragging = false
+            record.meta.releases++
+            if (value === goal) {
+                done()
+            }
+        })
+    })
+}
+
+
+function cargo() {
+    return task('drag', 'Перетащить блок в пунктирную рамку', ({record, done}) => {
+        record.meta = {subkind: 'item', drops: 0}
+        add('<div class="tip">Перетащите блок в пунктирную рамку</div>')
+        const slot = add('<div class="slot float" data-mark="Рамка"></div>')
+        const item = add('<div class="cargo float" data-mark="Блок">груз</div>')
+        const spot = () => ({x: uniform(MARGIN, innerWidth - MARGIN - 88), y: uniform(BAR + 60, innerHeight - MARGIN - 88)})
+        const start = spot()
+        let end = spot()
+        while (Math.hypot(end.x - start.x, end.y - start.y) < 250) {
+            end = spot()
+        }
+        put(item, start.x, start.y)
+        put(slot, end.x, end.y)
+        mark(record, [item, slot])
+
+        let grip = null
+        item.addEventListener('pointerdown', e => {
+            if (e.button === 0) {
+                grip = {x: e.clientX - item.offsetLeft, y: e.clientY - item.offsetTop}
+                item.setPointerCapture(e.pointerId)
+            }
+        })
+        item.addEventListener('pointermove', e => grip && put(item, e.clientX - grip.x, e.clientY - grip.y))
+        item.addEventListener('pointerup', () => {
+            if (!grip) {
+                return
+            }
+            grip = null
+            record.meta.drops++
+            const box = item.getBoundingClientRect()
+            const frame = slot.getBoundingClientRect()
+            const x = box.x + box.width / 2
+            const y = box.y + box.height / 2
+            if (x >= frame.left && x <= frame.right && y >= frame.top && y <= frame.bottom) {
+                done()
+            }
+        })
+    })
+}
+
+
+function pause(seconds) {
+    return task('pause', `Перерыв ${seconds} с: ничего не делать или водить мышью как угодно`, ({signal, done}) => {
+        const box = card(`<h2>Перерыв</h2><div class="countdown">${seconds}</div><p class="hint">Отдохните. ${either('Мышью можно делать что угодно или ничего.', 'Можно ничего не делать.')} Задание закончится само.</p>`)
+        const deadline = performance.now() + seconds * 1000
+        every(signal, 250, () => {
+            box.querySelector('.countdown').textContent = Math.max(0, Math.ceil((deadline - performance.now()) / 1000))
+        })
+        later(signal, seconds * 1000, done)
+    })
+}
+
+
+const teaSections = [
+    ['Легенда о начале', [
+        'По китайской легенде, чай открыл император Шэнь-нун: листья дикого куста упали в котёл с кипящей водой, и отвар ему понравился. Историки относятся к легенде осторожно, но чай в Китае пили уже больше двух тысяч лет назад.',
+        'Сначала его ценили как лекарство и пили горьким. Привычку заваривать чай ради вкуса и долгих разговоров люди приобрели гораздо позже.',
+    ]],
+    ['Книга Лу Юя', [
+        'В VIII веке поэт Лу Юй написал «Канон чая» — первую книгу, целиком посвящённую этому напитку. В ней описаны сорта, посуда, вода и сам порядок заваривания.',
+        'В те времена листья прессовали в плитки. Перед чаепитием плитку подсушивали на огне, растирали в порошок и варили, иногда добавляя соль.',
+    ]],
+    ['Путь в Японию', [
+        'Чай попал в Японию вместе с буддийскими монахами, которые учились в Китае. Монахи пили его, чтобы не засыпать во время долгих медитаций.',
+        'Из этой привычки выросла японская чайная церемония. В ней важен каждый жест: как хозяин складывает ткань, как держит чашу и как гость её принимает.',
+    ]],
+    ['Чай в Европе', [
+        'В начале XVII века голландские купцы привезли чай в Европу. Сначала он стоил очень дорого и продавался в аптеках как лекарство.',
+        'В Англии чай вошёл в моду при дворе, а со временем стал повседневным напитком. Так появилась традиция чаепития в пять часов вечера.',
+    ]],
+    ['Чай в России', [
+        'В 1638 году русский посол Василий Старков привёз от монгольского хана в подарок царю Михаилу Фёдоровичу несколько пудов чая. Напиток при дворе сначала встретили без восторга.',
+        'Позже чай везли в Россию караванами через Кяхту на границе с Китаем. Путь занимал больше года, поэтому чай долго оставался дорогим.',
+    ]],
+    ['Самовар', [
+        'Самовар стал символом русского чаепития в XIX веке. Самым известным центром их производства была Тула.',
+        'Внутри самовара проходит труба, в которой горят угли или сосновые шишки, а вода нагревается вокруг неё. Сверху ставят заварочный чайник, чтобы он оставался горячим.',
+    ]],
+    ['Виды чая', [
+        'Зелёный, чёрный, белый чай и улун делают из листьев одного растения — камелии китайской. Отличаются они обработкой, прежде всего тем, насколько сильно окисляются листья.',
+        'Зелёный чай почти не окисляют, чёрный окисляют полностью, а улун занимает место посередине. Белый чай делают из молодых почек и листьев, которые просто подвяливают и сушат.',
+    ]],
+    ['Как заваривать', [
+        'Зелёный чай обычно заваривают водой около 80 градусов, а чёрный — почти кипятком. Слишком горячая вода делает зелёный чай горьким.',
+        'Время тоже важно: зелёному чаю хватает пары минут, чёрному нужно три-пять. Хороший чай можно заварить несколько раз подряд.',
+    ]],
+    ['Плантации', [
+        'Чайный куст любит тепло, влагу и хорошо растёт на склонах гор. Крупнейшие производители чая — Китай, Индия, Кения и Шри-Ланка.',
+        'Лучший чай собирают вручную: срывают верхнюю почку и два листа под ней. Сборщица за день может собрать несколько десятков килограммов листа.',
+    ]],
+    ['Чай сегодня', [
+        'Сегодня чай — один из самых популярных напитков в мире. Его пьют горячим и холодным, с молоком, лимоном, мятой или вовсе без добавок.',
+        'В каждой стране сложились свои привычки: где-то чай пьют из пиал, где-то из стаканов в подстаканниках, а где-то только из маленьких чашек.',
+    ]],
+]
+const rules = [
+    'Пользователь сам отвечает за сохранность своего пароля.',
+    'Сервис может обновлять интерфейс без предварительного уведомления.',
+    'Сообщения в поддержку обрабатываются в рабочие дни.',
+    'Пользователь может удалить аккаунт в настройках профиля.',
+    'Запрещается публиковать чужие материалы без разрешения автора.',
+    'Сервис хранит историю заказов в течение трёх лет.',
+    'Возврат оформляется в разделе «Мои заказы».',
+    'Уведомления можно отключить в настройках.',
+    'Сервис не передаёт контактные данные третьим лицам без согласия.',
+    'При нарушении правил доступ к аккаунту может быть ограничен.',
+    'Цены указаны с учётом налогов.',
+    'Сроки доставки зависят от выбранного способа и региона.',
+]
+
+
+function paged(markup, signal) {
+    document.documentElement.classList.add('paged')
+    signal.addEventListener('abort', () => {
+        scrollTo(0, 0)
+        document.documentElement.classList.remove('paged')
+    })
+    return add(`<div class="page">${markup}</div>`)
+}
+
+
+function teaPage(top, bottom) {
+    const sections = teaSections.map(([title, paragraphs]) => `<h3 data-mark="${title}">${title}</h3>${paragraphs.map(text => `<p>${text}</p>`).join('')}`)
+    return `<h1>Чай: короткая история</h1>${top}${sections.join('')}${bottom}`
+}
+
+
+function articleDown() {
+    return task('scroll', 'Прочитать длинную статью, прокручивая страницу, и нажать «Дочитано» внизу', ({record, signal, done}) => {
+        record.meta = {subkind: 'page', sections: teaSections.length}
+        const content = paged(teaPage('<p class="banner">Прочитайте статью в своём темпе, прокручивая страницу вниз. В конце нажмите «Дочитано».</p>', '<div class="actions"><button class="on big" data-mark="Дочитано">Дочитано</button></div>'), signal)
+        mark(record, [content.querySelector('button')])
+        scrollVia(record, signal, document.documentElement)
+        content.querySelector('button').addEventListener('click', done)
+    })
+}
+
+
+function articleBack(goal) {
+    const title = teaSections[goal][0]
+    return task('scroll', `Вернуться вверх к разделу «${title}» и нажать на его заголовок`, ({record, signal, done}) => {
+        record.meta = {subkind: 'page-back', goal, wrong: 0}
+        add(`<div class="tip">Вернитесь к разделу <b>«${title}»</b> и нажмите на его заголовок</div>`)
+        const content = paged(teaPage('', '<p class="banner">Нажмите на заголовок нужного раздела выше.</p>'), signal)
+        scrollTo(0, document.scrollingElement.scrollHeight)
+        const headings = content.querySelectorAll('h3')
+        mark(record, [headings[goal]])
+        scrollVia(record, signal, document.documentElement)
+        content.addEventListener('click', e => {
+            const heading = e.target.closest('h3')
+            if (heading === headings[goal]) {
+                done()
+            } else if (heading) {
+                record.meta.wrong++
+            }
+        })
+    })
+}
+
+
+function longArticle() {
+    return sequence([
+        articleDown,
+        () => articleBack(integer(1, 3)),
+        () => ask('Кто привёз первый чай в Россию?', ['Посол Василий Старков', 'Голландские купцы', 'Буддийские монахи', 'Поэт Лу Юй']),
+    ])
+}
+
+
+function rulesPage() {
+    const count = integer(70, 90)
+    return task('scroll', 'Пролистать правила до конца и нажать «Принимаю»', ({record, signal, done}) => {
+        record.meta = {subkind: 'rules', items: count}
+        const items = Array.from({length: count}, (_, index) => `<p>${index + 1}. ${pick(rules)}</p>`)
+        const content = paged(`<h1>Правила сервиса</h1><p class="banner">Пролистайте правила до конца и нажмите «Принимаю». ${either('Листайте как удобно: колесом, полосой прокрутки или клавишами Page Down, пробел, стрелки.', 'Листайте пальцем, можно быстрыми движениями.')}</p>${items.join('')}<div class="actions"><button class="on big" data-mark="Принимаю">Принимаю</button></div>`, signal)
+        mark(record, [content.querySelector('button')])
+        scrollVia(record, signal, document.documentElement)
+        content.querySelector('button').addEventListener('click', done)
+    })
+}
+
+
+const phrases = [
+    'Утром над рекой стоял густой туман, и лодки шли медленно.',
+    'В библиотеке на втором этаже открыли новый читальный зал.',
+    'Поезд прибывает на третий путь в половине восьмого вечера.',
+    'Съешь же ещё этих мягких французских булок, да выпей чаю.',
+]
+
+
+function typing() {
+    const phrase = pick(phrases)
+    return task('type', `Перепечатать фразу: ${phrase}`, ({record, done}) => {
+        const box = card(`
+            <h2>Печать</h2>
+            <p>Перепечатайте фразу и нажмите «Готово»:</p>
+            <p class="phrase">${phrase}</p>
+            <textarea rows="3" data-mark="Поле ввода" autocomplete="off" spellcheck="false"></textarea>
+            <div class="actions"><button class="on big" data-mark="Готово" disabled>Готово</button></div>`)
+        const area = box.querySelector('textarea')
+        const button = box.querySelector('button')
+        mark(record, [area, button])
+        area.addEventListener('input', () => {
+            button.disabled = area.value.length < phrase.length / 2
+        })
+        button.addEventListener('click', done)
+    })
+}
+
+
+const readingIntro = ['Прочитайте короткий текст в своём темпе, затем ответьте на вопрос по нему.']
+
+const plan = [
+    {title: 'Начало', est: 30, run: setup},
+    {
+        title: either('Клики', 'Касания'), est: 30, run: () => clicks(18, allBins, either([16, 80], [28, 60]), ['click']),
+        intro: ['По одной будут появляться цели — круги и прямоугольники разного размера в разных местах экрана.', `${either('Кликайте по каждой левой кнопкой', 'Нажимайте на каждую пальцем')}. Двигайтесь в обычном темпе: не нужно спешить или целиться идеально.`],
+    },
+    {
+        title: 'Форма', est: 50, run: orderForm,
+        intro: ['Заполните форму заказа. Рядом с каждым полем написано, что ввести или выбрать.', 'Введённый текст не сохраняется.'],
+    },
+    {
+        title: 'Ожидание', est: 24, run: () => sequence([() => wait(true), () => wait(false), () => wait(true)]),
+        intro: ['Иногда сайту нужно время. Дождитесь, пока появится кнопка «Продолжить», и нажмите её.', 'Пока ждёте, ведите себя как обычно.'],
+    },
+    {
+        title: 'Близкие цели', est: 27, run: () => clicks(22, [0, 1, 2], either([8, 28], [20, 40]), ['click']),
+        intro: [`Теперь цели мелкие и появляются недалеко ${either('от курсора', 'от предыдущей')}: короткие точные движения.`],
+    },
+    {title: 'Чтение', est: 45, run: () => reading(article), intro: readingIntro},
+    {
+        title: 'Меню', est: 32, run: () => sequence(sample(menuPaths(menuTree, []), 3).map(path => () => menu(path))),
+        intro: [`${either('Наведите курсор на пункт меню', 'Нажмите на пункт меню')} — раскроется подменю. Найдите и нажмите указанный пункт.`, 'Нужный путь написан вверху экрана.'],
+    },
+    {
+        title: 'Дальние цели', est: 29, run: () => clicks(18, either([4, 5, 6], [3, 4]), either([12, 64], [28, 56]), ['click']),
+        intro: [`Цели будут появляться далеко ${either('от курсора', 'от предыдущей')}: в другом конце экрана, сверху и снизу.`],
+    },
+    {
+        title: 'Флажки и список', est: 32, run: () => sequence([checkboxes, select]),
+        intro: ['Отметьте нужные флажки, затем выберите город в выпадающем списке.'],
+    },
+    {
+        title: 'Перерыв', est: 30, run: () => pause(25),
+        intro: [`Перерыв 25 секунд. Можно ничего не делать или водить ${either('мышью', 'пальцем по экрану')} как угодно.`, 'Задание закончится само.'],
+    },
+    {
+        title: either('Двойной и правый клик', 'Двойное и долгое нажатие'), est: 36, run: () => clicks(20, allBins, either([20, 64], [32, 60]), ['dblclick', 'rightclick']),
+        intro: either(['Фиолетовые цели — двойной клик левой кнопкой.', 'Жёлтые цели — один клик правой кнопкой.'], ['Фиолетовые цели — два быстрых касания.', 'Жёлтые цели — нажмите и подержите полсекунды.']),
+    },
+    {
+        title: 'Прокрутка', est: 60, run: () => sequence([scrollList, () => nested('short'), () => nested('long'), sideways]),
+        intro: ['Несколько заданий с прокруткой: список заказов, окно сообщений и ряд карточек, который листается вбок.', `Список заказов отсортирован по номеру. ${either('Прокручивайте как привыкли: колесом, тачпадом или полосой прокрутки.', 'Листайте пальцем, как привыкли.')}`],
+    },
+    {
+        title: 'Перетаскивание', est: 27, run: () => sequence([slider, cargo, cargo]),
+        intro: [`${either('Зажмите левую кнопку мыши', 'Прижмите пальцем')} и тяните: ползунок — до нужного значения, блок — в пунктирную рамку.`],
+    },
+    {
+        title: 'Мелкие цели', est: 26, run: () => clicks(15, allBins, either([8, 14], [12, 20]), ['click']),
+        intro: ['Очень маленькие цели в разных местах экрана. Не торопитесь.'],
+    },
+    {
+        title: 'Печать', est: 32, run: typing,
+        intro: ['Перепечатайте короткую фразу в поле ввода. Сам текст не сохраняется.'],
+    },
+    {
+        title: 'Статья', est: 80, run: longArticle,
+        intro: ['Длинная статья на несколько экранов. Прочитайте её в своём темпе, прокручивая страницу, и нажмите кнопку в конце.', 'Потом нужно будет вернуться к одному из разделов и ответить на вопрос.'],
+    },
+    {
+        title: 'Длинные страницы', est: 45, run: () => sequence([longList, rulesPage]),
+        intro: ['Длинный список и длинная страница с правилами.', either('Листайте как удобно: колесом, полосой прокрутки или клавишами Page Down, пробел, стрелки.', 'Листайте пальцем, можно быстрыми движениями.')],
+    },
+    {
+        title: 'Финал', est: 31, run: () => clicks(18, allBins, either([8, 80], [16, 60]), ['click', 'click', 'click', 'dblclick', 'rightclick']),
+        intro: ['Последний блок: все виды целей вперемешку.', either('Синие — обычный клик, фиолетовые — двойной, жёлтые — правой кнопкой.', 'Синие — одно касание, фиолетовые — два касания, жёлтые — долгое нажатие.')],
+    },
+]
+const total = plan.reduce((sum, step) => sum + step.est, 0)
+let completed = 0
+let stepStarted = 0
+
+
+function updateBar() {
+    const over = !plan.includes(section)
+    const left = over ? 0 : total - completed - Math.min((performance.now() - stepStarted) / 1000, section.est)
+    const invalid = active?.record.valid === false
+    $('section').textContent = section.title
+    $('counter').textContent = counter
+    $('progress').style.width = `${(1 - left / total) * 100}%`
+    $('remaining').textContent = `${either('осталось ', '')}≈ ${clock(left)}`
+    $('remaining').hidden = over
+    $('notice').hidden = !invalid
+    $('restart').classList.toggle('on', invalid)
+    $('restart').hidden = over
+    $('fullscreen').hidden = section === plan[0] || over || !document.fullscreenEnabled || Boolean(document.fullscreenElement)
+}
+
+
+function finale() {
+    const passed = tasks.filter(record => record.tEnd !== null && !record.meta.restarted && !record.meta.setup && record.kind !== 'read')
+    const questions = passed.filter(record => record.kind === 'question')
+    const box = card(`
+        <h2>Экзамен окончен</h2>
+        <div class="form report">
+            <span>Время</span><span>${clock((performance.now() - tasks[0].tEnd) / 1000)}</span>
+            <span>Пройдено заданий</span><span>${passed.length}</span>
+            <span>Ответы на вопросы</span><span>${questions.filter(record => record.meta.correct).length} из ${questions.length}</span>
+        </div>
+        <p class="hint">Отчёт содержит ответы и ход выполнения заданий: действия и ${either('движение курсора', 'касания экрана')}, без введённого текста.</p>
+        <p class="hint">Скачайте отчёт и сохраните или отправьте его до закрытия вкладки, иначе он пропадёт.</p>
+        <div class="actions"><button class="on big">Скачать отчёт</button></div>`, true)
+    box.querySelector('button').addEventListener('click', download)
+}
+
+
+function measureHz(duration) {
+    return new Promise(resolve => {
+        const stamps = []
+        const tick = time => {
+            stamps.push(time)
+            if (time - stamps[0] < duration) {
+                requestAnimationFrame(tick)
+                return
+            }
+            const deltas = stamps.slice(1).map((value, index) => value - stamps[index]).sort((a, b) => a - b)
+            resolve(Math.round(10000 / deltas[deltas.length >> 1]) / 10)
+        }
+        requestAnimationFrame(tick)
+    })
+}
+
+
+async function main() {
+    for (const step of plan) {
+        section = step
+        counter = ''
+        stepStarted = performance.now()
+        if (step.intro) {
+            await read(step.title, step.intro, 'Понятно, начать')
+        }
+        await step.run()
+        completed += step.est
+    }
+    section = {title: 'Готово', est: 0}
+    counter = ''
+    updateBar()
+    finale()
+}
+
+
+listen()
+new MutationObserver(scheduleLayout).observe(stage, {childList: true, subtree: true, attributes: true, attributeFilter: ['hidden', 'class', 'disabled']})
+stage.addEventListener('transitionend', scheduleLayout)
+addEventListener('resize', scheduleLayout)
+visualViewport?.addEventListener('resize', scheduleLayout)
+addEventListener('scroll', e => e.target.classList?.contains('screen') && scheduleLayout(), {capture: true, passive: true})
+$('restart').addEventListener('click', () => active?.restart())
+$('fullscreen').addEventListener('click', fullscreen)
+if (coarse) {
+    visualViewport?.addEventListener('resize', () => {
+        stage.style.height = `${visualViewport.height * visualViewport.scale}px`
+        scrollTo(0, 0)
+        if (document.activeElement.matches('input, textarea')) {
+            document.activeElement.scrollIntoView({block: 'center'})
+        }
+    })
+    screen.orientation?.addEventListener('change', () => active?.restart())
+}
+$('export').addEventListener('click', e => {
+    e.preventDefault()
+    download()
+})
+measureHz(2000).then(hz => {
+    displayHz = hz
+    if ($('hz')) {
+        $('hz').textContent = `${hz} Гц`
+    }
+})
+setInterval(updateBar, 250)
+main()
+</script>
+</body>
+</html>
