@@ -114,6 +114,12 @@
   .scroller.thick::-webkit-scrollbar{width:16px; height:16px}
   .scroller.thick::-webkit-scrollbar-thumb{background:#2b3a4e; border:3px solid var(--field); border-radius:8px}
   .scroller.thick::-webkit-scrollbar-track{background:var(--field)}
+  .scroller.prose{padding:12px 16px}
+  .scroller.prose p{margin:0 0 10px}
+  .post{margin:0 0 12px; padding:10px 14px; background:var(--panel); border:1px solid var(--border); border-radius:6px; cursor:pointer}
+  .post p:first-child{color:var(--dim)}
+  .post p:last-child{margin:0}
+  .post.goal{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent); color:#fff}
   .mobile #bar{gap:8px; padding:0 8px}
   .mobile #counter, .mobile #notice, .mobile #bar button span{display:none}
   .mobile .screen{padding:10px}
@@ -143,7 +149,7 @@
   <span id="notice" hidden>окно теряло фокус — лучше пройти задание заново</span>
   <button id="restart">↻<span> задание заново</span></button>
   <button id="fullscreen" hidden>⛶<span> полный экран</span></button>
-  <a id="export" href="#">сохранить отчёт</a>
+  <a id="export" href="#" hidden>сохранить отчёт</a>
 </div>
 <script>
 'use strict'
@@ -220,6 +226,7 @@ const rawSource = 'onpointerrawupdate' in window ? 'pointerrawupdate' : 'pointer
 let displayHz = null
 let firstPointerType = null
 let dirty = false
+let finished = false
 
 
 const pointerCodes = {mouse: 0, touch: 1, pen: 2}
@@ -373,12 +380,92 @@ function environment() {
         pointerType: firstPointerType,
         coarse,
         maxTouchPoints: navigator.maxTouchPoints,
-        exportVersion: 2,
+        exportVersion: 3,
+        fingerprint,
     }
 }
 
 
+function digest(text) {
+    let first = 0xdeadbeef
+    let second = 0x41c6ce57
+    for (let index = 0; index < text.length; index++) {
+        const code = text.charCodeAt(index)
+        first = Math.imul(first ^ code, 2654435761)
+        second = Math.imul(second ^ code, 1597334677)
+    }
+    first = Math.imul(first ^ (first >>> 16), 2246822507) ^ Math.imul(second ^ (second >>> 13), 3266489909)
+    second = Math.imul(second ^ (second >>> 16), 2246822507) ^ Math.imul(first ^ (first >>> 13), 3266489909)
+    return [second, first].map(value => (value >>> 0).toString(16).padStart(8, '0')).join('')
+}
+
+
+function storedUuid() {
+    try {
+        const uuid = localStorage.getItem('examUuid') ?? crypto.randomUUID()
+        localStorage.setItem('examUuid', uuid)
+        return uuid
+    } catch {
+        return crypto.randomUUID()
+    }
+}
+
+
+function graphics() {
+    const gl = document.createElement('canvas').getContext('webgl')
+    if (!gl) {
+        return [null, null]
+    }
+    const info = gl.getExtension('WEBGL_debug_renderer_info')
+    const names = [gl.getParameter(info?.UNMASKED_VENDOR_WEBGL ?? gl.VENDOR), gl.getParameter(info?.UNMASKED_RENDERER_WEBGL ?? gl.RENDERER)]
+    gl.getExtension('WEBGL_lose_context')?.loseContext()
+    return names
+}
+
+
+function drawing() {
+    const canvas = Object.assign(document.createElement('canvas'), {width: 240, height: 60})
+    const context = canvas.getContext('2d')
+    context.textBaseline = 'top'
+    context.font = '16px Arial'
+    context.fillStyle = '#f60'
+    context.fillRect(110, 4, 90, 30)
+    context.fillStyle = '#069'
+    context.fillText('Lordium, экзамен ½ ∑ ≈', 4, 8)
+    context.font = '18px serif'
+    context.fillStyle = 'rgba(102, 204, 0, 0.7)'
+    context.fillText('Lordium, экзамен ½ ∑ ≈', 8, 30)
+    return digest(canvas.toDataURL())
+}
+
+
+function identify() {
+    const [webglVendor, webglRenderer] = graphics()
+    const components = {
+        screen: [screen.width, screen.height],
+        colorDepth: screen.colorDepth,
+        devicePixelRatio,
+        hardwareConcurrency: navigator.hardwareConcurrency ?? null,
+        deviceMemory: navigator.deviceMemory ?? null,
+        platform: navigator.platform,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        languages: [...navigator.languages],
+        maxTouchPoints: navigator.maxTouchPoints,
+        webglVendor,
+        webglRenderer,
+        canvas: drawing(),
+    }
+    return {uuid: storedUuid(), hash: digest(JSON.stringify(components)), components}
+}
+
+
+const fingerprint = identify()
+
+
 function download() {
+    if (!finished) {
+        return
+    }
     const head = JSON.stringify({version: 1, kind: 'cursory-dataset', exported: new Date().toISOString(), env: environment()})
     const parts = [head.slice(0, -1), ',"raw":', ...raw.json(), ',"frames":', ...frames.json(), ',"events":', JSON.stringify(events), ',"tasks":', JSON.stringify(tasks), ',"touches":', ...touches.json(), ',"touchEvents":', ...touchEvents.json(), '}']
     const url = URL.createObjectURL(new Blob(parts, {type: 'application/json'}))
@@ -426,7 +513,7 @@ function card(markup, steady = false) {
 }
 
 
-const layoutSelector = '#bar, #bar button, #bar a, .screen, .page, .card, h1, h2, h3, p, .banner, .scroller, .scroller > *, .phrase, .tip, .form > span, .chip, input, textarea, button, .dropdown .current, .options, .options > div, .menubar, .menubar li > span, .list, .list .item, .slider, .handle, .slot, .cargo, .target, .countdown, .spinner'
+const layoutSelector = '#bar, #bar button, #bar a, .screen, .page, .card, h1, h2, h3, p, .banner, .scroller, .scroller > *, .post, .phrase, .tip, .form > span, .chip, input, textarea, button, .dropdown .current, .options, .options > div, .menubar, .menubar li > span, .list, .list .item, .slider, .handle, .slot, .cargo, .target, .countdown, .spinner'
 const textSelector = 'h1, h2, h3, p, .banner, .phrase, .tip, .form > span, .countdown'
 const scrollSelector = '.screen, .list, .options, .scroller'
 let layoutPending = false
@@ -768,9 +855,9 @@ function setup() {
         record.meta = {setup: true}
         const box = card(`
             <h2>Онлайн-экзамен</h2>
-            <p>Около 10 минут простых заданий: клики по целям, форма, чтение, ожидание, меню, прокрутка, перетаскивание. Работайте в обычном темпе, как на любом сайте: не нужно спешить или целиться идеально.</p>
-            <p class="hint">Введённый текст не сохраняется. Ничего никуда не отправляется: в конце вы сами скачаете отчёт.</p>
-            <p class="hint">Если отвлеклись — «↻ задание заново» вверху.${document.fullscreenEnabled ? ' Вышли из полноэкранного режима — верните кнопкой «⛶».' : ''} «сохранить отчёт» вверху работает в любой момент.</p>
+            <p>Около 15 минут простых заданий: клики по целям, форма, чтение, ожидание, меню, много прокрутки, перетаскивание. Работайте в обычном темпе, как на любом сайте: не нужно спешить или целиться идеально.</p>
+            <p class="hint">Введённый текст не сохраняется. Ничего никуда не отправляется: в конце вы сами скачаете отчёт. Скачать его можно только после последнего задания.</p>
+            <p class="hint">Если отвлеклись — «↻ задание заново» вверху.${document.fullscreenEnabled ? ' Вышли из полноэкранного режима — верните кнопкой «⛶».' : ''}</p>
             <div class="form">
                 <span>Чем вы пользуетесь</span><div class="choices">${chips('device', devices, 'radio', either(null, 'touchscreen'))}</div>
                 <span>Ведущая рука</span><div class="choices">${chips('hand', hands, 'radio')}</div>
@@ -1059,7 +1146,7 @@ function pickGoal(scroller, goal, record, signal, done) {
     mark(record, [goal])
     scrollVia(record, signal, scroller)
     scroller.addEventListener('click', e => {
-        const item = e.target.closest('.row, .tile')
+        const item = e.target.closest('.row, .tile, .post')
         if (item === goal) {
             done()
         } else if (item) {
@@ -1069,15 +1156,46 @@ function pickGoal(scroller, goal, record, signal, done) {
 }
 
 
-function nested(distance) {
-    const goal = distance === 'short' ? integer(9, 16) : integer(60, 100)
-    const rows = goal + integer(2, 6)
-    return task('scroll', `Прокрутить окно сообщений и нажать на выделенную строку (${distance === 'short' ? 'близко' : 'далеко'})`, ({record, signal, done}) => {
-        record.meta = {subkind: 'nested', distance, rows, goal, wrong: 0}
+const nestedSpans = {short: [9, 16], medium: [25, 45], long: [60, 100], huge: [150, 220]}
+const nestedLabels = {short: 'близко', medium: 'средне', long: 'далеко', huge: 'очень далеко'}
+
+
+function nested(distance, direction = 'down') {
+    const up = direction === 'up'
+    const span = integer(...nestedSpans[distance])
+    const rows = span + integer(2, 6)
+    const goal = up ? rows - 1 - span : span
+    return task('scroll', `Прокрутить окно сообщений${up ? ' вверх' : ''} и нажать на выделенную строку (${nestedLabels[distance]})`, ({record, signal, done}) => {
+        record.meta = {subkind: 'nested', distance, direction, rows, goal, wrong: 0}
         const items = Array.from({length: rows}, (_, index) => `<div class="row${index === goal ? ' goal" data-mark="Цель' : ''}">${pick(senders)}: ${pick(snippets)}</div>`)
-        const box = card(`<h2>Сообщения</h2><p>Прокрутите окно и нажмите на <b>выделенную строку</b>.</p><div class="scroller" style="height:${integer(220, 320)}px">${items.join('')}</div>`)
+        const box = card(`<h2>Сообщения</h2><p>Прокрутите окно${up ? ' вверх, к старым сообщениям,' : ''} и нажмите на <b>выделенную строку</b>.</p><div class="scroller" style="height:${integer(220, 320)}px">${items.join('')}</div>`)
         const scroller = box.querySelector('.scroller')
+        if (up) {
+            scroller.scrollTop = scroller.scrollHeight
+        }
         pickGoal(scroller, scroller.querySelector('.goal'), record, signal, done)
+    })
+}
+
+
+const operations = ['перевод', 'покупка', 'пополнение', 'возврат', 'оплата', 'снятие']
+
+
+function ledger(direction) {
+    const up = direction === 'up'
+    const rows = integer(160, 260)
+    const span = integer(40, rows - 10)
+    const goal = up ? rows - 1 - span : span
+    const first = integer(1000, 8000)
+    return task('scroll', `Найти в выписке операцию №${first + goal} и нажать на неё`, ({record, signal, done}) => {
+        record.meta = {subkind: 'ledger', direction, rows, goal, wrong: 0}
+        const items = Array.from({length: rows}, (_, index) => `<div class="row" data-mark="№${first + index}">№${first + index} · ${pick(operations)} · ${integer(50, 99999)} ₽</div>`)
+        const box = card(`<h2>Выписка</h2><p>Найдите операцию <b>№${first + goal}</b> и нажмите на неё. Номера идут по порядку${up ? ', сейчас открыт конец выписки' : ''}.</p><div class="scroller" style="height:${Math.min(integer(300, 400), innerHeight - BAR - 220)}px">${items.join('')}</div>`)
+        const scroller = box.querySelector('.scroller')
+        if (up) {
+            scroller.scrollTop = scroller.scrollHeight
+        }
+        pickGoal(scroller, scroller.children[goal], record, signal, done)
     })
 }
 
@@ -1338,6 +1456,108 @@ function rulesPage() {
 }
 
 
+const feedScreens = {short: [0.7, 1.5], medium: [3, 6], long: [10, 18]}
+
+
+function feed(direction, distance) {
+    const up = direction === 'up'
+    const screens = uniform(...feedScreens[distance])
+    return task('scroll', `Прокрутить ленту ${up ? 'вверх' : 'вниз'} до выделенного поста и нажать на него`, ({record, signal, done}) => {
+        const count = Math.ceil((screens + 2) * innerHeight / 90)
+        const posts = Array.from({length: count}, () => `<div class="post"><p>${pick(senders)} · ${integer(1, 59)} мин назад</p><p>${sample(snippets, integer(1, 3)).join('<br>')}</p></div>`)
+        const content = paged(`<h1>Лента</h1>${posts.join('')}<p class="banner">Конец ленты</p>`, signal)
+        add(`<div class="tip">Найдите <b>выделенный пост</b> ${up ? 'выше' : 'ниже'} и нажмите на него</div>`)
+        if (up) {
+            scrollTo(0, document.scrollingElement.scrollHeight)
+        }
+        const items = [...content.querySelectorAll('.post')]
+        const offset = innerHeight / 2 + (up ? -screens : screens) * innerHeight
+        const gaps = items.map(item => Math.abs(item.getBoundingClientRect().top - offset))
+        const goal = gaps.indexOf(Math.min(...gaps))
+        items[goal].classList.add('goal')
+        items[goal].dataset.mark = 'Цель'
+        record.meta = {subkind: 'feed', direction, distance, screens: ms(screens), posts: count, goal, wrong: 0}
+        pickGoal(document.documentElement, items[goal], record, signal, done)
+    })
+}
+
+
+function waypoints(count) {
+    const sections = integer(30, 40)
+    const stops = [integer(4, sections - 1)]
+    while (stops.length < count) {
+        const next = integer(0, sections - 1)
+        if (Math.abs(next - stops.at(-1)) >= 4 && !stops.includes(next)) {
+            stops.push(next)
+        }
+    }
+    return task('scroll', `Нажать на заголовки разделов по порядку: ${stops.map(stop => stop + 1).join(' → ')}`, ({record, signal, done}) => {
+        record.meta = {subkind: 'waypoints', sections, stops, reached: [], wrong: 0}
+        const blocks = Array.from({length: sections}, (_, index) => `<h3 data-mark="Раздел ${index + 1}">Раздел ${index + 1}</h3>${sample(rules, integer(2, 5)).map(text => `<p>${text}</p>`).join('')}`)
+        const tip = add('<div class="tip"></div>')
+        const content = paged(`<h1>Справочник</h1>${blocks.join('')}`, signal)
+        const headings = content.querySelectorAll('h3')
+        let step = 0
+        const show = () => {
+            tip.innerHTML = `Нажмите на заголовок <b>«Раздел ${stops[step] + 1}»</b> · ${step + 1} из ${count}`
+        }
+        show()
+        mark(record, stops.map(stop => headings[stop]))
+        scrollVia(record, signal, document.documentElement)
+        content.addEventListener('click', e => {
+            const heading = e.target.closest('h3')
+            if (heading === headings[stops[step]]) {
+                record.meta.reached.push(ms(e.timeStamp))
+                step++
+                if (step === count) {
+                    done()
+                } else {
+                    show()
+                }
+            } else if (heading) {
+                record.meta.wrong++
+            }
+        })
+    })
+}
+
+
+const metro = {
+    title: 'Метро',
+    text: [
+        'Первое в мире метро открылось в Лондоне 10 января 1863 года. Линию строили неглубоко, открытым способом: вдоль улицы рыли траншею, укладывали в ней пути и перекрывали сверху.',
+        'Поезда первых лет водили паровозы. Дым и пар уходили через вентиляционные шахты и открытые участки пути, но под землёй всё равно было душно.',
+        'В 1890 году в Лондоне заработала первая глубокая линия на электрической тяге. Её круглые тоннели прокладывали глубоко под городом, и за эту форму лондонское метро прозвали «трубой».',
+        'В континентальной Европе первым стало метро Будапешта: его открыли в 1896 году, к тысячелетию Венгрии. В 1900 году, к Всемирной выставке, заработала первая линия парижского метро.',
+        'Московское метро открылось 15 мая 1935 года. Первая линия шла от «Сокольников» до «Парка культуры» с ответвлением к «Смоленской», и на ней было 13 станций.',
+        'Станции московского метро с самого начала строили как подземные дворцы: с мрамором, мозаикой, бронзовыми светильниками и скульптурами. Многие из них сегодня охраняются как памятники архитектуры.',
+        'В Ленинграде метро открыли в 1955 году. Грунты под городом мягкие и влажные, поэтому станции пришлось строить очень глубоко: «Адмиралтейская» лежит на глубине около 86 метров и считается самой глубокой в России.',
+        'Сегодня метро есть почти в двухстах городах мира. Самые большие сети — в Китае: длина линий в Шанхае и Пекине превышает 800 километров.',
+    ],
+    question: 'В каком году открылось первое в мире метро?',
+    answers: ['В 1863 году', 'В 1890 году', 'В 1900 году', 'В 1935 году'],
+}
+
+
+function scrollText(title, text) {
+    return task('scroll', `Прочитать текст «${title}» в окне с прокруткой и нажать «Дочитано»`, ({record, signal, done}) => {
+        record.meta = {subkind: 'reading-window', paragraphs: text.length}
+        const box = card(`<h2>${title}</h2><p class="hint">Прочитайте текст в своём темпе, прокручивая окно. В конце нажмите «Дочитано».</p><div class="scroller prose" style="height:${Math.min(integer(240, 300), innerHeight - BAR - 200)}px">${text.map(paragraph => `<p>${paragraph}</p>`).join('')}<div class="actions"><button class="on big" data-mark="Дочитано">Дочитано</button></div></div>`)
+        const scroller = box.querySelector('.scroller')
+        const button = scroller.querySelector('button')
+        mark(record, [button])
+        scrollVia(record, signal, scroller)
+        button.addEventListener('click', done)
+    })
+}
+
+
+async function windowReading({title, text, question, answers}) {
+    await scrollText(title, text)
+    await ask(question, answers)
+}
+
+
 const phrases = [
     'Утром над рекой стоял густой туман, и лодки шли медленно.',
     'В библиотеке на втором этаже открыли новый читальный зал.',
@@ -1367,6 +1587,7 @@ function typing() {
 
 
 const readingIntro = ['Прочитайте короткий текст в своём темпе, затем ответьте на вопрос по нему.']
+const wheelHint = either('Прокручивайте колесом мыши или двумя пальцами на тачпаде, как обычно на сайтах.', 'Листайте пальцем, как привыкли.')
 
 const plan = [
     {title: 'Начало', est: 30, run: setup},
@@ -1379,6 +1600,10 @@ const plan = [
         intro: ['Заполните форму заказа. Рядом с каждым полем написано, что ввести или выбрать.', 'Введённый текст не сохраняется.'],
     },
     {
+        title: 'Лента', est: 40, run: () => sequence([() => feed('down', 'short'), () => feed('down', 'medium'), () => feed('up', 'medium')]),
+        intro: ['Лента постов на несколько экранов. Найдите выделенный пост — он ниже или выше по странице — и нажмите на него.', wheelHint],
+    },
+    {
         title: 'Ожидание', est: 24, run: () => sequence([() => wait(true), () => wait(false), () => wait(true)]),
         intro: ['Иногда сайту нужно время. Дождитесь, пока появится кнопка «Продолжить», и нажмите её.', 'Пока ждёте, ведите себя как обычно.'],
     },
@@ -1388,6 +1613,10 @@ const plan = [
     },
     {title: 'Чтение', est: 45, run: () => reading(article), intro: readingIntro},
     {
+        title: 'Чат', est: 40, run: () => sequence([() => nested('short', 'up'), () => nested('medium'), () => nested('huge', 'up')]),
+        intro: ['Окно сообщений с прокруткой. Иногда нужно листать вниз, иногда вверх — к старым сообщениям. Нажмите на выделенную строку.', wheelHint],
+    },
+    {
         title: 'Меню', est: 32, run: () => sequence(sample(menuPaths(menuTree, []), 3).map(path => () => menu(path))),
         intro: [`${either('Наведите курсор на пункт меню', 'Нажмите на пункт меню')} — раскроется подменю. Найдите и нажмите указанный пункт.`, 'Нужный путь написан вверху экрана.'],
     },
@@ -1396,8 +1625,16 @@ const plan = [
         intro: [`Цели будут появляться далеко ${either('от курсора', 'от предыдущей')}: в другом конце экрана, сверху и снизу.`],
     },
     {
+        title: 'Метро', est: 70, run: () => windowReading(metro),
+        intro: ['Текст в небольшом окне с прокруткой. Прочитайте его в своём темпе, прокручивая окно, затем ответьте на вопрос.', wheelHint],
+    },
+    {
         title: 'Флажки и список', est: 32, run: () => sequence([checkboxes, select]),
         intro: ['Отметьте нужные флажки, затем выберите город в выпадающем списке.'],
+    },
+    {
+        title: 'Выписка', est: 45, run: () => sequence([() => ledger('down'), () => ledger('up')]),
+        intro: ['Длинная выписка, номера операций идут по порядку. Найдите нужный номер и нажмите на строку.', wheelHint],
     },
     {
         title: 'Перерыв', est: 30, run: () => pause(25),
@@ -1416,8 +1653,16 @@ const plan = [
         intro: [`${either('Зажмите левую кнопку мыши', 'Прижмите пальцем')} и тяните: ползунок — до нужного значения, блок — в пунктирную рамку.`],
     },
     {
+        title: 'Разделы', est: 50, run: () => waypoints(6),
+        intro: ['Длинная страница с пронумерованными разделами. Внизу экрана написано, на заголовок какого раздела нажать: то ниже, то выше по странице.', wheelHint],
+    },
+    {
         title: 'Мелкие цели', est: 26, run: () => clicks(15, allBins, either([8, 14], [12, 20]), ['click']),
         intro: ['Очень маленькие цели в разных местах экрана. Не торопитесь.'],
+    },
+    {
+        title: 'Длинная лента', est: 45, run: () => sequence([() => feed('down', 'long'), () => feed('up', 'long')]),
+        intro: ['Снова лента, но длиннее: выделенный пост может быть далеко.', wheelHint],
     },
     {
         title: 'Печать', est: 32, run: typing,
@@ -1453,6 +1698,7 @@ function updateBar() {
     $('notice').hidden = !invalid
     $('restart').classList.toggle('on', invalid)
     $('restart').hidden = over
+    $('export').hidden = !finished
     $('fullscreen').hidden = section === plan[0] || over || !document.fullscreenEnabled || Boolean(document.fullscreenElement)
 }
 
@@ -1504,6 +1750,7 @@ async function main() {
     }
     section = {title: 'Готово', est: 0}
     counter = ''
+    finished = true
     updateBar()
     finale()
 }
