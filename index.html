@@ -120,6 +120,196 @@
   .post p:first-child{color:var(--dim)}
   .post p:last-child{margin:0}
   .post.goal{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent); color:#fff}
+  .web{position:absolute; inset:var(--bar) 0 0; display:flex; flex-direction:column}
+  .brief{flex:none; padding:7px 14px; background:var(--panel2); border-bottom:1px solid var(--border); color:#fff; text-align:center}
+  .frame{position:relative; flex:1; min-height:0; overflow:hidden; background:var(--s-bg); color:var(--s-text); font:14px/1.5 var(--s-font)}
+  .frame b{color:inherit; font-weight:600}
+  .frame a{color:var(--s-brand); cursor:pointer; text-decoration:underline; text-underline-offset:2px}
+  .frame h1{margin:0; font-size:24px; line-height:1.25; color:var(--s-strong)}
+  .frame h2{margin:0; font-size:17px; color:var(--s-strong)}
+  .frame p{margin:0}
+  .frame big{font-size:22px; color:var(--s-strong)}
+  .frame button, .frame input{font:inherit; color:var(--s-text); background:var(--s-field); border:1px solid var(--s-line); border-radius:var(--s-radius)}
+  .frame button{padding:8px 16px}
+  .frame button:hover{border-color:var(--s-brand); color:var(--s-text)}
+  .frame button:disabled{opacity:.6; cursor:default}
+  .frame button.primary{background:var(--s-brand); border-color:var(--s-brand); color:var(--s-on-brand); font-weight:600}
+  .frame button.primary:hover{color:var(--s-on-brand); filter:brightness(1.08)}
+  .frame input{width:100%; padding:9px 12px}
+  .frame input:focus{border-color:var(--s-brand); box-shadow:0 0 0 3px color-mix(in srgb, var(--s-brand) 25%, transparent)}
+  .frame input:disabled{opacity:.6}
+  .frame .wrong{outline:2px solid #e5484d; outline-offset:2px; border-radius:var(--s-radius)}
+  .frame .spinner{margin:auto; border-color:var(--s-line); border-top-color:var(--s-brand)}
+  .muted{color:var(--s-dim)}
+  .error{color:#e5484d}
+  .error:empty{display:none}
+  .busy::before{content:''; display:inline-block; width:12px; height:12px; margin-right:8px; vertical-align:-1px; border:2px solid currentColor; border-right-color:transparent; border-radius:50%; animation:spin .8s linear infinite}
+  .skeleton{display:flex; flex-direction:column; gap:14px; width:min(100%, 720px); margin:0 auto}
+  .skeleton i{display:block; height:18px; border-radius:4px; background:linear-gradient(90deg, var(--s-line) 40%, var(--s-field) 50%, var(--s-line) 60%) 0 0 / 300% 100%; animation:shimmer 1.3s linear infinite}
+  @keyframes shimmer{from{background-position:100% 0} to{background-position:0 0}}
+  .site{position:absolute; inset:0; overflow-y:auto; overscroll-behavior:contain; display:flex; flex-direction:column}
+  .site > header{flex:none; display:flex; align-items:center; gap:22px; min-height:var(--s-head-height); padding:0 max(16px, calc(50% - var(--s-max) / 2)); background:var(--s-head); color:var(--s-head-text); border-bottom:1px solid var(--s-line)}
+  .frame .logo{display:flex; align-items:center; gap:8px; font-size:18px; font-weight:700; color:inherit; text-decoration:none}
+  .colored .logo i, .frame .site > header.colored button.primary{background:var(--s-on-brand); border-color:var(--s-on-brand); color:var(--s-brand)}
+  .date .current{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .logo i{display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:var(--s-radius); background:var(--s-brand); color:var(--s-on-brand); font-style:normal; font-size:15px}
+  .site > header nav{flex:1; display:flex; gap:20px}
+  .frame .site > header nav a{color:inherit; opacity:.85; text-decoration:none}
+  .site > header .account{display:flex; gap:8px}
+  .nav-center nav{justify-content:center}
+  .nav-right nav{justify-content:flex-end}
+  .site > header.logo-center nav{order:-1; flex:none}
+  .logo-center .logo{flex:1; justify-content:center}
+  .site > main{flex:1 0 auto; display:flex; gap:40px; padding:32px max(16px, calc(50% - var(--s-max) / 2))}
+  .site > main.center > .sheet{margin:auto}
+  .site > main.top > .sheet{margin:0 auto auto}
+  .site > main.right{flex-direction:row-reverse}
+  .site > main.wide{flex-direction:column; gap:20px}
+  .site > main > aside{flex:1; align-self:center; display:flex; flex-direction:column; gap:10px; padding:28px; border-radius:var(--s-radius); background:color-mix(in srgb, var(--s-brand) 12%, var(--s-bg)); font-size:16px}
+  .site > footer{flex:none; display:flex; flex-wrap:wrap; gap:8px 20px; padding:18px max(16px, calc(50% - var(--s-max) / 2)) 22px; border-top:1px solid var(--s-line); color:var(--s-dim); font-size:12px}
+  .frame .site > footer a{color:inherit}
+  .sheet{flex:none; align-self:flex-start; width:min(var(--s-width), 100%); display:flex; flex-direction:column; gap:14px; padding:26px; background:var(--s-card); border:1px solid var(--s-line); border-radius:var(--s-radius); box-shadow:0 4px 18px rgba(0,0,0,.06)}
+  .sheet.flat{width:min(560px, 100%); box-shadow:none}
+  .stretch > button.primary{width:100%}
+  .field{display:flex; flex-direction:column; gap:5px}
+  .field > span, .split > span{font-size:13px; color:var(--s-dim)}
+  .pair{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .date{display:grid; grid-template-columns:64px 1fr 84px; gap:8px}
+  .suffix{display:flex; align-items:center; gap:6px; white-space:nowrap}
+  .secret{position:relative}
+  .secret input{padding-right:44px}
+  .frame .eye{position:absolute; right:4px; top:50%; transform:translateY(-50%); padding:4px 8px; border:0; background:none; opacity:.5}
+  .frame .eye.shown{opacity:1}
+  .tick{display:flex; align-items:center; gap:8px; cursor:pointer}
+  .frame .tick input{width:auto; margin:0; padding:0; accent-color:var(--s-brand); box-shadow:none}
+  .ticks{display:flex; gap:18px; flex-wrap:wrap}
+  .split{display:flex; justify-content:space-between; align-items:center; gap:12px}
+  .code{display:flex; gap:8px}
+  .frame .code input{width:44px; height:52px; padding:0; text-align:center; font-size:22px}
+  .frame .link{align-self:flex-start; font-size:13px}
+  .done-mark{width:56px; height:56px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:color-mix(in srgb, var(--s-brand) 18%, transparent); color:var(--s-brand); font-size:28px}
+  .frame .dropdown{width:auto}
+  .frame .dropdown .current{padding:9px 12px; background:var(--s-field); border-color:var(--s-line); border-radius:var(--s-radius)}
+  .frame .dropdown .options{background:var(--s-card); border-color:var(--s-line)}
+  .frame .dropdown .options > div:hover{background:var(--s-brand); color:var(--s-on-brand)}
+  .backdrop{position:absolute; inset:0; z-index:10; display:flex; padding:16px; overflow-y:auto; background:rgba(10,14,20,.5)}
+  .modal{position:relative; margin:auto; width:min(420px, 100%); display:flex; flex-direction:column; gap:14px; padding:26px; background:var(--s-card); border-radius:var(--s-radius); box-shadow:0 12px 40px rgba(0,0,0,.3)}
+  .buttons{display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap}
+  .frame .close{position:absolute; top:8px; right:8px; width:32px; height:32px; padding:0; border:0; background:none; font-size:22px; line-height:1; color:var(--s-dim)}
+  .frame .close.left{right:auto; left:8px}
+  .frame .close.small{top:4px; right:4px; width:22px; height:22px; font-size:15px}
+  .toast{position:absolute; z-index:20; display:flex; align-items:center; gap:12px; padding:10px 8px 10px 16px; max-width:min(380px, calc(100% - 32px)); background:var(--s-strong); color:var(--s-bg); border-radius:var(--s-radius); box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .toast.top-right{top:16px; right:16px}
+  .toast.bottom-right{bottom:16px; right:16px}
+  .toast.bottom-left{bottom:16px; left:16px}
+  .toast.top{top:16px; left:50%; transform:translateX(-50%)}
+  .frame .toast .close{position:static; color:inherit}
+  .cookie{position:absolute; z-index:9; display:flex; gap:12px 20px; align-items:center; padding:16px 20px; background:var(--s-card); border:1px solid var(--s-line); box-shadow:0 -4px 24px rgba(0,0,0,.12)}
+  .cookie.bar{inset:auto 0 0; flex-wrap:wrap; justify-content:center}
+  .cookie.box{bottom:16px; width:min(380px, calc(100% - 32px)); flex-direction:column; align-items:stretch; border-radius:var(--s-radius)}
+  .cookie.box.left{left:16px}
+  .cookie.box.right{right:16px}
+  .cookie .buttons{justify-content:flex-start}
+  .mail{position:absolute; z-index:15; top:14px; right:14px; width:min(320px, calc(100% - 28px)); padding:12px 40px 12px 14px; background:var(--s-card); border:1px solid var(--s-line); border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,.2)}
+  .mail big{display:block; margin-top:4px; letter-spacing:3px}
+  .frame .switch{position:relative; flex:none; width:44px; height:24px; padding:0; border:0; border-radius:12px; background:var(--s-line)}
+  .switch::after{content:''; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#fff; transition:left .15s}
+  .frame .switch.checked{background:var(--s-brand)}
+  .switch.checked::after{left:23px}
+  .setting{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 0; border-bottom:1px solid var(--s-line)}
+  .robot{display:flex; align-items:center; gap:12px; width:min(300px, 100%); padding:12px 14px; background:var(--s-field); border:1px solid var(--s-line); border-radius:4px}
+  .frame .robot .box{display:flex; align-items:center; justify-content:center; width:28px; height:28px; padding:0; border:2px solid var(--s-dim); border-radius:3px; background:#fff}
+  .frame .robot .box .spinner{width:18px; height:18px; border-width:2px}
+  .frame .robot .box.passed{border-color:transparent; background:none; color:#1a9e55; font-size:24px}
+  .robot small{margin-left:auto; color:var(--s-dim); font-size:10px; line-height:1.3; text-align:center}
+  .cells{display:grid; gap:4px}
+  .frame .cells button{aspect-ratio:1; padding:0; font-size:30px; border-radius:2px}
+  .frame .cells button.picked{outline:4px solid var(--s-brand); outline-offset:-4px}
+  .info{position:relative; display:inline-flex; margin-left:6px; vertical-align:middle}
+  .frame .info > button{width:20px; height:20px; padding:0; border-radius:50%; font-size:12px; line-height:1}
+  .tooltip{position:absolute; z-index:5; bottom:100%; left:50%; width:230px; margin-left:-115px; padding-bottom:8px; visibility:hidden}
+  .tooltip > span{display:block; padding:10px 12px; background:var(--s-strong); color:var(--s-bg); border-radius:6px; font-size:13px}
+  .frame .tooltip a{color:inherit}
+  .info.open .tooltip{visibility:visible}
+  @media (hover:hover){.info:hover .tooltip{visibility:visible}}
+  .faq{display:flex; flex-direction:column; width:min(760px, 100%); border-top:1px solid var(--s-line)}
+  .frame .faq .q{display:flex; justify-content:space-between; gap:12px; width:100%; padding:14px 4px; border:0; border-bottom:1px solid var(--s-line); border-radius:0; background:none; text-align:left; font-weight:600}
+  .faq .q::after{content:'+'; color:var(--s-dim)}
+  .faq .open .q::after{content:'−'}
+  .answer{display:flex; flex-direction:column; align-items:flex-start; gap:10px; padding:12px 4px 18px; border-bottom:1px solid var(--s-line)}
+  .tabs{display:flex; gap:4px; border-bottom:1px solid var(--s-line); overflow-x:auto}
+  .frame .tabs button{padding:10px 14px; border:0; border-bottom:2px solid transparent; border-radius:0; background:none; white-space:nowrap}
+  .frame .tabs button.current{border-bottom-color:var(--s-brand); color:var(--s-strong); font-weight:600}
+  .pane{display:flex; flex-direction:column; align-items:flex-start; gap:12px; min-height:120px}
+  .pane table{width:auto; min-width:min(420px, 100%)}
+  .review{display:flex; flex-direction:column; align-items:flex-start; gap:6px; width:100%; padding-bottom:12px; border-bottom:1px solid var(--s-line)}
+  .hero{display:flex; flex-direction:column; align-items:flex-start; gap:14px; padding:36px; border-radius:var(--s-radius); background:color-mix(in srgb, var(--s-brand) 12%, var(--s-bg))}
+  .frame .hero h1{font-size:30px}
+  .cards{display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:16px}
+  .offer{display:flex; flex-direction:column; align-items:flex-start; gap:8px; padding:16px; background:var(--s-card); border:1px solid var(--s-line); border-radius:var(--s-radius)}
+  .offer ul{margin:4px 0; padding-left:18px; line-height:2}
+  .pic{align-self:stretch; height:110px; border-radius:var(--s-radius); background:linear-gradient(135deg, color-mix(in srgb, var(--s-brand) 40%, var(--s-bg)), color-mix(in srgb, var(--s-brand) 8%, var(--s-bg)))}
+  .product{display:flex; flex-wrap:wrap; gap:28px}
+  .product .pic{flex:0 1 320px; height:240px}
+  .buy{display:flex; flex-direction:column; align-items:flex-start; gap:10px}
+  .providers{display:flex; flex-wrap:wrap; gap:8px}
+  .providers.column{flex-direction:column}
+  .frame .provider, .frame .persona{display:flex; align-items:center; gap:10px; text-align:left}
+  .provider i, .persona i, .user i{display:inline-flex; flex:none; align-items:center; justify-content:center; width:26px; height:26px; border-radius:50%; background:var(--s-brand); color:#fff; font-style:normal; font-size:12px; font-weight:bold}
+  .frame .persona.current{border-color:var(--s-brand); box-shadow:0 0 0 2px var(--s-brand)}
+  .app{position:absolute; inset:0; display:grid; grid-template:var(--s-head-height) 1fr / var(--s-side) 1fr; grid-template-areas:'side top' 'side main'}
+  .app.flip{grid-template-columns:1fr var(--s-side); grid-template-areas:'top side' 'main side'}
+  .app > aside{grid-area:side; display:flex; flex-direction:column; gap:2px; padding:14px 10px; background:var(--s-head); color:var(--s-head-text); border-right:1px solid var(--s-line); overflow-y:auto}
+  .app > aside .logo{margin:0 8px 14px}
+  .frame .app > aside button{display:flex; align-items:center; gap:10px; padding:9px 12px; border:0; background:none; color:inherit; text-align:left}
+  .frame .app > aside button.current{background:color-mix(in srgb, var(--s-brand) 20%, transparent); font-weight:600}
+  .app > header{grid-area:top; display:flex; align-items:center; gap:12px; padding:0 18px; background:var(--s-card); border-bottom:1px solid var(--s-line)}
+  .app > main{grid-area:main; display:flex; flex-direction:column; gap:18px; padding:22px; overflow:auto; overscroll-behavior:contain}
+  .app > main > *{flex:none}
+  .search{width:min(360px, 45%)}
+  .spacer{flex:1}
+  .drop{position:relative}
+  .pop{position:absolute; z-index:8; top:calc(100% + 6px); right:0; display:flex; flex-direction:column; min-width:220px; padding:6px; background:var(--s-card); border:1px solid var(--s-line); border-radius:var(--s-radius); box-shadow:0 10px 30px rgba(0,0,0,.18)}
+  .search .pop{left:0; right:0}
+  .frame .pop button{display:flex; justify-content:space-between; gap:12px; padding:8px 10px; border:0; background:none; text-align:left}
+  .frame .pop button:hover{background:color-mix(in srgb, var(--s-brand) 12%, transparent)}
+  .frame .pop .split button{color:var(--s-brand)}
+  .pop .split{padding:6px 10px}
+  .pop .unread{font-weight:600}
+  .pop .unread::before{content:'●'; color:var(--s-brand)}
+  .frame .bell, .frame .user, .frame .burger{position:relative; display:flex; align-items:center; gap:8px; border:0; background:none}
+  .frame .burger{display:none}
+  .badge{position:absolute; top:-2px; right:2px; min-width:18px; height:18px; padding:0 5px; border-radius:9px; background:#e5484d; color:#fff; font-size:11px; line-height:18px; text-align:center}
+  .stats{display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:14px}
+  .stat{display:flex; flex-direction:column; padding:16px; background:var(--s-card); border:1px solid var(--s-line); border-radius:var(--s-radius)}
+  .chart{display:flex; align-items:flex-end; gap:6px; height:170px; padding:16px; background:var(--s-card); border:1px solid var(--s-line); border-radius:var(--s-radius)}
+  .chart i{flex:1; border-radius:3px 3px 0 0; background:var(--s-brand); opacity:.8}
+  .figures{display:flex; flex-direction:column; gap:18px; min-height:120px}
+  .block{background:var(--s-card); border:1px solid var(--s-line); border-radius:var(--s-radius); overflow-x:auto}
+  .block > .split{padding:12px 16px; border-bottom:1px solid var(--s-line)}
+  .block.rows{overflow:visible}
+  .frame table{width:100%; border-collapse:collapse; white-space:nowrap}
+  .frame th, .frame td{padding:10px 14px; border-bottom:1px solid var(--s-line); text-align:left}
+  .frame th{font-size:12px; color:var(--s-dim); font-weight:600}
+  .frame td button{padding:5px 12px}
+  .frame tr.found td{background:color-mix(in srgb, var(--s-brand) 14%, transparent)}
+  .pill{display:inline-block; padding:2px 10px; border-radius:10px; background:color-mix(in srgb, var(--s-brand) 14%, transparent); font-size:12px}
+  .toolbar, .pages, .segmented{display:flex; flex-wrap:wrap; align-items:center; gap:6px}
+  .frame .pages button{min-width:38px; padding:6px 10px}
+  .frame .toolbar button.current, .frame .pages button.current, .frame .segmented button.current{background:var(--s-brand); border-color:var(--s-brand); color:var(--s-on-brand)}
+  .frame .back{align-self:flex-start}
+  @media (max-width:760px){
+    .app, .app.flip{grid-template:var(--s-head-height) 1fr / 1fr; grid-template-areas:'top' 'main'}
+    .app > aside{display:none; position:absolute; z-index:12; inset:0 auto 0 0; width:min(260px, 80%); box-shadow:8px 0 30px rgba(0,0,0,.3)}
+    .app.drawer > aside{display:flex}
+    .frame .burger{display:flex}
+    .search{flex:1; width:auto}
+    .user span{display:none}
+    .site > header nav, .site > main > aside{display:none}
+    .site > header{gap:12px}
+    .pair{grid-template-columns:1fr}
+    .hero{padding:22px}
+  }
   .mobile #bar{gap:8px; padding:0 8px}
   .mobile #counter, .mobile #notice, .mobile #bar button span{display:none}
   .mobile .screen{padding:10px}
@@ -227,6 +417,8 @@ let displayHz = null
 let firstPointerType = null
 let dirty = false
 let finished = false
+let examStart = null
+const examMinutes = 20
 
 
 const pointerCodes = {mouse: 0, touch: 1, pen: 2}
@@ -380,7 +572,8 @@ function environment() {
         pointerType: firstPointerType,
         coarse,
         maxTouchPoints: navigator.maxTouchPoints,
-        exportVersion: 3,
+        exportVersion: 4,
+        examMinutes,
         fingerprint,
     }
 }
@@ -439,38 +632,242 @@ function drawing() {
 }
 
 
-function identify() {
-    const [webglVendor, webglRenderer] = graphics()
-    const components = {
-        screen: [screen.width, screen.height],
-        colorDepth: screen.colorDepth,
-        devicePixelRatio,
-        hardwareConcurrency: navigator.hardwareConcurrency ?? null,
-        deviceMemory: navigator.deviceMemory ?? null,
-        platform: navigator.platform,
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        languages: [...navigator.languages],
-        maxTouchPoints: navigator.maxTouchPoints,
-        webglVendor,
-        webglRenderer,
-        canvas: drawing(),
+function scene() {
+    const canvas = Object.assign(document.createElement('canvas'), {width: 64, height: 64})
+    const gl = canvas.getContext('webgl', {preserveDrawingBuffer: true})
+    if (!gl) {
+        return null
     }
-    return {uuid: storedUuid(), hash: digest(JSON.stringify(components)), components}
+    const program = gl.createProgram()
+    const sources = [
+        [gl.VERTEX_SHADER, 'attribute vec2 p; attribute vec3 c; varying vec3 v; void main() { v = c; gl_Position = vec4(p, 0.0, 1.0); }'],
+        [gl.FRAGMENT_SHADER, 'precision mediump float; varying vec3 v; void main() { gl_FragColor = vec4(v * 0.9 + 0.05, 1.0); }'],
+    ]
+    for (const [type, source] of sources) {
+        const shader = gl.createShader(type)
+        gl.shaderSource(shader, source)
+        gl.compileShader(shader)
+        gl.attachShader(program, shader)
+    }
+    gl.linkProgram(program)
+    gl.useProgram(program)
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer())
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-0.9, -0.8, 1, 0.2, 0, 0.85, -0.6, 0, 1, 0.3, 0.1, 0.95, 0.2, 0.4, 1]), gl.STATIC_DRAW)
+    const position = gl.getAttribLocation(program, 'p')
+    const color = gl.getAttribLocation(program, 'c')
+    gl.enableVertexAttribArray(position)
+    gl.enableVertexAttribArray(color)
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 20, 0)
+    gl.vertexAttribPointer(color, 3, gl.FLOAT, false, 20, 8)
+    gl.clearColor(0.1, 0.2, 0.3, 1)
+    gl.clear(gl.COLOR_BUFFER_BIT)
+    gl.drawArrays(gl.TRIANGLES, 0, 3)
+    return gl
 }
 
 
-const fingerprint = identify()
+const glParameters = ['MAX_TEXTURE_SIZE', 'MAX_RENDERBUFFER_SIZE', 'MAX_VIEWPORT_DIMS', 'ALIASED_LINE_WIDTH_RANGE', 'ALIASED_POINT_SIZE_RANGE', 'MAX_VERTEX_ATTRIBS', 'MAX_VERTEX_UNIFORM_VECTORS', 'MAX_FRAGMENT_UNIFORM_VECTORS', 'MAX_VARYING_VECTORS', 'MAX_COMBINED_TEXTURE_IMAGE_UNITS', 'MAX_TEXTURE_IMAGE_UNITS', 'MAX_VERTEX_TEXTURE_IMAGE_UNITS', 'MAX_CUBE_MAP_TEXTURE_SIZE', 'RED_BITS', 'GREEN_BITS', 'BLUE_BITS', 'ALPHA_BITS', 'DEPTH_BITS', 'STENCIL_BITS', 'SUBPIXEL_BITS', 'SAMPLES', 'SAMPLE_BUFFERS', 'VERSION', 'SHADING_LANGUAGE_VERSION', 'VENDOR', 'RENDERER']
 
 
-function download() {
+function glDump(gl) {
+    const values = glParameters.map(name => [name, gl.getParameter(gl[name])])
+    for (const shader of ['VERTEX_SHADER', 'FRAGMENT_SHADER']) {
+        for (const precision of ['LOW_FLOAT', 'MEDIUM_FLOAT', 'HIGH_FLOAT', 'LOW_INT', 'MEDIUM_INT', 'HIGH_INT']) {
+            const format = gl.getShaderPrecisionFormat(gl[shader], gl[precision])
+            values.push([`${shader}.${precision}`, format && [format.rangeMin, format.rangeMax, format.precision]])
+        }
+    }
+    const anisotropy = gl.getExtension('EXT_texture_filter_anisotropic')
+    values.push(['MAX_TEXTURE_MAX_ANISOTROPY', anisotropy && gl.getParameter(anisotropy.MAX_TEXTURE_MAX_ANISOTROPY_EXT)])
+    return values.map(([name, value]) => [name, ArrayBuffer.isView(value) ? [...value] : value]).sort((a, b) => a[0] < b[0] ? -1 : 1)
+}
+
+
+async function audio() {
+    const Context = window.OfflineAudioContext ?? window.webkitOfflineAudioContext
+    if (!Context) {
+        return null
+    }
+    const context = new Context(1, 5000, 44100)
+    const oscillator = context.createOscillator()
+    oscillator.type = 'triangle'
+    oscillator.frequency.value = 10000
+    const compressor = context.createDynamicsCompressor()
+    for (const [name, value] of [['threshold', -50], ['knee', 40], ['ratio', 12], ['attack', 0], ['release', 0.25]]) {
+        compressor[name].value = value
+    }
+    oscillator.connect(compressor)
+    compressor.connect(context.destination)
+    oscillator.start(0)
+    const samples = (await context.startRendering()).getChannelData(0).slice(4500)
+    return {sum: Math.round(samples.reduce((sum, value) => sum + Math.abs(value), 0) * 1e6) / 1e6, hash: digest(samples.join(','))}
+}
+
+
+const fontNames = ['Arial', 'Arial Black', 'Arial Narrow', 'Bahnschrift', 'Book Antiqua', 'Bookman Old Style', 'Calibri', 'Cambria', 'Cambria Math', 'Candara', 'Century Gothic', 'Comic Sans MS', 'Consolas', 'Constantia', 'Corbel', 'Courier New', 'Ebrima', 'Franklin Gothic Medium', 'Gabriola', 'Gadugi', 'Garamond', 'Georgia', 'Impact', 'Leelawadee UI', 'Lucida Console', 'Lucida Sans Unicode', 'Malgun Gothic', 'Microsoft Sans Serif', 'MS Gothic', 'Palatino Linotype', 'Segoe Print', 'Segoe Script', 'Segoe UI', 'Sitka Text', 'Sylfaen', 'Tahoma', 'Times New Roman', 'Trebuchet MS', 'Verdana', 'Yu Gothic', 'American Typewriter', 'Andale Mono', 'Avenir', 'Avenir Next', 'Baskerville', 'Chalkboard', 'Cochin', 'Copperplate', 'Didot', 'Futura', 'Geneva', 'Gill Sans', 'Helvetica', 'Helvetica Neue', 'Hoefler Text', 'Lucida Grande', 'Menlo', 'Monaco', 'Optima', 'Palatino', 'PT Sans', 'Skia', 'DejaVu Sans', 'DejaVu Serif', 'Liberation Sans', 'Liberation Serif', 'Noto Sans', 'Ubuntu', 'Cantarell', 'Droid Sans', 'Roboto']
+
+
+function fonts() {
+    const context = document.createElement('canvas').getContext('2d')
+    const size = family => {
+        context.font = `72px ${family}`
+        const metrics = context.measureText('mmmmmmmmmmlliWW@#йЖ')
+        return `${metrics.width}/${metrics.actualBoundingBoxAscent}/${metrics.actualBoundingBoxDescent}`
+    }
+    const bases = ['monospace', 'serif', 'sans-serif']
+    const fallback = bases.map(size)
+    return fontNames.filter(name => bases.some((base, index) => size(`'${name}', ${base}`) !== fallback[index]))
+}
+
+
+function voices() {
+    if (!window.speechSynthesis) {
+        return null
+    }
+    const list = () => speechSynthesis.getVoices().map(voice => `${voice.name}|${voice.lang}|${voice.localService}`).sort()
+    return new Promise(resolve => {
+        const finish = () => resolve(digest(list().join(';')))
+        if (list().length) {
+            finish()
+            return
+        }
+        speechSynthesis.addEventListener('voiceschanged', finish, {once: true})
+        setTimeout(finish, 2000)
+    })
+}
+
+
+function mathDigest() {
+    const values = [Math.tan(-1e300), Math.sin(-1e300), Math.cos(10.000000000123), Math.sinh(1), Math.cosh(1), Math.tanh(1), Math.asinh(1), Math.acosh(1e300), Math.atanh(0.5), Math.expm1(1), Math.log1p(10), Math.cbrt(100), Math.acos(0.123124234234234242), Math.asin(0.123124234234234242), Math.atan(2), Math.atan2(0.04, 0.7), Math.exp(1), Math.log(10), Math.log2(3), Math.log10(7), Math.pow(Math.PI, -100), Math.hypot(3e-200, 4e-200), Math.sqrt(2) ** Math.E]
+    return digest(values.join(','))
+}
+
+
+function mediaQueries() {
+    const queries = {
+        colorGamut: ['color-gamut', ['rec2020', 'p3', 'srgb']],
+        dynamicRange: ['dynamic-range', ['high', 'standard']],
+        prefersColorScheme: ['prefers-color-scheme', ['dark', 'light']],
+        prefersReducedMotion: ['prefers-reduced-motion', ['reduce', 'no-preference']],
+        forcedColors: ['forced-colors', ['active', 'none']],
+        invertedColors: ['inverted-colors', ['inverted', 'none']],
+        pointer: ['pointer', ['fine', 'coarse', 'none']],
+        hover: ['hover', ['hover', 'none']],
+        anyPointer: ['any-pointer', ['fine', 'coarse', 'none']],
+        anyHover: ['any-hover', ['hover', 'none']],
+    }
+    return Object.fromEntries(Object.entries(queries).map(([key, [feature, values]]) => [key, values.find(value => matchMedia(`(${feature}: ${value})`).matches) ?? null]))
+}
+
+
+function intl() {
+    const options = Intl.DateTimeFormat().resolvedOptions()
+    const date = new Date(Date.UTC(2020, 0, 2, 3, 4, 5))
+    const samples = [
+        new Intl.NumberFormat().format(1234567.891),
+        new Intl.NumberFormat(undefined, {style: 'currency', currency: 'USD'}).format(-1234.5),
+        new Intl.NumberFormat(undefined, {style: 'percent'}).format(0.256),
+        new Intl.DateTimeFormat(undefined, {dateStyle: 'full', timeStyle: 'long', timeZone: 'UTC'}).format(date),
+        new Intl.DateTimeFormat().format(date),
+        date.toLocaleString(),
+    ]
+    return {locale: options.locale, numberingSystem: options.numberingSystem, calendar: options.calendar, hash: digest(samples.join('|'))}
+}
+
+
+async function keyboardLayout() {
+    if (!navigator.keyboard?.getLayoutMap) {
+        return null
+    }
+    const layout = await navigator.keyboard.getLayoutMap()
+    return digest([...layout.entries()].sort().join(';'))
+}
+
+
+async function storageQuota() {
+    if (!navigator.storage?.estimate) {
+        return null
+    }
+    return Math.round((await navigator.storage.estimate()).quota / 2 ** 30)
+}
+
+
+async function userAgentData() {
+    if (!navigator.userAgentData?.getHighEntropyValues) {
+        return null
+    }
+    return navigator.userAgentData.getHighEntropyValues(['architecture', 'bitness', 'model', 'platformVersion', 'fullVersionList', 'wow64'])
+}
+
+
+function probe(compute) {
+    const timeout = new Promise(resolve => setTimeout(resolve, 3000, null))
+    return Promise.race([Promise.resolve().then(compute), timeout]).catch(() => null)
+}
+
+
+async function identify() {
+    const [webglVendor, webglRenderer] = await probe(graphics) ?? [null, null]
+    const gl = await probe(scene)
+    const probes = {
+        screen: () => [screen.width, screen.height],
+        colorDepth: () => screen.colorDepth,
+        devicePixelRatio: () => devicePixelRatio,
+        hardwareConcurrency: () => navigator.hardwareConcurrency ?? null,
+        deviceMemory: () => navigator.deviceMemory ?? null,
+        platform: () => navigator.platform,
+        timezone: () => Intl.DateTimeFormat().resolvedOptions().timeZone,
+        languages: () => [...navigator.languages],
+        maxTouchPoints: () => navigator.maxTouchPoints,
+        webglVendor: () => webglVendor,
+        webglRenderer: () => webglRenderer,
+        canvas: drawing,
+        audio,
+        webglImage: () => {
+            const pixels = new Uint8Array(64 * 64 * 4)
+            gl.readPixels(0, 0, 64, 64, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
+            return digest(pixels.join(','))
+        },
+        webglParams: () => digest(JSON.stringify(glDump(gl))),
+        webglExtensions: () => digest((gl.getSupportedExtensions() ?? []).sort().join(',')),
+        fonts,
+        voices,
+        math: mathDigest,
+        uaData: userAgentData,
+        media: mediaQueries,
+        intl,
+        storageQuota,
+        keyboardLayout,
+        pdfViewer: () => navigator.pdfViewerEnabled ?? null,
+        plugins: () => digest([...navigator.plugins].map(plugin => plugin.name).join(',')),
+        screenFrame: () => [screen.availLeft ?? null, screen.availTop ?? null, outerWidth - innerWidth, outerHeight - innerHeight],
+        touchSupport: () => ({maxTouchPoints: navigator.maxTouchPoints, touchEvent: 'ontouchstart' in window}),
+    }
+    const values = await Promise.all(Object.values(probes).map(probe))
+    gl?.getExtension('WEBGL_lose_context')?.loseContext()
+    const components = Object.fromEntries(Object.keys(probes).map((key, index) => [key, values[index] ?? null]))
+    return {hash: digest(JSON.stringify(components)), components}
+}
+
+
+const fingerprint = {uuid: storedUuid(), hash: null, components: null}
+const fingerprinted = identify().then(result => Object.assign(fingerprint, result))
+const gzipped = 'CompressionStream' in window
+const reportName = `exam-report-….json${gzipped ? '.gz' : ''}`
+
+
+async function download() {
     if (!finished) {
         return
     }
+    await fingerprinted
     const head = JSON.stringify({version: 1, kind: 'cursory-dataset', exported: new Date().toISOString(), env: environment()})
     const parts = [head.slice(0, -1), ',"raw":', ...raw.json(), ',"frames":', ...frames.json(), ',"events":', JSON.stringify(events), ',"tasks":', JSON.stringify(tasks), ',"touches":', ...touches.json(), ',"touchEvents":', ...touchEvents.json(), '}']
-    const url = URL.createObjectURL(new Blob(parts, {type: 'application/json'}))
+    const json = new Blob(parts, {type: 'application/json'})
+    const file = gzipped ? await new Response(json.stream().pipeThrough(new CompressionStream('gzip'))).blob() : json
+    const url = URL.createObjectURL(file)
     const stamp = new Date().toISOString().slice(0, 19).replace(/[-:]/g, '').replace('T', '-')
-    Object.assign(document.createElement('a'), {href: url, download: `exam-report-${stamp}.json`}).click()
+    Object.assign(document.createElement('a'), {href: url, download: `exam-report-${stamp}.json${gzipped ? '.gz' : ''}`}).click()
     setTimeout(() => URL.revokeObjectURL(url), 60000)
     dirty = false
 }
@@ -513,9 +910,9 @@ function card(markup, steady = false) {
 }
 
 
-const layoutSelector = '#bar, #bar button, #bar a, .screen, .page, .card, h1, h2, h3, p, .banner, .scroller, .scroller > *, .post, .phrase, .tip, .form > span, .chip, input, textarea, button, .dropdown .current, .options, .options > div, .menubar, .menubar li > span, .list, .list .item, .slider, .handle, .slot, .cargo, .target, .countdown, .spinner'
-const textSelector = 'h1, h2, h3, p, .banner, .phrase, .tip, .form > span, .countdown'
-const scrollSelector = '.screen, .list, .options, .scroller'
+const layoutSelector = '#bar, #bar button, #bar a, .screen, .page, .card, h1, h2, h3, p, .banner, .scroller, .scroller > *, .post, .phrase, .tip, .form > span, .chip, input, textarea, button, .dropdown .current, .options, .options > div, .menubar, .menubar li > span, .list, .list .item, .slider, .handle, .slot, .cargo, .target, .countdown, .spinner, .web, .brief, .frame, .site > header, .site > main, .site > footer, .sheet, .hero, .offer, .frame [data-mark], .frame label, .frame td, .frame th, .backdrop, .modal, .toast, .cookie, .mail, .tooltip, .skeleton, .app > aside, .app > header, .app > main, .pop, .stat, .chart'
+const textSelector = 'h1, h2, h3, p, .banner, .phrase, .tip, .form > span, .countdown, .brief, .frame label, .frame td, .toast, .mail, .tooltip'
+const scrollSelector = '.screen, .list, .options, .scroller, .site, .app > main, .backdrop'
 let layoutPending = false
 let lastLayout = null
 
@@ -855,8 +1252,9 @@ function setup() {
         record.meta = {setup: true}
         const box = card(`
             <h2>Онлайн-экзамен</h2>
-            <p>Около 15 минут простых заданий: клики по целям, форма, чтение, ожидание, меню, много прокрутки, перетаскивание. Работайте в обычном темпе, как на любом сайте: не нужно спешить или целиться идеально.</p>
-            <p class="hint">Введённый текст не сохраняется. Ничего никуда не отправляется: в конце вы сами скачаете отчёт. Скачать его можно только после последнего задания.</p>
+            <p>20 минут простых заданий: клики по целям, формы, чтение, ожидание, меню, прокрутка, перетаскивание и действия на сайтах — регистрация, вход, панель управления. Работайте в обычном темпе, как на любом сайте: не нужно спешить или целиться идеально.</p>
+            <p class="hint">Если основные задания закончатся раньше, дальше пойдут дополнительные. Отчёт можно скачать, когда пройдёт 20 минут и закончится текущий блок.</p>
+            <p class="hint">В формах вводите выдуманные данные: имя, почту, пароль — любые. Введённый текст не сохраняется. Ничего никуда не отправляется: в конце вы сами скачаете отчёт.</p>
             <p class="hint">Если отвлеклись — «↻ задание заново» вверху.${document.fullscreenEnabled ? ' Вышли из полноэкранного режима — верните кнопкой «⛶».' : ''}</p>
             <div class="form">
                 <span>Чем вы пользуетесь</span><div class="choices">${chips('device', devices, 'radio', either(null, 'touchscreen'))}</div>
@@ -1586,120 +1984,1405 @@ function typing() {
 }
 
 
+const brands = [['Облакс', 'oblaks'], ['Квартон', 'kvarton'], ['Лумо', 'lumo'], ['Вектрикс', 'vektriks'], ['Фьордо', 'fjordo'], ['Каштаныч', 'kashtanych'], ['Орбитон', 'orbiton'], ['Тундрикс', 'tundriks'], ['Мирро', 'mirro'], ['Полярикс', 'polyariks'], ['Сотка', 'sotka'], ['Гранатис', 'granatis'], ['Кедрово', 'kedrovo'], ['Пиксела', 'piksela'], ['Брусло', 'bruslo'], ['Зефирка', 'zefirka'], ['Нордика', 'nordika'], ['Вереско', 'veresko']]
+const fontStacks = ['system-ui, sans-serif', 'Arial, Helvetica, sans-serif', 'Georgia, serif', 'Verdana, Geneva, sans-serif', "'Trebuchet MS', sans-serif", "'Segoe UI', Roboto, sans-serif"]
+const navLinks = ['Каталог', 'Доставка', 'О нас', 'Блог', 'Акции', 'Помощь', 'Контакты', 'Тарифы', 'Магазины', 'Новости']
+const footerLinks = ['Помощь', 'Конфиденциальность', 'Условия', 'Вакансии', 'Партнёрам', 'Контакты', 'Карта сайта']
+const heroes = [
+    ['Всё для дома с доставкой за день', 'Тысячи товаров в наличии, бесплатная доставка от 2000 ₽.'],
+    ['Облачный диск для всей семьи', 'Храните фото и документы в одном месте, 20 ГБ бесплатно.'],
+    ['Онлайн-курсы с наставником', 'Учитесь в своём темпе и получайте обратную связь от практиков.'],
+    ['Билеты в кино и на концерты', 'Выбирайте места на схеме зала и платите без комиссии.'],
+    ['Свежие продукты к вашей двери', 'Фермерские овощи, выпечка и молочные продукты каждый день.'],
+    ['Жильё посуточно в любом городе', 'Квартиры и дома в 300 городах, проверенные хозяева.'],
+]
+const goods = ['Чайник', 'Настольная лампа', 'Рюкзак', 'Плед', 'Кружка', 'Наушники', 'Кофемолка', 'Зонт', 'Термос', 'Подушка', 'Сковорода', 'Набор полотенец']
+const slogans = ['Сервис, которым приятно пользоваться.', 'Больше двух миллионов довольных клиентов.', 'Работаем без выходных с 2012 года.', 'Всё нужное — в одном аккаунте.', 'Быстро, честно и без лишних шагов.']
+const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+const providers = ['КлючID', 'Облако ID', 'Портал Плюс', 'Связка', 'Мой Профиль']
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+
+function theme() {
+    const hue = integer(0, 359)
+    const dark = Math.random() < 0.25
+    const colored = Math.random() < 0.3
+    const card = dark ? `hsl(${hue} 14% 13%)` : '#fff'
+    const vars = {
+        brand: `hsl(${hue} ${integer(55, 85)}% ${dark ? integer(58, 66) : integer(36, 46)}%)`,
+        'on-brand': dark ? '#0b0f14' : '#fff',
+        bg: dark ? `hsl(${hue} 16% 9%)` : pick(['#fff', `hsl(${hue} 35% 97%)`, '#f3f4f6']),
+        card,
+        field: dark ? `hsl(${hue} 14% 17%)` : '#fff',
+        text: dark ? '#d5dbe3' : '#2b3038',
+        strong: dark ? '#fff' : '#111418',
+        dim: dark ? '#8d96a5' : '#6b7280',
+        line: dark ? `hsl(${hue} 12% 24%)` : '#d9dee5',
+        head: colored ? 'var(--s-brand)' : card,
+        'head-text': colored ? 'var(--s-on-brand)' : 'var(--s-text)',
+        radius: `${pick([0, 3, 6, 8, 12])}px`,
+        font: pick(fontStacks),
+        'head-height': `${integer(52, 72)}px`,
+        width: `${integer(340, 480)}px`,
+        max: `${integer(900, 1240)}px`,
+        side: `${integer(180, 250)}px`,
+    }
+    const [name, domain] = pick(brands)
+    return {
+        name,
+        domain,
+        vars: Object.entries(vars).map(([key, value]) => `--s-${key}:${value}`).join(';'),
+        header: `${pick(['nav-left', 'nav-center', 'nav-right', 'logo-center'])}${colored ? ' colored' : ''}`,
+        colored,
+        layout: pick(['center', 'top', 'left', 'right']),
+        nav: sample(navLinks, integer(3, 5)),
+        account: shuffle(['Войти', 'Регистрация']),
+        footer: sample(footerLinks, 4),
+        since: integer(2008, 2022),
+        hero: pick(heroes),
+        cta: pick(['Попробовать', 'Начать', 'Подробнее', 'Смотреть каталог']),
+        slogan: pick(slogans),
+        stretch: Math.random() < 0.5,
+        forgot: pick(['label', 'row', 'below']),
+        okFirst: Math.random() < 0.25,
+        corner: pick(['top-right', 'bottom-right', 'bottom-left', 'top']),
+        flip: Math.random() < 0.2,
+    }
+}
+
+
+function browse(look, frame, body, wide = false) {
+    const header = `<header class="${look.header}"><a class="logo" data-mark="${look.name}"><i>${look.name[0]}</i>${look.name}</a><nav>${look.nav.map(link => `<a data-mark="${link}">${link}</a>`).join('')}</nav><div class="account">${look.account.map(label => `<button data-mark="${label}"${label === 'Регистрация' ? ' class="primary"' : ''}>${label}</button>`).join('')}</div></header>`
+    const aside = wide || look.layout === 'center' || look.layout === 'top' ? '' : `<aside><h2>${look.name}</h2><p>${look.slogan}</p></aside>`
+    frame.innerHTML = `<div class="site">${header}<main class="${wide ? 'wide' : look.layout}">${body}${aside}</main><footer><span>© ${look.name}, ${look.since}–2026</span>${look.footer.map(link => `<a data-mark="${link}">${link}</a>`).join('')}</footer></div>`
+    return frame.querySelector('main')
+}
+
+
+function web(kind, step, instruction, look, setup) {
+    return task(kind, instruction, ({record, signal, done}) => {
+        record.meta = {step, site: look.name, loads: []}
+        const view = add(`<div class="web"><div class="brief">${instruction}</div><div class="frame" style="${look.vars}"></div></div>`)
+        const [brief, frame] = view.children
+        frame.addEventListener('click', e => {
+            const toggle = e.target.closest('.switch, .eye')
+            if (toggle?.classList.contains('eye')) {
+                const input = toggle.previousElementSibling
+                input.type = input.type === 'password' ? 'text' : 'password'
+                toggle.classList.toggle('shown', input.type === 'text')
+                record.meta.reveals = (record.meta.reveals ?? 0) + 1
+            } else if (toggle) {
+                toggle.classList.toggle('checked')
+            }
+        })
+        const say = text => {
+            brief.textContent = text
+        }
+        setup({record, signal, done, frame, say})
+    })
+}
+
+
+function delay(record, signal, show, list = record.meta.loads) {
+    const start = ms(performance.now())
+    later(signal, uniform(500, 5000), () => {
+        if (show() !== false) {
+            list.push([start, ms(performance.now())])
+        }
+    })
+}
+
+
+const skeleton = () => `<div class="skeleton">${Array.from({length: integer(4, 9)}, () => `<i style="width:${integer(30, 100)}%"></i>`).join('')}</div>`
+
+
+function loadInto(record, signal, container, render) {
+    container.innerHTML = Math.random() < 0.4 ? '<div class="spinner"></div>' : skeleton()
+    delay(record, signal, render)
+}
+
+
+function busy(record, signal, button, then, leave = false) {
+    const scope = button.closest('.sheet, .modal, .pop, .drop') ?? button
+    const controls = [...scope.querySelectorAll('input, button')].filter(control => !control.disabled)
+    for (const control of [button, ...controls]) {
+        control.disabled = true
+    }
+    button.classList.add('busy')
+    const main = button.closest('.site > main')
+    if (leave && main && Math.random() < 0.5) {
+        main.className = 'wide'
+        main.innerHTML = skeleton()
+    }
+    delay(record, signal, () => {
+        for (const control of [button, ...controls]) {
+            control.disabled = false
+        }
+        button.classList.remove('busy')
+        then()
+    })
+}
+
+
+const field = (label, mark, attributes = '') => `<div class="field"><span>${label}</span><input data-mark="${mark}" autocomplete="off" spellcheck="false" ${attributes}></div>`
+const secret = (label, mark) => `<div class="field">${label ? `<span>${label}</span>` : ''}<div class="secret"><input type="password" data-mark="${mark}" autocomplete="new-password" autocapitalize="off" spellcheck="false"><button class="eye" data-mark="Показать пароль">👁</button></div></div>`
+const tick = (text, mark, type = 'checkbox', name = '') => `<label class="tick" data-mark="${mark}"><input type="${type}"${name ? ` name="${name}"` : ''}>${text}</label>`
+const sheet = (look, body) => `<div class="sheet${look.stretch ? ' stretch' : ''}">${body}</div>`
+
+
+function verify(checks, error) {
+    for (const [element, ok] of checks) {
+        element.classList.toggle('wrong', !ok)
+    }
+    const failed = checks.find(([, ok]) => !ok)
+    error.textContent = failed?.[2] ?? ''
+    return !failed
+}
+
+
+function toast(frame, look, signal, text) {
+    const element = frame.appendChild(html(`<div class="toast ${look.corner}"><span>${text}</span><button class="close" data-mark="Закрыть уведомление">×</button></div>`))
+    element.lastElementChild.addEventListener('click', () => element.remove())
+    later(signal, 4000, () => element.remove())
+}
+
+
+function confirmBox(frame, look, title, text, ok, cancelled, confirmed) {
+    const buttons = ['<button data-mark="Отмена">Отмена</button>', `<button class="primary" data-mark="${ok}">${ok}</button>`]
+    const dialog = frame.appendChild(html(`<div class="backdrop"><div class="modal"><button class="close" data-mark="Закрыть окно">×</button><h2>${title}</h2><p class="muted">${text}</p><div class="buttons">${(look.okFirst ? buttons.reverse() : buttons).join('')}</div></div></div>`))
+    const close = () => dialog.remove()
+    dialog.addEventListener('click', e => {
+        const button = e.target.closest('button')
+        if (dialog.querySelector('.busy')) {
+            return
+        }
+        if (button?.classList.contains('primary')) {
+            confirmed(button, close)
+        } else if (button || e.target === dialog) {
+            close()
+            cancelled()
+        }
+    })
+}
+
+
+const cookieGoals = [['accept', 'примите cookie кнопкой «Принять все»'], ['necessary', 'разрешите только необходимые cookie'], ['settings', 'откройте настройки cookie, выключите «Маркетинг» и сохраните выбор']]
+
+
+function cookieBanner(record, frame, settle) {
+    const style = pick(['bar', 'box', 'modal'])
+    const choices = shuffle([['Принять все', 'accept'], ['Только необходимые', 'necessary'], ['Настройки', 'settings']])
+    const body = `<div><h2>Мы используем cookie</h2><p class="muted">Они помогают сайту работать и подбирать предложения. Подробнее — в <a data-mark="Политика cookie">политике cookie</a>.</p></div><div class="buttons">${choices.map(([label, choice]) => `<button data-choice="${choice}" data-mark="${label}"${choice === 'accept' ? ' class="primary"' : ''}>${label}</button>`).join('')}</div>`
+    const banner = frame.appendChild(html(style === 'modal' ? `<div class="backdrop"><div class="modal">${body}</div></div>` : `<div class="cookie ${style} ${pick(['left', 'right'])}">${body}</div>`))
+    record.meta.cookieShown = ms(performance.now())
+    mark(record, banner.querySelectorAll('button'))
+    banner.addEventListener('click', e => {
+        const choice = e.target.closest('[data-choice]')?.dataset.choice
+        if (!choice) {
+            return
+        }
+        banner.remove()
+        if (choice === 'settings') {
+            cookieSettings(record, frame, settle)
+        } else {
+            record.meta.cookieChoice = choice
+            settle(choice, null)
+        }
+    })
+}
+
+
+function cookieSettings(record, frame, settle) {
+    const kinds = [['Необходимые', true], ['Аналитика', Math.random() < 0.5], ['Маркетинг', true], ['Персонализация', Math.random() < 0.5]]
+    const dialog = frame.appendChild(html(`<div class="backdrop"><div class="modal"><button class="close" data-mark="Закрыть настройки">×</button><h2>Настройки cookie</h2>${kinds.map(([label, on], index) => `<div class="setting"><span>${label}</span><button class="switch${on ? ' checked' : ''}" data-mark="${label}"${index ? '' : ' disabled'}></button></div>`).join('')}<div class="buttons"><button class="primary" data-mark="Сохранить выбор">Сохранить выбор</button></div></div></div>`))
+    mark(record, dialog.querySelectorAll('[data-mark]'))
+    dialog.addEventListener('click', e => {
+        if (e.target.closest('.close')) {
+            dialog.remove()
+            cookieBanner(record, frame, settle)
+        } else if (e.target.closest('.primary')) {
+            const marketing = dialog.querySelectorAll('.switch')[2].classList.contains('checked')
+            dialog.remove()
+            record.meta.cookieChoice = 'settings'
+            settle('settings', marketing)
+        }
+    })
+}
+
+
+const offers = [['Скидка 10% на первый заказ', 'Оставьте почту — пришлём промокод.'], ['Не пропустите распродажу', 'Подпишитесь на рассылку и узнавайте об акциях первыми.'], ['Подарок за подписку', 'Бесплатная доставка первого заказа для подписчиков.']]
+
+
+function promo(record, frame, close) {
+    const [title, text] = pick(offers)
+    const cross = `close${Math.random() < 0.8 ? '' : ' left'}${Math.random() < 0.3 ? ' small' : ''}`
+    const dialog = frame.appendChild(html(`<div class="backdrop"><div class="modal"><button class="${cross}" data-mark="×">×</button><h2>${title}</h2><p class="muted">${text}</p>${field('Электронная почта', 'Email подписки', 'type="email"')}<button class="primary" data-mark="Подписаться">Подписаться</button><a class="link" data-mark="Нет, спасибо">Нет, спасибо</a></div></div>`))
+    record.meta.shown = ms(performance.now())
+    mark(record, dialog.querySelectorAll('[data-mark]'))
+    dialog.addEventListener('click', e => {
+        const how = e.target === dialog ? 'backdrop' : e.target.closest('.close') ? 'cross' : e.target.closest('.link') ? 'decline' : e.target.closest('.primary') ? 'subscribe' : null
+        if (how) {
+            dialog.remove()
+            record.meta.closed = how
+            close()
+        }
+    })
+}
+
+
+const symbols = ['★', '●', '▲', '■', '♥', '◆']
+
+
+function puzzle(record, frame, solved, cancelled) {
+    const size = pick([3, 4])
+    const goal = pick(symbols)
+    const others = symbols.filter(symbol => symbol !== goal)
+    const dialog = frame.appendChild(html(`<div class="backdrop"><div class="modal"><button class="close" data-mark="Закрыть проверку">×</button><h2>Выберите все клетки с ${goal}</h2><div class="cells" style="grid-template-columns:repeat(${size}, 1fr)"></div><p class="error"></p><div class="buttons"><button class="primary" data-mark="Подтвердить">Подтвердить</button></div></div></div>`))
+    const grid = dialog.querySelector('.cells')
+    const fill = () => {
+        const count = integer(2, size + 1)
+        const cells = shuffle([...Array(count).fill(goal), ...Array.from({length: size * size - count}, () => pick(others))])
+        grid.innerHTML = cells.map((symbol, index) => `<button data-symbol="${symbol}" data-mark="Клетка ${index + 1}">${symbol}</button>`).join('')
+        mark(record, grid.children)
+    }
+    fill()
+    record.meta.puzzle = {size, errors: 0}
+    dialog.addEventListener('click', e => {
+        const cell = e.target.closest('[data-symbol]')
+        if (cell) {
+            cell.classList.toggle('picked')
+        } else if (e.target.closest('.close')) {
+            dialog.remove()
+            cancelled()
+        } else if (e.target.closest('.primary')) {
+            if ([...grid.children].every(button => button.classList.contains('picked') === (button.dataset.symbol === goal))) {
+                dialog.remove()
+                solved()
+            } else {
+                record.meta.puzzle.errors++
+                dialog.querySelector('.error').textContent = 'Не совсем. Попробуйте ещё раз.'
+                fill()
+            }
+        }
+    })
+}
+
+
+function robotCheck(record, signal, frame, slot, challenge) {
+    const element = html(`<div class="robot"><button class="box" data-mark="Я не робот"></button><span>Я не робот</span><small>${pick(['АнтиБот', 'Страж', 'Барьер'])}<br>защита</small></div>`)
+    slot.replaceWith(element)
+    const box = element.firstElementChild
+    let state = 'idle'
+    const pass = () => {
+        state = 'passed'
+        box.classList.add('passed')
+        box.textContent = '✓'
+    }
+    box.addEventListener('click', () => {
+        if (state !== 'idle') {
+            return
+        }
+        state = 'checking'
+        box.innerHTML = '<div class="spinner"></div>'
+        delay(record, signal, () => {
+            if (!challenge) {
+                pass()
+                return
+            }
+            box.innerHTML = ''
+            puzzle(record, frame, pass, () => {
+                state = 'idle'
+            })
+        })
+    })
+    return {element, passed: () => state === 'passed'}
+}
+
+
+function showcase(look) {
+    const [title, text] = look.hero
+    return `<section class="hero"><h1>${title}</h1><p>${text}</p><button class="primary" data-mark="${look.cta}">${look.cta}</button></section><h2>Популярное</h2><div class="cards">${sample(goods, integer(4, 8)).map(name => `<div class="offer"><div class="pic"></div><b>${name}</b><span class="muted">${integer(5, 90) * 100 - 10} ₽</span><button data-mark="В корзину">В корзину</button></div>`).join('')}</div>`
+}
+
+
+function landing(kind, look, goal) {
+    const cookie = Math.random() < 0.6 ? pick(cookieGoals) : null
+    return web(kind, 'landing', `Сайт «${look.name}»: ${cookie ? `${cookie[1]}, затем ` : ''}нажмите «${goal}» вверху страницы`, look, ({record, signal, done, frame}) => {
+        record.meta.cookie = cookie?.[0] ?? null
+        const main = browse(look, frame, skeleton(), true)
+        const button = frame.querySelector(`header [data-mark="${goal}"]`)
+        mark(record, [button])
+        button.addEventListener('click', () => busy(record, signal, button, done, true))
+        delay(record, signal, () => {
+            main.innerHTML = showcase(look)
+            if (cookie) {
+                later(signal, uniform(300, 1500), () => cookieBanner(record, frame, () => {}))
+            }
+        })
+    })
+}
+
+
+function signupPage(look, step, instruction, body, checks, taken = null) {
+    return web('signup', step, instruction, look, ({record, signal, done, frame, say}) => {
+        Object.assign(record.meta, {submits: 0, errors: 0})
+        const main = browse(look, frame, sheet(look, `${body}<p class="error"></p><button class="primary" data-mark="Далее">Далее</button>`))
+        const page = main.querySelector('.sheet')
+        const extras = {}
+        if (page.querySelector('.month')) {
+            extras.month = dropdown('Месяц', monthNames, signal)
+            page.querySelector('.month').replaceWith(extras.month)
+        }
+        if (page.querySelector('.gender')) {
+            extras.gender = dropdown('Пол', ['Мужской', 'Женский'], signal)
+            page.querySelector('.gender').replaceWith(extras.gender)
+        }
+        if (page.querySelector('.robot-slot')) {
+            extras.robot = robotCheck(record, signal, frame, page.querySelector('.robot-slot'), Math.random() < 0.4)
+        }
+        mark(record, page.querySelectorAll('[data-mark]'))
+        const input = name => page.querySelector(`input[data-mark="${name}"]`)
+        const button = page.querySelector('button.primary')
+        const error = page.querySelector('.error')
+        let rejected = taken === null ? undefined : null
+        button.addEventListener('click', () => {
+            record.meta.submits++
+            const list = checks(input, extras, page)
+            if (rejected) {
+                list.unshift([rejected[0], rejected[0].value !== rejected[1], taken])
+            }
+            if (!verify(list, error)) {
+                record.meta.errors++
+                return
+            }
+            const reject = rejected === null
+            busy(record, signal, button, () => {
+                if (!reject) {
+                    done()
+                    return
+                }
+                const element = page.querySelector('input')
+                rejected = [element, element.value]
+                record.meta.rejected = true
+                verify([[element, false, taken]], error)
+                say('Сайт ответил, что это имя занято: придумайте другое и снова нажмите «Далее»')
+            }, !reject)
+        })
+    })
+}
+
+
+async function signup() {
+    const look = theme()
+    const filled = (input, ...names) => names.map(name => [input(name), input(name).value.trim() !== '', 'Заполните все поля'])
+    if (Math.random() < 0.6) {
+        await landing('signup', look, 'Регистрация')
+    }
+    await signupPage(look, 'name', 'Регистрация: введите выдуманные имя и фамилию и нажмите «Далее»', `<span class="muted">Шаг 1 из 4</span><h1>Как вас зовут?</h1>${Math.random() < 0.5 ? `<div class="pair">${field('Имя', 'Имя')}${field('Фамилия', 'Фамилия')}</div>` : `${field('Имя', 'Имя')}${field('Фамилия', 'Фамилия')}`}`, input => filled(input, 'Имя', 'Фамилия'))
+    await signupPage(look, 'birth', 'Регистрация: укажите любую дату рождения (день, месяц из списка, год), пол и нажмите «Далее»', `<span class="muted">Шаг 2 из 4</span><h1>Дата рождения и пол</h1><div class="field"><span>Дата рождения</span><div class="date"><input data-mark="День" placeholder="ДД" inputmode="numeric" maxlength="2" autocomplete="off"><div class="month"></div><input data-mark="Год" placeholder="ГГГГ" inputmode="numeric" maxlength="4" autocomplete="off"></div></div><div class="field"><span>Пол</span>${Math.random() < 0.5 ? '<div class="gender"></div>' : `<div class="ticks">${tick('Мужской', 'Мужской', 'radio', 'gender')}${tick('Женский', 'Женский', 'radio', 'gender')}</div>`}</div>`, (input, {month, gender}, page) => {
+        const day = Number(input('День').value)
+        const year = Number(input('Год').value)
+        const sex = gender ?? page.querySelector('.ticks')
+        return [
+            [input('День'), Number.isInteger(day) && day >= 1 && day <= 31, 'Проверьте день рождения'],
+            [month, Boolean(month.dataset.value), 'Выберите месяц'],
+            [input('Год'), year >= 1920 && year <= 2012, 'Год рождения — от 1920 до 2012'],
+            [sex, gender ? Boolean(gender.dataset.value) : Boolean(page.querySelector('input:checked')), 'Укажите пол'],
+        ]
+    })
+    await signupPage(look, 'username', `Регистрация: придумайте любое имя для почты на ${look.domain}.mail (латиницей) и нажмите «Далее»`, `<span class="muted">Шаг 3 из 4</span><h1>Адрес почты</h1><p class="muted">Это будет ваш адрес и логин для входа.</p><div class="field"><span>Имя пользователя</span><div class="suffix"><input data-mark="Имя пользователя" autocomplete="off" autocapitalize="off" spellcheck="false"><span>@${look.domain}.mail</span></div></div>`, input => [[input('Имя пользователя'), /^[a-z0-9._-]{3,}$/i.test(input('Имя пользователя').value.trim()), 'Не меньше 3 символов: латинские буквы, цифры, точка']], Math.random() < 0.3 ? 'Это имя уже занято, придумайте другое' : null)
+    await signupPage(look, 'password', 'Регистрация: придумайте любой пароль (от 6 символов), повторите его, примите условия и нажмите «Далее»', `<span class="muted">Шаг 4 из 4</span><h1>Пароль</h1>${secret('Пароль', 'Пароль')}${secret('Повторите пароль', 'Повтор пароля')}${Math.random() < 0.3 ? '<div class="robot-slot"></div>' : ''}${tick('Я принимаю <a data-mark="Условия">условия использования</a>', 'Принимаю условия')}`, (input, {robot}, page) => [
+        [input('Пароль'), input('Пароль').value.length >= 6, 'Пароль — не короче 6 символов'],
+        [input('Повтор пароля'), input('Повтор пароля').value === input('Пароль').value, 'Пароли не совпадают'],
+        ...robot ? [[robot.element, robot.passed(), 'Подтвердите, что вы не робот']] : [],
+        [page.querySelector('.tick'), page.querySelector('.tick input').checked, 'Нужно принять условия'],
+    ])
+    await signupPage(look, 'success', 'Регистрация завершена: нажмите «Далее»', `<div class="done-mark">✓</div><h1>Регистрация завершена</h1><p class="muted">Добро пожаловать в ${look.name}! Аккаунт готов.</p>`, () => [])
+}
+
+
+const providerButton = (name, label) => `<button class="provider" data-provider="${name}" data-mark="${name}"><i style="background:hsl(${providers.indexOf(name) * 67} 60% 45%)">${name[0]}</i>${label}</button>`
+
+
+function loginSheet(look, extra = '') {
+    const forgot = '<a class="link forgot" data-mark="Забыли пароль?">Забыли пароль?</a>'
+    return sheet(look, `<h1>Вход</h1>${field('Электронная почта', 'Email', 'type="email" inputmode="email"')}${look.forgot === 'label' ? `<div class="split"><span>Пароль</span>${forgot}</div>` : ''}${secret(look.forgot === 'label' ? '' : 'Пароль', 'Пароль')}<div class="split">${tick('Запомнить меня', 'Запомнить меня')}${look.forgot === 'row' ? forgot : ''}</div><div class="robot-slot" hidden></div><p class="error"></p><button class="primary" data-mark="Войти">Войти</button>${look.forgot === 'below' ? forgot : ''}${extra}<p class="muted">Нет аккаунта? <a data-mark="Зарегистрироваться">Зарегистрироваться</a></p>`)
+}
+
+
+function loginForm(look) {
+    const reveal = Math.random() < 0.5
+    const remember = Math.random() < 0.5
+    const fail = Math.random() < 0.4
+    const captcha = fail && Math.random() < 0.5
+    const asks = ['введите выдуманные email и пароль', ...reveal ? ['нажмите на глаз 👁, чтобы проверить пароль'] : [], ...remember ? ['отметьте «Запомнить меня»'] : []]
+    return web('login', 'form', `Вход на сайт «${look.name}»: ${asks.join(', ')} и нажмите «Войти»`, look, ({record, signal, done, frame, say}) => {
+        Object.assign(record.meta, {reveal, remember, fail, captcha, submits: 0, errors: 0, rejected: 0})
+        const others = Math.random() < 0.5 ? `<span class="muted">или войдите через</span><div class="providers">${sample(providers, integer(2, 3)).map(name => providerButton(name, name)).join('')}</div>` : ''
+        const page = browse(look, frame, loginSheet(look, others)).querySelector('.sheet')
+        const email = page.querySelector('input[data-mark="Email"]')
+        const password = page.querySelector('input[data-mark="Пароль"]')
+        const button = page.querySelector('button.primary')
+        const error = page.querySelector('.error')
+        let robot = null
+        mark(record, page.querySelectorAll('[data-mark]'))
+        button.addEventListener('click', () => {
+            record.meta.submits++
+            const checks = [[email, emailPattern.test(email.value.trim()), 'Введите адрес почты, например name@mail.ru'], [password, password.value !== '', 'Введите пароль']]
+            if (robot) {
+                checks.push([robot.element, robot.passed(), 'Подтвердите, что вы не робот'])
+            }
+            if (!verify(checks, error)) {
+                record.meta.errors++
+                return
+            }
+            busy(record, signal, button, () => {
+                if (fail && !record.meta.rejected) {
+                    record.meta.rejected++
+                    password.value = ''
+                    verify([[password, false, 'Неверный email или пароль']], error)
+                    if (captcha) {
+                        const slot = page.querySelector('.robot-slot')
+                        slot.hidden = false
+                        robot = robotCheck(record, signal, frame, slot, Math.random() < 0.4)
+                    }
+                    say(`Сайт ответил «неверный пароль»: введите пароль ещё раз${captcha ? ', отметьте «Я не робот»' : ''} и снова нажмите «Войти»`)
+                    return
+                }
+                record.meta.remembered = page.querySelector('.tick input').checked
+                done()
+            }, !fail || record.meta.rejected > 0)
+        })
+    })
+}
+
+
+function consent(record, signal, frame, look, provider, done) {
+    const accounts = Array.from({length: integer(1, 3)}, person)
+    const dialog = frame.appendChild(html(`<div class="backdrop"><div class="modal"><button class="close" data-mark="Закрыть">×</button><span class="muted">${provider}</span><h2>Выберите аккаунт</h2>${accounts.map((name, index) => `<button class="persona" data-mark="Аккаунт ${index + 1}"><i>${initials(name)}</i>${name}</button>`).join('')}<p class="muted">Сайт «${look.name}» получит ваше имя и адрес почты.</p><p class="error"></p><div class="buttons"><button data-mark="Отмена">Отмена</button><button class="primary" data-mark="Разрешить">Разрешить</button></div></div></div>`))
+    mark(record, dialog.querySelectorAll('[data-mark]'))
+    let chosen = null
+    dialog.addEventListener('click', e => {
+        const button = e.target.closest('button')
+        if (dialog.querySelector('.busy')) {
+            return
+        }
+        if (button?.classList.contains('persona')) {
+            chosen?.classList.remove('current')
+            chosen = button
+            chosen.classList.add('current')
+        } else if (button?.classList.contains('primary')) {
+            if (chosen) {
+                busy(record, signal, button, done)
+            } else {
+                dialog.querySelector('.error').textContent = 'Выберите аккаунт'
+            }
+        } else if (button || e.target === dialog) {
+            dialog.remove()
+        }
+    })
+}
+
+
+function providerLogin(look) {
+    const names = sample(providers, integer(3, 5))
+    const goal = pick(names)
+    return web('login', 'provider', `Вход на сайт «${look.name}»: войдите через «${goal}», выберите любой аккаунт и нажмите «Разрешить»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {provider: goal, chosen: []})
+        const page = browse(look, frame, sheet(look, `<h1>Войти в ${look.name}</h1><div class="providers column">${names.map(name => providerButton(name, `Продолжить с ${name}`)).join('')}</div><span class="muted">или по почте</span>${field('Электронная почта', 'Email', 'type="email"')}<button data-mark="Продолжить">Продолжить</button>`)).querySelector('.sheet')
+        mark(record, page.querySelectorAll('[data-mark]'))
+        page.addEventListener('click', e => {
+            const button = e.target.closest('[data-provider]')
+            if (button && !frame.querySelector('.backdrop')) {
+                record.meta.chosen.push(button.dataset.provider)
+                busy(record, signal, button, () => consent(record, signal, frame, look, button.dataset.provider, done))
+            }
+        })
+    })
+}
+
+
+async function login() {
+    const look = theme()
+    if (Math.random() < 0.5) {
+        await landing('login', look, 'Войти')
+    }
+    await (Math.random() < 0.3 ? providerLogin(look) : loginForm(look))
+}
+
+
+function forgotten(look) {
+    return web('recover', 'login', `Вход на сайт «${look.name}»: вы не помните пароль — нажмите «Забыли пароль?»`, look, ({record, signal, done, frame}) => {
+        const page = browse(look, frame, loginSheet(look)).querySelector('.sheet')
+        const link = page.querySelector('.forgot')
+        mark(record, page.querySelectorAll('[data-mark]'))
+        link.addEventListener('click', () => {
+            if (!page.querySelector('.busy')) {
+                busy(record, signal, page.querySelector('button.primary'), done, true)
+            }
+        })
+    })
+}
+
+
+function recoverPage(look, step, instruction, body, action, checks) {
+    return web('recover', step, instruction, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {submits: 0, errors: 0})
+        const page = browse(look, frame, sheet(look, `${body}<p class="error"></p><button class="primary" data-mark="${action}">${action}</button>`)).querySelector('.sheet')
+        const input = name => page.querySelector(`input[data-mark="${name}"]`)
+        const button = page.querySelector('button.primary')
+        mark(record, page.querySelectorAll('[data-mark]'))
+        button.addEventListener('click', () => {
+            record.meta.submits++
+            if (verify(checks(input), page.querySelector('.error'))) {
+                busy(record, signal, button, done, true)
+            } else {
+                record.meta.errors++
+            }
+        })
+    })
+}
+
+
+function recoverCode(look) {
+    const code = String(integer(0, 999999)).padStart(6, '0')
+    const boxes = Math.random() < 0.6
+    return web('recover', 'code', 'Дождитесь письма с кодом (появится на экране), введите код и нажмите «Подтвердить»', look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {boxes, errors: 0, resends: 0, mail: []})
+        const entry = boxes ? `<div class="code">${Array.from({length: 6}, (_, index) => `<input data-mark="Цифра ${index + 1}" inputmode="numeric" autocomplete="off">`).join('')}</div>` : field('Код из письма', 'Код', 'inputmode="numeric" maxlength="6"')
+        const page = browse(look, frame, sheet(look, `<h1>Проверьте почту</h1><p class="muted">Мы отправили письмо с шестизначным кодом. Письмо может прийти не сразу.</p>${entry}<p class="error"></p><button class="primary" data-mark="Подтвердить">Подтвердить</button><a class="link" data-mark="Отправить код ещё раз">Отправить код ещё раз</a>`)).querySelector('.sheet')
+        const fields = [...page.querySelectorAll('input')]
+        const button = page.querySelector('button.primary')
+        const error = page.querySelector('.error')
+        mark(record, page.querySelectorAll('[data-mark]'))
+        const deliver = () => delay(record, signal, () => {
+            frame.querySelector('.mail')?.remove()
+            const mail = frame.appendChild(html(`<div class="mail"><button class="close" data-mark="Закрыть письмо">×</button><span class="muted">Новое письмо · ${look.name}</span><p>Код для сброса пароля:</p><big>${code.slice(0, 3)} ${code.slice(3)}</big></div>`))
+            mail.firstElementChild.addEventListener('click', () => mail.remove())
+        }, record.meta.mail)
+        deliver()
+        page.querySelector('.link').addEventListener('click', () => {
+            record.meta.resends++
+            deliver()
+        })
+        if (boxes) {
+            const row = page.querySelector('.code')
+            row.addEventListener('input', e => {
+                const digits = e.target.value.replace(/\D/g, '')
+                e.target.value = digits.slice(-1)
+                if (digits) {
+                    fields[fields.indexOf(e.target) + 1]?.focus()
+                }
+            })
+            row.addEventListener('keydown', e => {
+                if (e.key === 'Backspace' && !e.target.value) {
+                    fields[fields.indexOf(e.target) - 1]?.focus()
+                }
+            })
+        }
+        button.addEventListener('click', () => {
+            const typed = fields.map(input => input.value).join('').replace(/\D/g, '')
+            if (verify(fields.map(input => [input, typed === code, typed.length < 6 ? 'Введите все 6 цифр' : 'Неверный код, проверьте письмо']), error)) {
+                busy(record, signal, button, done, true)
+            } else {
+                record.meta.errors++
+            }
+        })
+    })
+}
+
+
+async function recover() {
+    const look = theme()
+    await forgotten(look)
+    await recoverPage(look, 'email', 'Восстановление пароля: введите выдуманный email и нажмите «Отправить код»', `<h1>Восстановление пароля</h1><p class="muted">Укажите почту, с которой вы регистрировались. Мы пришлём код для сброса пароля.</p>${field('Электронная почта', 'Email', 'type="email" inputmode="email"')}`, 'Отправить код', input => [[input('Email'), emailPattern.test(input('Email').value.trim()), 'Введите адрес почты, например name@mail.ru']])
+    await recoverCode(look)
+    await recoverPage(look, 'password', 'Придумайте новый пароль (любой, от 8 символов), повторите его и нажмите «Сохранить пароль»', `<h1>Новый пароль</h1><p class="muted">Не короче 8 символов.</p>${secret('Новый пароль', 'Новый пароль')}${secret('Повторите пароль', 'Повтор пароля')}`, 'Сохранить пароль', input => [
+        [input('Новый пароль'), input('Новый пароль').value.length >= 8, 'Пароль — не короче 8 символов'],
+        [input('Повтор пароля'), input('Повтор пароля').value === input('Новый пароль').value, 'Пароли не совпадают'],
+    ])
+    await recoverPage(look, 'success', 'Пароль изменён: нажмите «Войти»', '<div class="done-mark">✓</div><h1>Пароль изменён</h1><p class="muted">Теперь можно войти с новым паролем.</p>', 'Войти', () => [])
+}
+
+
+function cookieWidget(look) {
+    const [goal, text] = pick(cookieGoals)
+    return web('widget', 'cookie', `Сайт «${look.name}»: ${text}`, look, ({record, signal, done, frame}) => {
+        record.meta.goal = goal
+        const main = browse(look, frame, skeleton(), true)
+        delay(record, signal, () => {
+            main.innerHTML = showcase(look)
+            later(signal, uniform(300, 1500), () => cookieBanner(record, frame, (choice, marketing) => {
+                record.meta.correct = choice === goal && !marketing
+                done()
+            }))
+        })
+    })
+}
+
+
+function promoWidget(look) {
+    const [goal, text] = pick([['cross', 'закройте его крестиком ×'], ['decline', 'нажмите в нём «Нет, спасибо»']])
+    return web('widget', 'modal', `Сайт «${look.name}»: дождитесь всплывающего окна и ${text}`, look, ({record, signal, done, frame}) => {
+        record.meta.goal = goal
+        const main = browse(look, frame, skeleton(), true)
+        delay(record, signal, () => {
+            main.innerHTML = showcase(look)
+            later(signal, uniform(800, 3000), () => promo(record, frame, done))
+        })
+    })
+}
+
+
+function captchaWidget(look) {
+    const challenge = Math.random() < 0.6
+    return web('widget', 'captcha', `Сайт «${look.name}» проверяет посетителей: отметьте «Я не робот», если появится задание с картинками — выполните его, затем нажмите «Продолжить»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {challenge, errors: 0})
+        const page = browse(look, frame, sheet(look, '<h1>Проверка безопасности</h1><p class="muted">Подтвердите, что вы человек, чтобы продолжить работу с сайтом.</p><div class="robot-slot"></div><p class="error"></p><button class="primary" data-mark="Продолжить">Продолжить</button>')).querySelector('.sheet')
+        const robot = robotCheck(record, signal, frame, page.querySelector('.robot-slot'), challenge)
+        const button = page.querySelector('button.primary')
+        mark(record, page.querySelectorAll('[data-mark]'))
+        button.addEventListener('click', () => {
+            if (verify([[robot.element, robot.passed(), 'Сначала отметьте «Я не робот»']], page.querySelector('.error'))) {
+                busy(record, signal, button, done, true)
+            } else {
+                record.meta.errors++
+            }
+        })
+    })
+}
+
+
+const planSets = [['Базовый', 'Стандарт', 'Премиум'], ['Старт', 'Команда', 'Бизнес'], ['Лайт', 'Плюс', 'Про']]
+const planFeatures = [['Хранилище', 'Сколько файлов можно хранить в аккаунте.'], ['Поддержка', 'Как быстро отвечает служба поддержки.'], ['Пользователи', 'Сколько человек работают в одном аккаунте.'], ['Возврат денег', 'В течение 14 дней без объяснения причин.'], ['Резервные копии', 'Как часто сохраняются копии ваших данных.'], ['Интеграции', 'Подключение сторонних сервисов.']]
+
+
+function tooltipWidget(look) {
+    const plans = pick(planSets)
+    const features = sample(planFeatures, 4)
+    const [row, column] = [integer(0, 2), integer(0, 3)]
+    return web('widget', 'tooltip', `Тарифы «${look.name}»: ${either('наведите курсор', 'нажмите')} на значок i у пункта «${features[column][0]}» в тарифе «${plans[row]}» и нажмите «Подробнее» в подсказке`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {plan: row, feature: column, opened: 0, wrong: 0})
+        const main = browse(look, frame, skeleton(), true)
+        delay(record, signal, () => {
+            const prices = [0, integer(3, 6) * 100 - 1, integer(9, 15) * 100 - 1]
+            main.innerHTML = `<h1>Тарифы</h1><p class="muted">Выберите подходящий тариф. Сменить его можно в любой момент.</p><div class="cards">${plans.map((plan, index) => `<div class="offer"><h2>${plan}</h2><big>${prices[index]} ₽/мес</big><ul>${features.map(([feature, text], line) => `<li>${feature}<span class="info"><button data-mark="i ${plan}: ${feature}">i</button><span class="tooltip"><span>${text} <a data-mark="Подробнее ${plan}: ${feature}"${index === row && line === column ? ' data-goal' : ''}>Подробнее</a></span></span></span></li>`).join('')}</ul><button class="primary" data-mark="Выбрать ${plan}">Выбрать</button></div>`).join('')}</div>`
+            const infos = [...main.querySelectorAll('.info')]
+            for (const info of infos) {
+                info.addEventListener('pointerenter', e => {
+                    if (e.pointerType === 'mouse') {
+                        record.meta.opened++
+                    }
+                })
+            }
+            mark(record, [main.querySelector('[data-goal]').closest('.info').firstElementChild])
+            main.addEventListener('click', e => {
+                const info = e.target.closest('.info > button')?.parentElement
+                if (info) {
+                    const open = !info.classList.contains('open')
+                    for (const other of infos) {
+                        other.classList.toggle('open', open && other === info)
+                    }
+                }
+                const link = e.target.closest('.tooltip a')
+                if (link?.hasAttribute('data-goal')) {
+                    done()
+                } else if (link) {
+                    record.meta.wrong++
+                }
+            })
+        })
+    })
+}
+
+
+const faqItems = [
+    ['Как отследить заказ?', 'Номер для отслеживания приходит в письме после отправки заказа.', 'Отследить заказ'],
+    ['Как вернуть товар?', 'Вернуть товар можно в течение 14 дней в пункте выдачи или курьеру.', 'Оформить возврат'],
+    ['Можно ли изменить адрес доставки?', 'Адрес можно изменить, пока заказ не передан в доставку.', 'Изменить адрес'],
+    ['Какие способы оплаты доступны?', 'Картой онлайн, при получении или по счёту для компаний.', 'Способы оплаты'],
+    ['Как удалить аккаунт?', 'Удалить аккаунт можно в настройках профиля, раздел «Безопасность».', 'Перейти в настройки'],
+    ['Сколько стоит доставка?', 'Доставка бесплатна от 2000 ₽, иначе — по тарифу перевозчика.', 'Тарифы доставки'],
+    ['Как связаться с поддержкой?', 'Поддержка отвечает в чате с 8 до 22 часов без выходных.', 'Написать в чат'],
+    ['Как сменить пароль?', 'Нажмите «Забыли пароль?» на странице входа и следуйте подсказкам.', 'Сменить пароль'],
+    ['Где мой промокод?', 'Промокоды хранятся в личном кабинете в разделе «Бонусы».', 'Открыть бонусы'],
+    ['Можно ли заказать без регистрации?', 'Да, но историю заказов видят только зарегистрированные пользователи.', 'Оформить заказ'],
+]
+
+
+function faqWidget(look) {
+    const items = sample(faqItems, integer(6, 9))
+    const goal = integer(0, items.length - 1)
+    const single = Math.random() < 0.5
+    return web('widget', 'faq', `Помощь на сайте «${look.name}»: откройте вопрос «${items[goal][0]}» и нажмите в ответе «${items[goal][2]}»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {items: items.length, goal, opened: 0, wrong: 0})
+        const main = browse(look, frame, skeleton(), true)
+        delay(record, signal, () => {
+            main.innerHTML = `<h1>Вопросы и ответы</h1><div class="faq">${items.map(([question, answer, action], index) => `<div><button class="q" data-mark="${question}">${question}</button><div class="answer" hidden><p>${answer}</p><button data-mark="${action}"${index === goal ? ' data-goal' : ''}>${action}</button></div></div>`).join('')}</div>`
+            const questions = [...main.querySelectorAll('.q')]
+            mark(record, [questions[goal]])
+            main.addEventListener('click', e => {
+                const question = e.target.closest('.q')
+                const action = e.target.closest('.answer button')
+                if (question) {
+                    const answer = question.nextElementSibling
+                    const open = answer.hidden
+                    for (const other of questions) {
+                        if (other === question || single) {
+                            other.nextElementSibling.hidden = other !== question || !open
+                            other.parentElement.classList.toggle('open', other === question && open)
+                        }
+                    }
+                    record.meta.opened += open
+                } else if (action?.hasAttribute('data-goal')) {
+                    done()
+                } else if (action) {
+                    record.meta.wrong++
+                }
+            })
+        })
+    })
+}
+
+
+const reviewTexts = ['Пользуюсь месяц, всё отлично.', 'Качество хорошее, доставка быстрая.', 'За свои деньги нормально.', 'Цвет чуть отличается от фото.', 'Брали в подарок, все довольны.', 'Упаковка помята, но сам товар целый.']
+const shippingWays = ['Курьер', 'Пункт выдачи', 'Постамат', 'Почта', 'Самовывоз из магазина']
+
+
+function tabsWidget(look) {
+    const name = pick(goods)
+    const reviewers = sample([...men, ...women], 4)
+    const ways = sample(shippingWays, 3)
+    const tab = pick(['Отзывы', 'Доставка', 'Характеристики'])
+    const goal = tab === 'Отзывы' ? integer(0, 3) : integer(0, 2)
+    const action = {Отзывы: `«Полезно» у отзыва, который оставил(а) ${reviewers[goal]}`, Доставка: `«Выбрать» у способа «${ways[goal]}»`, Характеристики: '«Добавить к сравнению»'}[tab]
+    return web('widget', 'tabs', `Товар «${name}» на сайте «${look.name}»: откройте вкладку «${tab}» и нажмите ${action}`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {tab, goal, switches: 0, wrong: 0})
+        let reviewsLoaded = false
+        const panes = {
+            Описание: () => `<p>${name} из новой коллекции ${look.name}. Продуманный дизайн и надёжные материалы, подойдёт для дома и в подарок.</p><p class="muted">Гарантия производителя ${integer(1, 3)} года.</p>`,
+            Характеристики: () => `<table>${[['Вес', `${integer(2, 30) / 10} кг`], ['Цвет', pick(colors)], ['Материал', pick(['пластик', 'металл', 'хлопок', 'стекло'])], ['Страна', pick(['Россия', 'Китай', 'Турция'])]].map(([key, value]) => `<tr><td class="muted">${key}</td><td>${value}</td></tr>`).join('')}</table><button data-mark="Добавить к сравнению"${tab === 'Характеристики' ? ' data-goal' : ''}>Добавить к сравнению</button>`,
+            Отзывы: () => reviewers.map((who, index) => `<div class="review"><b>${who}</b><span class="muted">${'★'.repeat(integer(3, 5))}</span><p>${pick(reviewTexts)}</p><button data-mark="Полезно ${who}"${tab === 'Отзывы' && index === goal ? ' data-goal' : ''}>Полезно · ${integer(0, 40)}</button></div>`).join(''),
+            Доставка: () => ways.map((way, index) => `<div class="split" style="width:100%"><span>${way} · ${integer(1, 6)} дн. · ${integer(0, 5) * 100} ₽</span><button data-mark="Выбрать ${way}"${tab === 'Доставка' && index === goal ? ' data-goal' : ''}>Выбрать</button></div>`).join(''),
+        }
+        const main = browse(look, frame, skeleton(), true)
+        delay(record, signal, () => {
+            main.innerHTML = `<div class="product"><div class="pic"></div><div class="buy"><h1>${name}</h1><span class="muted">★ 4.${integer(1, 9)} · ${integer(12, 480)} отзывов</span><big>${integer(5, 90) * 100 - 10} ₽</big><button class="primary" data-mark="В корзину">В корзину</button></div></div><div class="tabs">${Object.keys(panes).map(label => `<button data-tab="${label}" data-mark="${label}"${label === 'Описание' ? ' class="current"' : ''}>${label}</button>`).join('')}</div><div class="pane">${panes.Описание()}</div>`
+            const pane = main.querySelector('.pane')
+            mark(record, [main.querySelector(`[data-tab="${tab}"]`)])
+            main.addEventListener('click', e => {
+                const button = e.target.closest('[data-tab]')
+                const inner = e.target.closest('.pane button')
+                if (button) {
+                    record.meta.switches++
+                    for (const other of main.querySelectorAll('[data-tab]')) {
+                        other.classList.toggle('current', other === button)
+                    }
+                    const label = button.dataset.tab
+                    if (label === 'Отзывы' && !reviewsLoaded) {
+                        reviewsLoaded = true
+                        loadInto(record, signal, pane, () => {
+                            if (main.querySelector('.tabs .current').dataset.tab === 'Отзывы') {
+                                pane.innerHTML = panes.Отзывы()
+                            }
+                        })
+                    } else {
+                        pane.innerHTML = panes[label]()
+                    }
+                } else if (inner?.hasAttribute('data-goal')) {
+                    done()
+                } else if (inner) {
+                    record.meta.wrong++
+                }
+            })
+        })
+    })
+}
+
+
+const widgetMakers = [cookieWidget, promoWidget, captchaWidget, tooltipWidget, faqWidget, tabsWidget]
+const widgets = () => sequence(sample(widgetMakers, 3).map(make => () => make(theme())))
+
+
+const men = ['Борис', 'Глеб', 'Егор', 'Илья', 'Лев', 'Марк', 'Олег', 'Пётр', 'Роман', 'Тимур']
+const women = ['Анна', 'Вера', 'Дина', 'Жанна', 'Кира', 'Лиза', 'Мария', 'Ольга', 'Полина', 'Софья']
+const surnames = ['Смирнов', 'Кузнецов', 'Попов', 'Васильев', 'Петров', 'Соколов', 'Михайлов', 'Новиков', 'Фёдоров', 'Морозов', 'Волков', 'Алексеев', 'Лебедев', 'Семёнов', 'Егоров', 'Павлов', 'Козлов', 'Степанов', 'Николаев', 'Орлов']
+const person = () => Math.random() < 0.5 ? `${pick(men)} ${pick(surnames)}` : `${pick(women)} ${pick(surnames)}а`
+const initials = name => name.split(' ').map(word => word[0]).join('')
+const orderStatuses = ['Новый', 'Оплачен', 'Собирается', 'Отправлен', 'Доставлен', 'Отменён']
+const periods = ['День', 'Неделя', 'Месяц', 'Год']
+const periodBars = {День: 24, Неделя: 7, Месяц: 30, Год: 12}
+const reportNames = ['Продажи за месяц', 'Остатки на складе', 'Новые клиенты', 'Возвраты', 'Платежи', 'Популярные товары']
+const formats = ['CSV', 'XLSX', 'PDF']
+const noteTexts = ['Новый заказ', 'Оплата получена', 'Заканчивается товар', 'Новый отзыв', 'Возврат оформлен', 'Клиент написал в чат', 'Отчёт готов']
+const deskSections = [['overview', 'Обзор', '◫'], ['orders', 'Заказы', '▤'], ['products', 'Товары', '◩'], ['customers', 'Клиенты', '◍'], ['analytics', 'Аналитика', '◔'], ['reports', 'Отчёты', '▥'], ['settings', 'Настройки', '⚙']]
+const settingsTabs = ['Профиль', 'Безопасность', 'Уведомления']
+const channels = ['Email-рассылка', 'Push-уведомления', 'SMS']
+const perPage = 8
+
+
+function office() {
+    const customers = [...new Set(Array.from({length: 60}, person))].slice(0, 24)
+    const first = integer(10000, 90000)
+    const day = () => `${String(integer(1, 28)).padStart(2, '0')}.${String(integer(1, 10)).padStart(2, '0')}.2026`
+    const channelsOn = Object.fromEntries(channels.map(channel => [channel, Math.random() < 0.5]))
+    return {
+        page: 'overview',
+        tab: 'Профиль',
+        filter: 'Все',
+        pageIndex: 0,
+        found: null,
+        customer: 0,
+        user: person(),
+        customers,
+        orders: Array.from({length: integer(36, 60)}, (_, index) => ({number: first + index, customer: pick(customers), date: day(), sum: integer(5, 400) * 100 - 10, status: pick(orderStatuses)})).reverse(),
+        sections: [deskSections[0], ...shuffle(deskSections.slice(1, -1)), deskSections.at(-1)],
+        products: sample(goods, 9).map(name => ({name, price: integer(5, 90) * 100 - 10, on: Math.random() < 0.7})),
+        reports: sample(reportNames, 5).map(name => [name, day()]),
+        stats: [['Выручка', `${integer(100, 990)} ${integer(100, 999)} ₽`], ['Заказы', integer(80, 900)], ['Клиенты', integer(300, 5000)], ['Конверсия', `${uniform(1, 6).toFixed(1)}%`]],
+        notes: sample(noteTexts, 5).map(text => ({text, time: `${integer(2, 59)} мин назад`, read: Math.random() < 0.4})),
+        period: 'Неделя',
+        twofa: false,
+        alerts: true,
+        channels: {...channelsOn},
+        saved: channelsOn,
+    }
+}
+
+
+function ordersTable(state, rows, editable) {
+    return `<table><tr><th>№</th><th>Клиент</th><th>Дата</th><th>Сумма</th><th>Статус</th>${editable ? '<th></th>' : ''}</tr>${rows.map(order => `<tr${order.number === state.found ? ' class="found"' : ''}><td>${order.number}</td><td>${order.customer}</td><td>${order.date}</td><td>${order.sum} ₽</td><td><span class="pill">${order.status}</span></td>${editable ? `<td><button data-act="edit:${order.number}" data-mark="Изменить ${order.number}">Изменить</button></td>` : ''}</tr>`).join('')}</table>`
+}
+
+
+const chart = count => `<div class="chart">${Array.from({length: count}, () => `<i style="height:${integer(15, 100)}%"></i>`).join('')}</div>`
+const stat = (label, value) => `<div class="stat"><span class="muted">${label}</span><big>${value}</big></div>`
+const figures = state => `<div class="stats">${['Посетители', 'Заказы', 'Средний чек'].map(label => stat(`${label} · ${state.period.toLowerCase()}`, integer(100, 9000))).join('')}</div>${chart(periodBars[state.period])}`
+const setting = (title, text, control) => `<div class="setting"><div><b>${title}</b>${text ? `<p class="muted">${text}</p>` : ''}</div>${control}</div>`
+const switcher = (on, act, label) => `<button class="switch${on ? ' checked' : ''}" data-act="${act}" data-mark="${label}"></button>`
+
+const settingsBody = {
+    Профиль: state => `<div class="sheet flat">${field('Имя', 'Имя профиля', `value="${state.user.split(' ')[0]}"`)}${field('Фамилия', 'Фамилия профиля', `value="${state.user.split(' ')[1]}"`)}${field('Телефон', 'Телефон', 'value="+7 900 000-00-00"')}<div class="buttons"><button class="primary" data-act="saveProfile" data-mark="Сохранить профиль">Сохранить</button></div></div>`,
+    Безопасность: state => `<div class="sheet flat">${setting('Двухфакторная защита', 'Код из приложения при каждом входе', switcher(state.twofa, 'twofa', 'Двухфакторная защита'))}${setting('Оповещать о новых входах', 'Письмо при входе с нового устройства', switcher(state.alerts, 'alerts', 'Оповещать о входах'))}${setting('Активные сеансы', 'Телефон, ноутбук и ещё одно устройство', '<button data-act="sessions" data-mark="Завершить другие сеансы">Завершить другие</button>')}</div>`,
+    Уведомления: state => `<div class="sheet flat">${channels.map(channel => setting(channel, '', switcher(state.channels[channel], `channel:${channel}`, channel))).join('')}<div class="buttons"><button class="primary" data-act="saveChannels" data-mark="Сохранить уведомления">Сохранить</button></div></div>`,
+}
+
+const deskPages = {
+    overview: state => `<h1>Обзор</h1><div class="stats">${state.stats.map(([label, value]) => stat(label, value)).join('')}</div>${chart(14)}<div class="block"><div class="split"><h2>Последние заказы</h2><button data-act="page:orders" data-mark="Все заказы">Все заказы →</button></div>${ordersTable(state, state.orders.slice(0, 5), false)}</div>`,
+    orders: state => {
+        const rows = state.filter === 'Все' ? state.orders : state.orders.filter(order => order.status === state.filter)
+        const count = Math.max(1, Math.ceil(rows.length / perPage))
+        const index = state.pageIndex
+        return `<h1>Заказы</h1><div class="toolbar">${['Все', ...orderStatuses].map(value => `<button data-act="filter:${value}" data-mark="${value}"${value === state.filter ? ' class="current"' : ''}>${value}</button>`).join('')}</div><div class="block">${ordersTable(state, rows.slice(index * perPage, (index + 1) * perPage), true)}</div><div class="pages"><button data-act="turn:${index - 1}" data-mark="Предыдущая страница"${index ? '' : ' disabled'}>‹</button>${Array.from({length: count}, (_, page) => `<button data-act="turn:${page}" data-mark="Страница ${page + 1}"${page === index ? ' class="current"' : ''}>${page + 1}</button>`).join('')}<button data-act="turn:${index + 1}" data-mark="Следующая страница"${index + 1 < count ? '' : ' disabled'}>›</button></div>`
+    },
+    products: state => `<h1>Товары</h1><div class="cards">${state.products.map((product, index) => `<div class="offer"><div class="pic"></div><b>${product.name}</b><span class="muted">${product.price} ₽</span><div class="setting" style="align-self:stretch"><span>В продаже</span>${switcher(product.on, `sale:${index}`, `В продаже: ${product.name}`)}</div><button data-act="remove:${index}" data-mark="Удалить ${product.name}">Удалить</button></div>`).join('')}</div>`,
+    customers: state => `<h1>Клиенты</h1><div class="block"><table><tr><th>Имя</th><th>Заказов</th><th>Последний заказ</th><th></th></tr>${state.customers.map((name, index) => {
+        const own = state.orders.filter(order => order.customer === name)
+        return `<tr><td>${name}</td><td>${own.length}</td><td>${own[0]?.date ?? '—'}</td><td><button data-act="customer:${index}" data-mark="Открыть ${name}">Открыть</button></td></tr>`
+    }).join('')}</table></div>`,
+    customer: state => {
+        const name = state.customers[state.customer]
+        const own = state.orders.filter(order => order.customer === name)
+        return `<button class="back" data-act="page:customers" data-mark="Назад к клиентам">← Клиенты</button><h1>${name}</h1><div class="stats">${stat('Заказов', own.length)}${stat('Сумма', `${own.reduce((sum, order) => sum + order.sum, 0)} ₽`)}</div><div class="block">${ordersTable(state, own.slice(0, 6), false)}</div>`
+    },
+    analytics: state => `<h1>Аналитика</h1><div class="segmented">${periods.map(value => `<button data-act="period:${value}" data-mark="${value}"${value === state.period ? ' class="current"' : ''}>${value}</button>`).join('')}</div><div class="figures">${figures(state)}</div>`,
+    reports: state => `<h1>Отчёты</h1><div class="block rows">${state.reports.map(([name, date], index) => `<div class="split"><div><b>${name}</b><p class="muted">Обновлён ${date}</p></div><div class="drop"><button data-act="menu" data-mark="Экспорт: ${name}">Экспорт ▾</button><div class="pop" hidden>${formats.map(format => `<button data-act="export:${index}:${format}" data-mark="${format}">${format}</button>`).join('')}</div></div></div>`).join('')}</div>`,
+    settings: state => `<h1>Настройки</h1><div class="tabs">${settingsTabs.map(tab => `<button data-act="tab:${tab}" data-mark="${tab}"${tab === state.tab ? ' class="current"' : ''}>${tab}</button>`).join('')}</div>${settingsBody[state.tab](state)}`,
+}
+
+
+function editOrder(record, signal, frame, order, saved) {
+    const dialog = frame.appendChild(html(`<div class="backdrop"><div class="modal"><button class="close" data-mark="Закрыть окно">×</button><h2>Заказ №${order.number}</h2><p class="muted">${order.customer} · ${order.date} · ${order.sum} ₽</p><div class="field"><span>Статус</span><div class="status-slot"></div></div>${field('Комментарий', 'Комментарий')}<div class="buttons"><button data-mark="Отмена">Отмена</button><button class="primary" data-mark="Сохранить">Сохранить</button></div></div></div>`))
+    const status = dropdown('Статус', orderStatuses, signal)
+    status.dataset.value = status.firstElementChild.textContent = order.status
+    dialog.querySelector('.status-slot').replaceWith(status)
+    mark(record, dialog.querySelectorAll('[data-mark]'))
+    dialog.addEventListener('click', e => {
+        const button = e.target.closest('button')
+        if (dialog.querySelector('.busy')) {
+            return
+        }
+        if (button?.classList.contains('primary')) {
+            busy(record, signal, button, () => {
+                order.status = status.dataset.value
+                dialog.remove()
+                saved(order)
+            })
+        } else if (button || e.target === dialog) {
+            dialog.remove()
+        }
+    })
+}
+
+
+function desk(record, signal, frame, look, state, emit) {
+    frame.innerHTML = `<div class="app${look.flip ? ' flip' : ''}"><aside${look.colored ? ' class="colored"' : ''}><div class="logo"><i>${look.name[0]}</i>${look.name}</div>${state.sections.map(([id, label, icon]) => `<button data-act="page:${id}" data-mark="${label}"><span>${icon}</span>${label}</button>`).join('')}</aside><header><button class="burger" data-act="drawer" data-mark="Меню">☰</button><div class="search drop"><input data-mark="Поиск" placeholder="Поиск клиентов и заказов" autocomplete="off" spellcheck="false"><div class="pop" hidden></div></div><span class="spacer"></span><div class="drop"><button class="bell" data-act="menu" data-mark="Уведомления"></button><div class="pop notes" hidden></div></div><div class="drop"><button class="user" data-act="menu" data-mark="Профиль"><i>${initials(state.user)}</i><span>${state.user}</span> ▾</button><div class="pop" hidden><button data-act="profile" data-mark="Мой профиль">Мой профиль</button><button data-act="page:settings" data-mark="Настройки">Настройки</button><button data-act="help" data-mark="Помощь">Помощь</button><button data-act="logout" data-mark="Выйти">Выйти</button></div></div></header><main></main></div>`
+    const app = frame.firstElementChild
+    const main = app.querySelector('main')
+    const notes = app.querySelector('.notes')
+    const chrome = () => {
+        for (const button of app.querySelectorAll('aside [data-act]')) {
+            button.classList.toggle('current', button.dataset.act === `page:${state.page === 'customer' ? 'customers' : state.page}`)
+        }
+        const unread = state.notes.filter(note => !note.read).length
+        app.querySelector('.bell').innerHTML = `🔔${unread ? `<span class="badge">${unread}</span>` : ''}`
+        notes.innerHTML = `<div class="split"><b>Уведомления</b><button data-act="readAll" data-mark="Прочитать все">Прочитать все</button></div>${state.notes.map((note, index) => `<button data-act="note:${index}" data-mark="${note.text}"${note.read ? '' : ' class="unread"'}><span>${note.text}</span><small class="muted">${note.time}</small></button>`).join('')}`
+    }
+    const draw = () => {
+        main.innerHTML = deskPages[state.page](state)
+        chrome()
+    }
+    const visit = (changes, then) => {
+        Object.assign(state, changes)
+        app.classList.remove('drawer')
+        chrome()
+        main.scrollTop = 0
+        loadInto(record, signal, main, () => {
+            draw()
+            then?.()
+        })
+    }
+    const pop = (title, text, ok, event, success) => confirmBox(frame, look, title, text, ok, () => emit(event, false), (button, close) => busy(record, signal, button, () => {
+        close()
+        if (success) {
+            toast(frame, look, signal, success)
+        }
+        emit(event, true)
+    }))
+    const actions = {
+        page: (_, id) => visit({page: id, pageIndex: 0, found: null, filter: 'Все'}),
+        drawer: () => app.classList.toggle('drawer'),
+        menu: button => {
+            const list = button.nextElementSibling
+            const open = list.hidden
+            for (const other of app.querySelectorAll('.drop > .pop')) {
+                other.hidden = true
+            }
+            list.hidden = !open
+        },
+        filter: (_, value) => visit({filter: value, pageIndex: 0}),
+        turn: (_, index) => visit({pageIndex: Number(index)}),
+        edit: (_, number) => editOrder(record, signal, frame, state.orders.find(order => order.number === Number(number)), order => {
+            draw()
+            toast(frame, look, signal, `Заказ №${order.number} сохранён`)
+            emit('order', order)
+        }),
+        order: (_, number) => visit({page: 'orders', filter: 'Все', pageIndex: Math.floor(state.orders.findIndex(order => order.number === Number(number)) / perPage), found: Number(number)}),
+        customer: (_, index) => visit({page: 'customer', customer: Number(index)}, () => emit('customer', state.customers[index])),
+        sale: (button, index) => {
+            const product = state.products[index]
+            product.on = button.classList.contains('checked')
+            toast(frame, look, signal, `«${product.name}» ${product.on ? 'снова в продаже' : 'снят с продажи'}`)
+            emit('sale', product)
+        },
+        remove: (_, index) => {
+            const product = state.products[index]
+            confirmBox(frame, look, 'Удалить товар?', `«${product.name}» пропадёт из каталога.`, 'Удалить', () => emit('remove', [product, false]), (button, close) => busy(record, signal, button, () => {
+                state.products.splice(state.products.indexOf(product), 1)
+                close()
+                draw()
+                toast(frame, look, signal, `Товар «${product.name}» удалён`)
+                emit('remove', [product, true])
+            }))
+        },
+        period: (_, value) => {
+            state.period = value
+            for (const button of main.querySelectorAll('.segmented button')) {
+                button.classList.toggle('current', button.dataset.act === `period:${value}`)
+            }
+            const area = main.querySelector('.figures')
+            loadInto(record, signal, area, () => {
+                area.innerHTML = figures(state)
+                emit('period', value)
+            })
+        },
+        export: (button, index, format) => {
+            const trigger = button.closest('.drop').firstElementChild
+            busy(record, signal, trigger, () => {
+                toast(frame, look, signal, `Файл «${state.reports[index][0]}.${format.toLowerCase()}» готов`)
+                emit('export', [state.reports[index][0], format])
+            })
+        },
+        tab: (_, value) => {
+            state.tab = value
+            draw()
+        },
+        twofa: button => {
+            if (!button.classList.contains('checked')) {
+                state.twofa = false
+                toast(frame, look, signal, 'Двухфакторная защита выключена')
+                return
+            }
+            confirmBox(frame, look, 'Включить двухфакторную защиту?', 'При входе понадобится код из приложения-аутентификатора.', 'Включить', () => button.classList.remove('checked'), (ok, close) => busy(record, signal, ok, () => {
+                state.twofa = true
+                close()
+                toast(frame, look, signal, 'Двухфакторная защита включена')
+                emit('twofa')
+            }))
+        },
+        alerts: button => {
+            state.alerts = button.classList.contains('checked')
+        },
+        sessions: () => pop('Завершить другие сеансы?', 'На других устройствах придётся войти заново.', 'Завершить', 'sessions', 'Другие сеансы завершены'),
+        channel: (button, channel) => {
+            state.channels[channel] = button.classList.contains('checked')
+        },
+        saveChannels: button => busy(record, signal, button, () => {
+            state.saved = {...state.channels}
+            toast(frame, look, signal, 'Настройки уведомлений сохранены')
+            emit('channels')
+        }),
+        saveProfile: button => busy(record, signal, button, () => toast(frame, look, signal, 'Профиль сохранён')),
+        readAll: () => {
+            for (const note of state.notes) {
+                note.read = true
+            }
+            chrome()
+            emit('readAll')
+        },
+        note: (_, index) => {
+            state.notes[index].read = true
+            chrome()
+        },
+        profile: () => visit({page: 'settings', tab: 'Профиль'}),
+        help: () => {},
+        logout: () => pop('Выйти из аккаунта?', 'Несохранённые изменения пропадут.', 'Выйти', 'logout', null),
+    }
+    draw()
+    mark(record, app.querySelectorAll('aside [data-mark], header [data-mark]'))
+    frame.addEventListener('click', e => {
+        const element = e.target.closest('[data-act]')
+        if (!element) {
+            return
+        }
+        const list = element.closest('.pop')
+        if (list && !list.classList.contains('notes')) {
+            list.hidden = true
+        }
+        const [act, ...args] = element.dataset.act.split(':')
+        actions[act](element, ...args)
+    })
+    addEventListener('pointerdown', e => {
+        for (const list of app.querySelectorAll('.drop > .pop:not([hidden])')) {
+            if (!list.parentElement.contains(e.target)) {
+                list.hidden = true
+            }
+        }
+    }, {signal})
+
+    const search = app.querySelector('.search input')
+    const results = search.nextElementSibling
+    let query = 0
+    search.addEventListener('focus', () => {
+        results.hidden = !search.value.trim()
+    })
+    search.addEventListener('input', () => {
+        const token = ++query
+        const text = search.value.trim().toLowerCase()
+        results.hidden = !text
+        results.innerHTML = '<div class="spinner"></div>'
+        later(signal, 300, () => token === query && text && delay(record, signal, () => {
+            if (token !== query) {
+                return false
+            }
+            const people = state.customers.map((name, index) => [name, index]).filter(([name]) => name.toLowerCase().includes(text)).slice(0, 5)
+            const orders = state.orders.filter(order => String(order.number).includes(text)).slice(0, 4)
+            results.innerHTML = [...people.map(([name, index]) => `<button data-act="customer:${index}" data-mark="${name}"><span>${name}</span><small class="muted">клиент</small></button>`), ...orders.map(order => `<button data-act="order:${order.number}" data-mark="Заказ №${order.number}"><span>Заказ №${order.number}</span><small class="muted">${order.customer}</small></button>`)].join('') || '<p class="muted">Ничего не найдено</p>'
+        }))
+    })
+}
+
+
+const panelOps = {
+    twofa: state => ({
+        instruction: 'Откройте Настройки → Безопасность и включите двухфакторную защиту',
+        prepare: () => {
+            state.twofa = false
+        },
+        goal: event => event === 'twofa',
+    }),
+    order: state => {
+        const order = pick(state.orders.slice(perPage))
+        const status = pick(orderStatuses.filter(value => value !== order.status))
+        return {
+            instruction: `Найдите в разделе «Заказы» заказ №${order.number}, нажмите «Изменить», поставьте статус «${status}» и сохраните`,
+            meta: {order: order.number, status},
+            goal: (event, value) => event === 'order' && value === order && order.status === status,
+        }
+    },
+    bell: state => ({
+        instruction: 'Откройте уведомления (колокольчик вверху) и нажмите «Прочитать все»',
+        prepare: () => {
+            for (const note of sample(state.notes, integer(2, 4))) {
+                note.read = false
+            }
+        },
+        goal: event => event === 'readAll',
+    }),
+    logout: state => {
+        const confirm = Math.random() < 0.6
+        return {
+            instruction: `Откройте меню профиля (${state.user}, вверху справа), нажмите «Выйти» и ${confirm ? 'подтвердите выход' : 'в окне подтверждения передумайте: «Отмена»'}`,
+            meta: {confirm},
+            goal: (event, value) => event === 'logout' && value === confirm,
+        }
+    },
+    remove: state => {
+        const product = pick(state.products)
+        const confirm = Math.random() < 0.7
+        return {
+            instruction: `В разделе «Товары» удалите «${product.name}»${confirm ? ' и подтвердите удаление' : ', но в окне подтверждения нажмите «Отмена»'}`,
+            meta: {product: product.name, confirm},
+            goal: (event, value) => event === 'remove' && value[0] === product && value[1] === confirm,
+        }
+    },
+    sale: state => {
+        const product = pick(state.products)
+        const on = !product.on
+        return {
+            instruction: `В разделе «Товары» ${on ? 'верните в продажу' : 'снимите с продажи'} «${product.name}» (переключатель «В продаже»)`,
+            meta: {product: product.name, on},
+            goal: (event, value) => event === 'sale' && value === product && product.on === on,
+        }
+    },
+    period: state => {
+        const period = pick(periods.filter(value => value !== state.period))
+        return {
+            instruction: `Откройте «Аналитика» и переключите период на «${period}»`,
+            meta: {period},
+            goal: (event, value) => event === 'period' && value === period,
+        }
+    },
+    search: state => {
+        const name = pick(state.customers)
+        return {
+            instruction: `Через поиск вверху найдите клиента «${name}» и откройте его карточку`,
+            meta: {customer: name},
+            goal: (event, value) => event === 'customer' && value === name,
+        }
+    },
+    channels: state => {
+        const wanted = Object.fromEntries(channels.map(channel => [channel, Math.random() < 0.5]))
+        if (channels.every(channel => wanted[channel] === state.saved[channel])) {
+            wanted.SMS = !wanted.SMS
+        }
+        const changes = channels.filter(channel => wanted[channel] !== state.saved[channel])
+        return {
+            instruction: `Откройте Настройки → Уведомления, ${changes.map(channel => `${wanted[channel] ? 'включите' : 'выключите'} «${channel}»`).join(', ')} и нажмите «Сохранить»`,
+            meta: {wanted},
+            goal: event => event === 'channels' && channels.every(channel => state.saved[channel] === wanted[channel]),
+        }
+    },
+    export: state => {
+        const [report] = pick(state.reports)
+        const format = pick(formats)
+        return {
+            instruction: `Откройте «Отчёты» и выгрузите «${report}» в формате ${format} (кнопка «Экспорт»)`,
+            meta: {report, format},
+            goal: (event, value) => event === 'export' && value[0] === report && value[1] === format,
+        }
+    },
+    sessions: () => ({
+        instruction: 'Откройте Настройки → Безопасность, завершите другие сеансы и подтвердите',
+        goal: (event, value) => event === 'sessions' && value,
+    }),
+}
+
+
+function panelStep(look, state, name) {
+    const op = panelOps[name](state)
+    return web('panel', name, op.instruction, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, op.meta)
+        op.prepare?.()
+        desk(record, signal, frame, look, state, (event, value) => op.goal(event, value) && done())
+    })
+}
+
+
+async function panel() {
+    const look = theme()
+    const state = office()
+    const names = sample(Object.keys(panelOps), integer(3, 5))
+    if (names.includes('logout')) {
+        names.push(...names.splice(names.indexOf('logout'), 1))
+    }
+    for (const name of names) {
+        await panelStep(look, state, name)
+    }
+}
+
+
 const readingIntro = ['Прочитайте короткий текст в своём темпе, затем ответьте на вопрос по нему.']
 const wheelHint = either('Прокручивайте колесом мыши или двумя пальцами на тачпаде, как обычно на сайтах.', 'Листайте пальцем, как привыкли.')
+const briefHint = 'Что сделать, написано в полосе над страницей сайта. Сайт иногда «думает» — подождите, как на обычном сайте.'
+const fakeData = 'Вводите выдуманные данные: любые имена, почту, пароли. Введённый текст не сохраняется в отчёт и никуда не отправляется.'
+
+const signupSection = {
+    title: 'Регистрация', run: signup,
+    intro: ['Дальше — как на настоящих сайтах. Зарегистрируйтесь: несколько страниц с полями и кнопкой «Далее».', briefHint, fakeData],
+}
+const loginSection = {
+    title: 'Вход', run: login,
+    intro: ['Войдите на сайт: почта и пароль или вход через сервис. Иногда сайт ответит «неверный пароль» — так и задумано.', briefHint, fakeData],
+}
+const recoverSection = {
+    title: 'Восстановление пароля', run: recover,
+    intro: ['Вы «забыли» пароль: восстановите его через почту. Письмо с кодом появится прямо на экране.', briefHint, fakeData],
+}
+const panelSection = {
+    title: 'Панель управления', run: panel,
+    intro: [`Панель управления магазином: разделы ${either('в меню сбоку', 'в меню ☰')}, поиск, уведомления и профиль вверху. Несколько поручений подряд.`, 'Ищите нужное как на любом сайте: через меню, страницы таблицы или поиск.', briefHint],
+}
+const widgetSection = {
+    title: 'Мелочи сайтов', run: widgets,
+    intro: ['То, что встречается на каждом сайте: баннер cookie, всплывающее окно, «Я не робот», подсказки, вопросы и ответы, вкладки.', briefHint],
+}
 
 const plan = [
-    {title: 'Начало', est: 30, run: setup},
     {
-        title: either('Клики', 'Касания'), est: 30, run: () => clicks(18, allBins, either([16, 80], [28, 60]), ['click']),
+        title: either('Клики', 'Касания'), run: () => clicks(18, allBins, either([16, 80], [28, 60]), ['click']),
         intro: ['По одной будут появляться цели — круги и прямоугольники разного размера в разных местах экрана.', `${either('Кликайте по каждой левой кнопкой', 'Нажимайте на каждую пальцем')}. Двигайтесь в обычном темпе: не нужно спешить или целиться идеально.`],
     },
     {
-        title: 'Форма', est: 50, run: orderForm,
+        title: 'Форма', run: orderForm,
         intro: ['Заполните форму заказа. Рядом с каждым полем написано, что ввести или выбрать.', 'Введённый текст не сохраняется.'],
     },
+    signupSection,
     {
-        title: 'Лента', est: 40, run: () => sequence([() => feed('down', 'short'), () => feed('down', 'medium'), () => feed('up', 'medium')]),
+        title: 'Лента', run: () => sequence([() => feed('down', 'short'), () => feed('down', 'medium'), () => feed('up', 'medium')]),
         intro: ['Лента постов на несколько экранов. Найдите выделенный пост — он ниже или выше по странице — и нажмите на него.', wheelHint],
     },
     {
-        title: 'Ожидание', est: 24, run: () => sequence([() => wait(true), () => wait(false), () => wait(true)]),
+        title: 'Ожидание', run: () => sequence([() => wait(true), () => wait(false), () => wait(true)]),
         intro: ['Иногда сайту нужно время. Дождитесь, пока появится кнопка «Продолжить», и нажмите её.', 'Пока ждёте, ведите себя как обычно.'],
     },
     {
-        title: 'Близкие цели', est: 27, run: () => clicks(22, [0, 1, 2], either([8, 28], [20, 40]), ['click']),
+        title: 'Близкие цели', run: () => clicks(22, [0, 1, 2], either([8, 28], [20, 40]), ['click']),
         intro: [`Теперь цели мелкие и появляются недалеко ${either('от курсора', 'от предыдущей')}: короткие точные движения.`],
     },
-    {title: 'Чтение', est: 45, run: () => reading(article), intro: readingIntro},
+    loginSection,
+    {title: 'Чтение', run: () => reading(article), intro: readingIntro},
     {
-        title: 'Чат', est: 40, run: () => sequence([() => nested('short', 'up'), () => nested('medium'), () => nested('huge', 'up')]),
+        title: 'Чат', run: () => sequence([() => nested('short', 'up'), () => nested('medium'), () => nested('huge', 'up')]),
         intro: ['Окно сообщений с прокруткой. Иногда нужно листать вниз, иногда вверх — к старым сообщениям. Нажмите на выделенную строку.', wheelHint],
     },
     {
-        title: 'Меню', est: 32, run: () => sequence(sample(menuPaths(menuTree, []), 3).map(path => () => menu(path))),
+        title: 'Меню', run: () => sequence(sample(menuPaths(menuTree, []), 3).map(path => () => menu(path))),
         intro: [`${either('Наведите курсор на пункт меню', 'Нажмите на пункт меню')} — раскроется подменю. Найдите и нажмите указанный пункт.`, 'Нужный путь написан вверху экрана.'],
     },
+    widgetSection,
     {
-        title: 'Дальние цели', est: 29, run: () => clicks(18, either([4, 5, 6], [3, 4]), either([12, 64], [28, 56]), ['click']),
+        title: 'Дальние цели', run: () => clicks(18, either([4, 5, 6], [3, 4]), either([12, 64], [28, 56]), ['click']),
         intro: [`Цели будут появляться далеко ${either('от курсора', 'от предыдущей')}: в другом конце экрана, сверху и снизу.`],
     },
     {
-        title: 'Метро', est: 70, run: () => windowReading(metro),
+        title: 'Метро', run: () => windowReading(metro),
         intro: ['Текст в небольшом окне с прокруткой. Прочитайте его в своём темпе, прокручивая окно, затем ответьте на вопрос.', wheelHint],
     },
+    panelSection,
     {
-        title: 'Флажки и список', est: 32, run: () => sequence([checkboxes, select]),
+        title: 'Флажки и список', run: () => sequence([checkboxes, select]),
         intro: ['Отметьте нужные флажки, затем выберите город в выпадающем списке.'],
     },
     {
-        title: 'Выписка', est: 45, run: () => sequence([() => ledger('down'), () => ledger('up')]),
+        title: 'Выписка', run: () => sequence([() => ledger('down'), () => ledger('up')]),
         intro: ['Длинная выписка, номера операций идут по порядку. Найдите нужный номер и нажмите на строку.', wheelHint],
     },
     {
-        title: 'Перерыв', est: 30, run: () => pause(25),
+        title: 'Перерыв', run: () => pause(25),
         intro: [`Перерыв 25 секунд. Можно ничего не делать или водить ${either('мышью', 'пальцем по экрану')} как угодно.`, 'Задание закончится само.'],
     },
     {
-        title: either('Двойной и правый клик', 'Двойное и долгое нажатие'), est: 36, run: () => clicks(20, allBins, either([20, 64], [32, 60]), ['dblclick', 'rightclick']),
+        title: either('Двойной и правый клик', 'Двойное и долгое нажатие'), run: () => clicks(20, allBins, either([20, 64], [32, 60]), ['dblclick', 'rightclick']),
         intro: either(['Фиолетовые цели — двойной клик левой кнопкой.', 'Жёлтые цели — один клик правой кнопкой.'], ['Фиолетовые цели — два быстрых касания.', 'Жёлтые цели — нажмите и подержите полсекунды.']),
     },
+    recoverSection,
     {
-        title: 'Прокрутка', est: 60, run: () => sequence([scrollList, () => nested('short'), () => nested('long'), sideways]),
+        title: 'Прокрутка', run: () => sequence([scrollList, () => nested('short'), () => nested('long'), sideways]),
         intro: ['Несколько заданий с прокруткой: список заказов, окно сообщений и ряд карточек, который листается вбок.', `Список заказов отсортирован по номеру. ${either('Прокручивайте как привыкли: колесом, тачпадом или полосой прокрутки.', 'Листайте пальцем, как привыкли.')}`],
     },
     {
-        title: 'Перетаскивание', est: 27, run: () => sequence([slider, cargo, cargo]),
+        title: 'Перетаскивание', run: () => sequence([slider, cargo, cargo]),
         intro: [`${either('Зажмите левую кнопку мыши', 'Прижмите пальцем')} и тяните: ползунок — до нужного значения, блок — в пунктирную рамку.`],
     },
     {
-        title: 'Разделы', est: 50, run: () => waypoints(6),
+        title: 'Разделы', run: () => waypoints(6),
         intro: ['Длинная страница с пронумерованными разделами. Внизу экрана написано, на заголовок какого раздела нажать: то ниже, то выше по странице.', wheelHint],
     },
     {
-        title: 'Мелкие цели', est: 26, run: () => clicks(15, allBins, either([8, 14], [12, 20]), ['click']),
+        title: 'Мелкие цели', run: () => clicks(15, allBins, either([8, 14], [12, 20]), ['click']),
         intro: ['Очень маленькие цели в разных местах экрана. Не торопитесь.'],
     },
     {
-        title: 'Длинная лента', est: 45, run: () => sequence([() => feed('down', 'long'), () => feed('up', 'long')]),
+        title: 'Длинная лента', run: () => sequence([() => feed('down', 'long'), () => feed('up', 'long')]),
         intro: ['Снова лента, но длиннее: выделенный пост может быть далеко.', wheelHint],
     },
     {
-        title: 'Печать', est: 32, run: typing,
+        title: 'Печать', run: typing,
         intro: ['Перепечатайте короткую фразу в поле ввода. Сам текст не сохраняется.'],
     },
     {
-        title: 'Статья', est: 80, run: longArticle,
+        title: 'Статья', run: longArticle,
         intro: ['Длинная статья на несколько экранов. Прочитайте её в своём темпе, прокручивая страницу, и нажмите кнопку в конце.', 'Потом нужно будет вернуться к одному из разделов и ответить на вопрос.'],
     },
     {
-        title: 'Длинные страницы', est: 45, run: () => sequence([longList, rulesPage]),
+        title: 'Длинные страницы', run: () => sequence([longList, rulesPage]),
         intro: ['Длинный список и длинная страница с правилами.', either('Листайте как удобно: колесом, полосой прокрутки или клавишами Page Down, пробел, стрелки.', 'Листайте пальцем, можно быстрыми движениями.')],
     },
     {
-        title: 'Финал', est: 31, run: () => clicks(18, allBins, either([8, 80], [16, 60]), ['click', 'click', 'click', 'dblclick', 'rightclick']),
-        intro: ['Последний блок: все виды целей вперемешку.', either('Синие — обычный клик, фиолетовые — двойной, жёлтые — правой кнопкой.', 'Синие — одно касание, фиолетовые — два касания, жёлтые — долгое нажатие.')],
+        title: 'Финал', run: () => clicks(18, allBins, either([8, 80], [16, 60]), ['click', 'click', 'click', 'dblclick', 'rightclick']),
+        intro: ['Все виды целей вперемешку.', either('Синие — обычный клик, фиолетовые — двойной, жёлтые — правой кнопкой.', 'Синие — одно касание, фиолетовые — два касания, жёлтые — долгое нажатие.')],
     },
 ]
-const total = plan.reduce((sum, step) => sum + step.est, 0)
-let completed = 0
-let stepStarted = 0
+const directions = ['down', 'up']
+const bonus = [
+    [4, signupSection],
+    [3, loginSection],
+    [3, recoverSection],
+    [4, panelSection],
+    [4, widgetSection],
+    [1, {title: either('Клики', 'Касания'), run: () => clicks(12, allBins, either([16, 80], [28, 60]), ['click'])}],
+    [1, {title: 'Близкие цели', run: () => clicks(15, [0, 1, 2], either([8, 28], [20, 40]), ['click'])}],
+    [1, {title: 'Дальние цели', run: () => clicks(12, either([4, 5, 6], [3, 4]), either([12, 64], [28, 56]), ['click'])}],
+    [1, {title: 'Мелкие цели', run: () => clicks(10, allBins, either([8, 14], [12, 20]), ['click'])}],
+    [1, {title: either('Двойной и правый клик', 'Двойное и долгое нажатие'), run: () => clicks(12, allBins, either([20, 64], [32, 60]), ['dblclick', 'rightclick'])}],
+    [1, {title: 'Лента', run: () => sequence([() => feed(pick(directions), pick(['short', 'medium'])), () => feed(pick(directions), pick(['medium', 'long']))])}],
+    [1, {title: 'Чат', run: () => sequence([() => nested(pick(['short', 'medium']), pick(directions)), () => nested(pick(['long', 'huge']), pick(directions))])}],
+    [1, {title: 'Выписка', run: () => ledger(pick(directions))}],
+    [1, {title: 'Прокрутка', run: () => sequence(sample([scrollList, sideways, longList, rulesPage], 2))}],
+    [1, {title: 'Разделы', run: () => waypoints(integer(4, 6))}],
+    [1, {title: 'Ожидание', run: () => sequence([() => wait(Math.random() < 0.5), () => wait(Math.random() < 0.5)])}],
+    [1, {title: 'Меню', run: () => sequence(sample(menuPaths(menuTree, []), 2).map(path => () => menu(path)))}],
+    [1, {title: 'Перетаскивание', run: () => sequence(shuffle([slider, cargo]))}],
+    [1, {title: 'Флажки и список', run: () => sequence([checkboxes, select])}],
+    [1, {title: 'Форма', run: orderForm}],
+    [1, {title: 'Печать', run: typing}],
+]
+
+
+function extra(previous) {
+    const options = bonus.filter(([, step]) => step !== previous)
+    let roll = Math.random() * options.reduce((sum, [weight]) => sum + weight, 0)
+    return options.find(([weight]) => (roll -= weight) < 0)[1]
+}
+
+
+const remaining = () => Math.max(0, examMinutes * 60 - (examStart === null ? 0 : (performance.now() - examStart) / 1000))
 
 
 function updateBar() {
-    const over = !plan.includes(section)
-    const left = over ? 0 : total - completed - Math.min((performance.now() - stepStarted) / 1000, section.est)
+    const left = remaining()
     const invalid = active?.record.valid === false
     $('section').textContent = section.title
     $('counter').textContent = counter
-    $('progress').style.width = `${(1 - left / total) * 100}%`
-    $('remaining').textContent = `${either('осталось ', '')}≈ ${clock(left)}`
-    $('remaining').hidden = over
+    $('progress').style.width = `${(1 - left / (examMinutes * 60)) * 100}%`
+    $('remaining').textContent = left ? `${either('осталось ', '')}${clock(left)}` : either('время вышло — закончите блок', 'закончите блок')
+    $('remaining').hidden = finished
     $('notice').hidden = !invalid
     $('restart').classList.toggle('on', invalid)
-    $('restart').hidden = over
+    $('restart').hidden = finished
     $('export').hidden = !finished
-    $('fullscreen').hidden = section === plan[0] || over || !document.fullscreenEnabled || Boolean(document.fullscreenElement)
+    $('fullscreen').hidden = examStart === null || finished || !document.fullscreenEnabled || Boolean(document.fullscreenElement)
 }
 
 
@@ -1709,12 +3392,12 @@ function finale() {
     const box = card(`
         <h2>Экзамен окончен</h2>
         <div class="form report">
-            <span>Время</span><span>${clock((performance.now() - tasks[0].tEnd) / 1000)}</span>
+            <span>Время</span><span>${clock((performance.now() - examStart) / 1000)}</span>
             <span>Пройдено заданий</span><span>${passed.length}</span>
             <span>Ответы на вопросы</span><span>${questions.filter(record => record.meta.correct).length} из ${questions.length}</span>
         </div>
         <p class="hint">Отчёт содержит ответы и ход выполнения заданий: действия и ${either('движение курсора', 'касания экрана')}, без введённого текста.</p>
-        <p class="hint">Скачайте отчёт и сохраните или отправьте его до закрытия вкладки, иначе он пропадёт.</p>
+        <p class="hint">Скачается файл ${reportName} — отправьте именно его, не распаковывая. Сохраните или отправьте его до закрытия вкладки, иначе отчёт пропадёт.</p>
         <div class="actions"><button class="on big">Скачать отчёт</button></div>`, true)
     box.querySelector('button').addEventListener('click', download)
 }
@@ -1737,18 +3420,34 @@ function measureHz(duration) {
 }
 
 
-async function main() {
-    for (const step of plan) {
-        section = step
-        counter = ''
-        stepStarted = performance.now()
-        if (step.intro) {
-            await read(step.title, step.intro, 'Понятно, начать')
-        }
-        await step.run()
-        completed += step.est
+async function enter(step, intro) {
+    section = step
+    counter = ''
+    if (intro) {
+        await read(step.title, intro, 'Понятно, начать')
     }
-    section = {title: 'Готово', est: 0}
+    await step.run()
+}
+
+
+async function main() {
+    section = {title: 'Начало'}
+    examStart = (await setup()).tEnd
+    for (const step of plan) {
+        if (!remaining()) {
+            break
+        }
+        await enter(step, step.intro)
+    }
+    if (remaining()) {
+        await enter({title: 'Дополнительные задания', run: () => read('Дополнительные задания', [`Основные задания пройдены. До конца экзамена ещё ${clock(remaining())} — дальше случайные задания из разных блоков.`, 'Отчёт можно будет скачать, когда пройдёт 20 минут и закончится текущий блок.'], 'Продолжить')})
+    }
+    let step = null
+    while (remaining()) {
+        step = extra(step)
+        await enter(step)
+    }
+    section = {title: 'Готово'}
     counter = ''
     finished = true
     updateBar()
@@ -1761,7 +3460,7 @@ new MutationObserver(scheduleLayout).observe(stage, {childList: true, subtree: t
 stage.addEventListener('transitionend', scheduleLayout)
 addEventListener('resize', scheduleLayout)
 visualViewport?.addEventListener('resize', scheduleLayout)
-addEventListener('scroll', e => e.target.classList?.contains('screen') && scheduleLayout(), {capture: true, passive: true})
+addEventListener('scroll', e => e.target.matches?.('.screen, .site, .app > main, .backdrop') && scheduleLayout(), {capture: true, passive: true})
 $('restart').addEventListener('click', () => active?.restart())
 $('fullscreen').addEventListener('click', fullscreen)
 if (coarse) {
