@@ -341,6 +341,139 @@
   .frame .pages button{min-width:38px; padding:6px 10px}
   .frame .toolbar button.current, .frame .pages button.current, .frame .segmented button.current{background:var(--s-brand); border-color:var(--s-brand); color:var(--s-on-brand)}
   .frame .back{align-self:flex-start}
+  .crumbs{display:flex; flex-wrap:wrap; gap:4px 8px; font-size:13px; color:var(--s-dim)}
+  .crumbs > span + span::before{content:'›'; margin-right:8px}
+  .frame textarea{display:block; min-height:92px; padding:9px 12px; font:inherit; color:var(--s-text); background:var(--s-field); border:1px solid var(--s-line); border-radius:var(--s-radius)}
+  .frame textarea:focus{border-color:var(--s-brand); box-shadow:0 0 0 3px color-mix(in srgb, var(--s-brand) 25%, transparent)}
+  .frame textarea::placeholder{color:var(--s-dim); opacity:.8}
+  .columns{display:flex; gap:28px; align-items:flex-start}
+  .columns.flip{flex-direction:row-reverse}
+  .columns.stack{flex-direction:column; align-items:stretch}
+  .columns > .side{flex:0 0 250px; display:flex; flex-direction:column; gap:14px; min-width:0}
+  .columns.stack > .side{flex:none; flex-direction:row; flex-wrap:wrap; align-items:flex-start}
+  .columns > .body{flex:1; min-width:0; display:flex; flex-direction:column; gap:16px}
+  .plate{display:flex; flex-direction:column; align-items:flex-start; gap:10px; padding:16px; background:var(--s-card); border:1px solid var(--s-line); border-radius:var(--s-radius)}
+  .frame .plate h2{font-size:15px}
+  .plate.wide{align-items:stretch}
+  .art{flex:none; display:flex; align-items:center; justify-content:center; border-radius:var(--s-radius); background:color-mix(in srgb, var(--art) 16%, var(--s-card)); color:var(--art)}
+  .art svg{width:64%; height:64%}
+  .art.tiny{width:56px; height:56px}
+  .offer > .art, .plate > .art{align-self:stretch; height:110px}
+  .frame .split > .dropdown{min-width:200px}
+  .goods{display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:16px}
+  .good{display:flex; flex-direction:column; gap:4px; padding:12px; background:var(--s-card); border:1px solid var(--s-line); border-radius:var(--s-radius); cursor:pointer}
+  .good .art{height:150px; margin-bottom:6px}
+  .price{font-size:18px; font-weight:700; color:var(--s-strong)}
+  .old{margin-left:8px; font-size:13px; color:var(--s-dim); text-decoration:line-through}
+  .score{color:#f5a623; letter-spacing:1px}
+  .ava{display:inline-flex; flex:none; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; color:#fff; font-size:14px; font-weight:700}
+  .who{display:flex; align-items:center; gap:10px}
+  .finder{position:relative; display:flex; gap:8px; width:min(560px, 100%)}
+  .finder > input{flex:1}
+  .popover{position:absolute; z-index:9; top:calc(100% + 6px); left:0; padding:12px; background:var(--s-card); color:var(--s-text); border:1px solid var(--s-line); border-radius:var(--s-radius); box-shadow:0 10px 30px rgba(0,0,0,.18)}
+  .popover.up{top:auto; bottom:calc(100% + 6px)}
+  .popover.calpop{width:max-content; max-width:calc(100vw - 32px)}
+  .popover.hints{right:0; display:flex; flex-direction:column; padding:6px}
+  .frame .hints button{display:flex; justify-content:space-between; gap:12px; padding:8px 10px; border:0; background:none; text-align:left}
+  .frame .hints button:hover{background:color-mix(in srgb, var(--s-brand) 12%, transparent)}
+  .hints p{padding:6px 10px}
+  .picker{position:relative; display:flex; gap:12px}
+  .picker > .field{flex:1; min-width:0}
+  .frame .datefield{display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%; padding:9px 12px; text-align:left; white-space:nowrap}
+  .datefield::after{content:'▾'; color:var(--s-dim)}
+  .datefield[data-index]::after{content:''; flex:none; width:15px; height:14px; box-sizing:border-box; border:2px solid var(--s-dim); border-top-width:5px; border-radius:3px}
+  .calendar{position:relative}
+  .months{display:flex; flex-wrap:wrap; gap:12px 24px}
+  .month-grid{display:grid; grid-template-columns:repeat(7, 36px); gap:2px; text-align:center}
+  .month-grid > b{grid-column:1 / -1; line-height:34px; color:var(--s-strong)}
+  .month-grid > small{font-size:12px; line-height:24px; color:var(--s-dim)}
+  .frame .month-grid button{width:36px; height:34px; padding:0; border:0; background:none}
+  .frame .month-grid button:hover{background:color-mix(in srgb, var(--s-brand) 14%, transparent)}
+  .frame .month-grid button.today{box-shadow:inset 0 0 0 1px var(--s-line)}
+  .frame .month-grid button.between{background:color-mix(in srgb, var(--s-brand) 16%, transparent); border-radius:0}
+  .frame .month-grid button.picked{background:var(--s-brand); color:var(--s-on-brand); font-weight:600}
+  .frame .month-grid button:disabled{opacity:.3}
+  .frame .calendar .arrow{position:absolute; top:0; width:34px; height:34px; padding:0; font-size:18px; line-height:1}
+  .frame .calendar .prev{left:0}
+  .frame .calendar .next{right:0}
+  .stars{display:flex; align-items:center; gap:2px}
+  .frame .stars button{width:42px; height:42px; padding:0; border:0; background:none; font-size:32px; line-height:1; color:var(--s-line)}
+  .frame .stars button.lit{color:#f5a623}
+  .stars span{margin-left:10px; color:var(--s-dim)}
+  .verdict{display:flex; flex-wrap:wrap; align-items:center; gap:14px 24px; width:100%}
+  .grade{font-size:46px; font-weight:700; line-height:1; color:var(--s-strong)}
+  .bars{flex:1; min-width:160px; display:flex; flex-direction:column; gap:3px; font-size:12px; color:var(--s-dim)}
+  .bars > div{display:grid; grid-template-columns:14px 1fr 30px; gap:8px; align-items:center}
+  .bars i{height:6px; border-radius:3px; background:linear-gradient(90deg, #f5a623 var(--w), var(--s-line) 0)}
+  .opinion{display:flex; flex-direction:column; align-items:flex-start; gap:6px; width:100%; padding:16px; background:var(--s-card); border:1px solid var(--s-line); border-radius:var(--s-radius)}
+  .topics{display:grid; grid-template-columns:repeat(auto-fill, minmax(170px, 1fr)); gap:12px}
+  .frame .topics button{display:flex; flex-direction:column; align-items:flex-start; gap:8px; padding:16px; text-align:left; background:var(--s-card)}
+  .topics i{display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:color-mix(in srgb, var(--s-brand) 15%, transparent); color:var(--s-brand); font-style:normal; font-size:18px}
+  .topics small{color:var(--s-dim)}
+  .links{display:flex; flex-direction:column; width:100%}
+  .frame .links a{padding:12px 4px; border-bottom:1px solid var(--s-line); text-decoration:none}
+  .frame .links a.current{color:var(--s-strong); font-weight:600}
+  .navlist{display:flex; flex-direction:column; gap:2px; width:100%}
+  .frame .navlist button{padding:10px 12px; border:0; background:none; text-align:left}
+  .frame .navlist button.current{background:color-mix(in srgb, var(--s-brand) 14%, transparent); color:var(--s-strong); font-weight:600}
+  .showcase{display:flex; flex-wrap:wrap; gap:32px; align-items:flex-start}
+  .showcase.flip{flex-direction:row-reverse}
+  .gallery{flex:1 1 320px; max-width:460px; display:flex; flex-direction:column; gap:10px}
+  .gallery > .art{height:320px}
+  .thumbs{display:flex; gap:8px}
+  .frame .thumbs button{flex:1; height:64px; padding:0; overflow:hidden}
+  .thumbs .art{height:100%; border-radius:0}
+  .frame .thumbs button.chosen{border-color:var(--s-brand); box-shadow:0 0 0 1px var(--s-brand)}
+  .buybox{flex:1 1 300px; display:flex; flex-direction:column; align-items:flex-start; gap:12px}
+  .swatches{display:flex; flex-wrap:wrap; gap:8px}
+  .frame .swatches button{min-width:46px; padding:7px 12px}
+  .frame .swatches button.chosen{border-color:var(--s-brand); box-shadow:0 0 0 1px var(--s-brand); color:var(--s-strong); font-weight:600}
+  .frame .swatches .dot{width:34px; height:34px; min-width:0; padding:0; border-radius:50%; border:3px solid var(--s-card); box-shadow:0 0 0 1px var(--s-line)}
+  .frame .swatches .dot.chosen{box-shadow:0 0 0 2px var(--s-brand)}
+  .stepper{display:inline-flex; align-items:center; border:1px solid var(--s-line); border-radius:var(--s-radius); overflow:hidden}
+  .frame .stepper button{width:36px; height:36px; padding:0; border:0; border-radius:0; font-size:18px; line-height:1}
+  .stepper span{min-width:36px; text-align:center; font-weight:600; color:var(--s-strong)}
+  .variants{display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:10px}
+  .variant{display:flex; align-items:flex-start; gap:10px; padding:12px; background:var(--s-card); border:1px solid var(--s-line); border-radius:var(--s-radius); cursor:pointer}
+  .variant:has(input:checked){border-color:var(--s-brand); box-shadow:0 0 0 1px var(--s-brand)}
+  .frame .variant input{width:auto; margin:3px 0 0; padding:0; accent-color:var(--s-brand); box-shadow:none}
+  .variant small{display:block; color:var(--s-dim)}
+  .pricebar{position:relative; height:28px; margin:0 11px; cursor:pointer; touch-action:none}
+  .pricebar::before{content:''; position:absolute; inset:12px 0 auto; height:4px; border-radius:2px; background:linear-gradient(90deg, var(--s-brand) var(--fill, 100%), var(--s-line) 0)}
+  .pricebar > i{position:absolute; top:3px; width:22px; height:22px; margin-left:-11px; border-radius:50%; background:var(--s-card); border:3px solid var(--s-brand); box-shadow:0 1px 4px rgba(0,0,0,.25)}
+  .backdrop.toside{padding:0}
+  .frame .site > header .user{color:inherit}
+  .frame .site > header.colored .user i{background:var(--s-on-brand); color:var(--s-brand)}
+  .cartbox{position:relative; width:min(440px, 100%); margin-left:auto; display:flex; flex-direction:column; gap:14px; padding:22px; background:var(--s-card); box-shadow:-8px 0 30px rgba(0,0,0,.25)}
+  .cartline{display:grid; grid-template-columns:64px 1fr; gap:6px 12px; padding-bottom:14px; border-bottom:1px solid var(--s-line)}
+  .cartline .art{grid-row:span 2; height:64px}
+  .cartline .split{flex-wrap:wrap}
+  .cartline.gone{display:flex; justify-content:space-between; align-items:center; gap:12px; color:var(--s-dim)}
+  .totals{display:flex; flex-direction:column; gap:6px; width:100%}
+  .stay{display:grid; grid-template-columns:180px 1fr auto; gap:16px; padding:14px; background:var(--s-card); border:1px solid var(--s-line); border-radius:var(--s-radius)}
+  .stay .art{height:130px}
+  .stay > div{display:flex; flex-direction:column; align-items:flex-start; gap:6px; min-width:0}
+  .stay > div:last-child{align-items:flex-end; justify-content:space-between; text-align:right}
+  .rate{display:inline-block; padding:2px 8px; border-radius:6px 6px 6px 0; background:var(--s-brand); color:var(--s-on-brand); font-size:13px; font-weight:700}
+  .searchbar{display:grid; grid-template-columns:1fr 1.6fr 1fr auto; gap:12px; align-items:end; width:100%; padding:18px; background:var(--s-card); color:var(--s-text); border:1px solid var(--s-line); border-radius:var(--s-radius); box-shadow:0 4px 18px rgba(0,0,0,.08)}
+  .searchbar.tall{grid-template-columns:1fr; width:min(520px, 100%)}
+  .guests{display:flex; flex-direction:column; gap:12px; min-width:250px}
+  .address, .firm{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; width:100%; padding:14px 16px; background:var(--s-card); border:1px solid var(--s-line); border-radius:var(--s-radius)}
+  @media (hover:hover){
+    .good:hover, .stay:hover{border-color:var(--s-brand)}
+  }
+  @media (max-width:760px){
+    .columns, .columns.flip{flex-direction:column; align-items:stretch}
+    .columns > .side{flex:none}
+    .navlist{flex-direction:row; flex-wrap:wrap}
+    .stay{grid-template-columns:96px 1fr}
+    .stay .art{height:96px}
+    .stay > div:last-child{grid-column:1 / -1; flex-direction:row; align-items:center}
+    .searchbar{grid-template-columns:1fr}
+    .picker{flex-wrap:wrap}
+    .gallery > .art{height:240px}
+    .goods{grid-template-columns:repeat(auto-fill, minmax(150px, 1fr))}
+  }
   @media (max-width:760px){
     .app, .app.flip{grid-template:var(--s-head-height) 1fr / 1fr; grid-template-areas:'top' 'main'}
     .app > aside{display:none; position:absolute; z-index:12; inset:0 auto 0 0; width:min(260px, 80%); box-shadow:8px 0 30px rgba(0,0,0,.3)}
@@ -957,7 +1090,7 @@ function card(markup, steady = false) {
 }
 
 
-const layoutSelector = '#bar, #bar button, #bar a, .screen, .page, .card, h1, h2, h3, p, .banner, .scroller, .scroller > *, .post, .phrase, .tip, .form > span, .chip, input, textarea, button, .dropdown .current, .options, .options > div, .menubar, .menubar li > span, .list, .list .item, .slider, .handle, .slot, .cargo, .target, .countdown, .spinner, .web, .brief, .frame, .site > header, .site > main, .site > footer, .sheet, .hero, .offer, .frame [data-mark], .frame label, .frame td, .frame th, .backdrop, .modal, .toast, .cookie, .mail, .tooltip, .skeleton, .app > aside, .app > header, .app > main, .pop, .stat, .chart'
+const layoutSelector = '#bar, #bar button, #bar a, .screen, .page, .card, h1, h2, h3, p, .banner, .scroller, .scroller > *, .post, .phrase, .tip, .form > span, .chip, input, textarea, button, .dropdown .current, .options, .options > div, .menubar, .menubar li > span, .list, .list .item, .slider, .handle, .slot, .cargo, .target, .countdown, .spinner, .web, .brief, .frame, .site > header, .site > main, .site > footer, .sheet, .hero, .offer, .frame [data-mark], .frame label, .frame td, .frame th, .backdrop, .modal, .toast, .cookie, .mail, .tooltip, .skeleton, .app > aside, .app > header, .app > main, .pop, .stat, .chart, .crumbs, .plate, .popover, .calendar, .cartbox, .good, .stay, .opinion, .address, .firm'
 const textSelector = 'h1, h2, h3, p, .banner, .phrase, .tip, .form > span, .countdown, .brief, .frame label, .frame td, .toast, .mail, .tooltip'
 const scrollSelector = '.screen, .list, .options, .scroller, .site, .app > main, .backdrop'
 let layoutPending = false
@@ -1300,7 +1433,7 @@ function setup() {
         const box = card(`
             <h2>Онлайн-экзамен</h2>
             <p>20 минут простых заданий: клики по целям, формы, чтение, ожидание, меню, прокрутка, перетаскивание и действия на сайтах — регистрация, вход, панель управления. Работайте в обычном темпе, как на любом сайте: не нужно спешить или целиться идеально.</p>
-            <p class="hint">Если основные задания закончатся раньше, дальше пойдут дополнительные. Отчёт можно скачать, когда пройдёт 20 минут и закончится текущий блок.</p>
+            <p class="hint">Отчёт можно скачать, когда пройдёт 20 минут и закончится текущий блок.</p>
             <p class="hint">В формах вводите выдуманные данные: имя, почту, пароль — любые. Введённый текст не сохраняется. Ничего никуда не отправляется: в конце вы сами скачаете отчёт.</p>
             <p class="hint">Если отвлеклись — «задание заново» вверху.${document.fullscreenEnabled ? ' Вышли из полноэкранного режима — верните кнопкой «полный экран» вверху.' : ''}</p>
             <div class="form">
@@ -3277,6 +3410,1416 @@ async function panel() {
 }
 
 
+const monthsGenitive = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
+const dateOf = (year, month, day) => new Date(year, month, day)
+const addDays = (date, days) => dateOf(date.getFullYear(), date.getMonth(), date.getDate() + days)
+const monthDays = (year, month) => dateOf(year, month + 1, 0).getDate()
+const two = value => String(value).padStart(2, '0')
+const dotted = date => `${two(date.getDate())}.${two(date.getMonth() + 1)}.${date.getFullYear()}`
+const iso = date => `${date.getFullYear()}-${two(date.getMonth() + 1)}-${two(date.getDate())}`
+const same = (a, b) => Boolean(a && b) && a.getTime() === b.getTime()
+const plural = (count, one, few, many) => count % 10 === 1 && count % 100 !== 11 ? one : [2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100) ? few : many
+
+
+function today() {
+    const now = new Date()
+    return dateOf(now.getFullYear(), now.getMonth(), now.getDate())
+}
+
+
+const spoken = (date, year = false) => `${date.getDate()} ${monthsGenitive[date.getMonth()]}${year || date.getFullYear() !== today().getFullYear() ? ` ${date.getFullYear()}` : ''}`
+
+
+function monthGrid(month, limits, chosen) {
+    const year = month.getFullYear()
+    const index = month.getMonth()
+    const offset = (month.getDay() + 6) % 7
+    const now = today()
+    const cells = Array.from({length: monthDays(year, index)}, (_, number) => {
+        const date = dateOf(year, index, number + 1)
+        const inside = chosen.from && chosen.to && date > chosen.from && date < chosen.to
+        const classes = [same(date, chosen.from) || same(date, chosen.to) ? 'picked' : '', inside ? 'between' : '', same(date, now) ? 'today' : ''].filter(Boolean).join(' ')
+        const off = limits.min && date < limits.min || limits.max && date > limits.max
+        return `<button type="button" data-day="${date.getTime()}" data-mark="${number + 1} ${monthsGenitive[index]}"${classes ? ` class="${classes}"` : ''}${number ? '' : ` style="grid-column:${offset + 1}"`}${off ? ' disabled' : ''}>${number + 1}</button>`
+    })
+    return `<div class="month-grid"><b>${monthNames[index]} ${year}</b>${weekdays.map(name => `<small>${name}</small>`).join('')}${cells.join('')}</div>`
+}
+
+
+function calendar(stats, count, view, limits, chosen, choose) {
+    const element = html('<div class="calendar"></div>')
+    let first = dateOf(view.getFullYear(), view.getMonth(), 1)
+    const draw = () => {
+        const last = dateOf(first.getFullYear(), first.getMonth() + count, 0)
+        const months = Array.from({length: count}, (_, index) => monthGrid(dateOf(first.getFullYear(), first.getMonth() + index, 1), limits, chosen))
+        element.innerHTML = `<button type="button" class="arrow prev" data-move="-1" data-mark="Предыдущий месяц"${limits.min && first <= limits.min ? ' disabled' : ''}>‹</button><button type="button" class="arrow next" data-move="1" data-mark="Следующий месяц"${limits.max && last >= limits.max ? ' disabled' : ''}>›</button><div class="months">${months.join('')}</div>`
+    }
+    element.addEventListener('click', e => {
+        const move = e.target.closest('[data-move]')
+        const cell = e.target.closest('[data-day]')
+        if (move) {
+            first = dateOf(first.getFullYear(), first.getMonth() + Number(move.dataset.move), 1)
+            stats.moves++
+        } else if (cell) {
+            stats.picks++
+            choose(new Date(Number(cell.dataset.day)))
+        } else {
+            return
+        }
+        draw()
+    })
+    draw()
+    return element
+}
+
+
+function place(pop) {
+    pop.classList.remove('up')
+    pop.style.left = pop.style.right = ''
+    const frame = pop.closest('.frame').getBoundingClientRect()
+    const anchor = pop.parentElement.getBoundingClientRect()
+    let box = pop.getBoundingClientRect()
+    if (box.right > frame.right - 8) {
+        pop.style.left = `${Math.max(frame.left + 8, frame.right - 8 - box.width) - anchor.left}px`
+        box = pop.getBoundingClientRect()
+    }
+    if (box.bottom > frame.bottom - 8 && anchor.top - frame.top > box.height + 16) {
+        pop.classList.add('up')
+    }
+}
+
+
+function datePicker(record, signal, labels, {count = 1, view = null, min = null, max = null, value = null} = {}) {
+    const range = labels.length === 2
+    const element = html(`<div class="picker">${labels.map((label, index) => `<div class="field"><span>${label}</span><button type="button" class="datefield" data-index="${index}" data-mark="${label}"></button></div>`).join('')}<div class="popover calpop" hidden></div></div>`)
+    const chosen = {from: value, to: null}
+    const fields = element.querySelectorAll('.datefield')
+    const pop = element.lastElementChild
+    const stats = record.meta.calendar ??= {opens: 0, moves: 0, picks: 0}
+    let editing = 0
+    const show = () => {
+        fields[0].textContent = chosen.from ? dotted(chosen.from) : 'дд.мм.гггг'
+        if (range) {
+            fields[1].textContent = chosen.to ? dotted(chosen.to) : 'дд.мм.гггг'
+        }
+    }
+    pop.append(calendar(stats, count, view ?? value ?? today(), {min, max}, chosen, date => {
+        if (!range) {
+            chosen.from = date
+            pop.hidden = true
+        } else if (editing === 0 || !chosen.from || date <= chosen.from) {
+            chosen.from = date
+            chosen.to = null
+            editing = 1
+        } else {
+            chosen.to = date
+            pop.hidden = true
+        }
+        show()
+    }))
+    element.addEventListener('click', e => {
+        const field = e.target.closest('.datefield')
+        if (!field) {
+            return
+        }
+        const index = range && chosen.from ? Number(field.dataset.index) : 0
+        const reopen = !pop.hidden && index !== editing
+        editing = index
+        pop.hidden = reopen ? false : !pop.hidden
+        if (!pop.hidden) {
+            stats.opens++
+            place(pop)
+        }
+    })
+    addEventListener('pointerdown', e => element.contains(e.target) || (pop.hidden = true), {signal})
+    show()
+    return {element, chosen}
+}
+
+
+function suggest(input, names, notes, signal, choose) {
+    const list = html('<div class="popover hints" hidden data-private></div>')
+    input.after(list)
+    let token = 0
+    const lookup = () => {
+        const text = input.value.trim().toLowerCase()
+        const current = ++token
+        later(signal, 250, () => {
+            if (current !== token) {
+                return
+            }
+            const found = names.map((name, index) => [name.toLowerCase(), index]).filter(([name]) => name.includes(text)).sort((a, b) => b[0].startsWith(text) - a[0].startsWith(text)).slice(0, 6)
+            list.innerHTML = found.map(([, index], order) => `<button type="button" data-pick="${index}" data-mark="Подсказка ${order + 1}"><span>${names[index]}</span><small class="muted">${notes[index]}</small></button>`).join('') || '<p class="muted">Ничего не найдено</p>'
+            list.hidden = !text
+        })
+    }
+    input.addEventListener('input', lookup)
+    input.addEventListener('focus', () => input.value.trim() && lookup())
+    list.addEventListener('click', e => {
+        const button = e.target.closest('[data-pick]')
+        if (button) {
+            list.hidden = true
+            choose(Number(button.dataset.pick))
+        }
+    })
+    addEventListener('pointerdown', e => input.parentElement.contains(e.target) || (list.hidden = true), {signal})
+    return lookup
+}
+
+
+function steppers(root, change = () => {}) {
+    root.addEventListener('click', e => {
+        const button = e.target.closest('[data-step]')
+        if (!button) {
+            return
+        }
+        const box = button.parentElement
+        const value = Math.min(Number(box.dataset.max), Math.max(Number(box.dataset.min), Number(box.dataset.value) + Number(button.dataset.step)))
+        box.dataset.value = box.querySelector('span').textContent = value
+        change(box, value)
+    })
+}
+
+
+const stepper = (mark, value, min, max) => `<div class="stepper" data-value="${value}" data-min="${min}" data-max="${max}"><button type="button" data-step="-1" data-mark="${mark}: меньше">−</button><span>${value}</span><button type="button" data-step="1" data-mark="${mark}: больше">+</button></div>`
+const variant = (name, value, title, note, checked = false) => `<label class="variant" data-mark="${title}"><input type="radio" name="${name}" value="${value}"${checked ? ' checked' : ''}><span><b>${title}</b><small>${note}</small></span></label>`
+const crumbs = items => `<div class="crumbs">${items.map(item => `<span>${item}</span>`).join('')}</div>`
+const starLine = rating => `<span class="score">${'★'.repeat(Math.round(rating))}${'☆'.repeat(5 - Math.round(rating))}</span>`
+const money = value => `${value.toLocaleString('ru-RU')} ₽`
+const area = (label, mark, rows = 4) => `<div class="field"><span>${label}</span><textarea rows="${rows}" data-mark="${mark}" autocomplete="off" spellcheck="false"></textarea></div>`
+const windows = Array.from({length: 15}, (_, index) => `<rect x="${29 + index % 3 * 15}" y="${26 + Math.floor(index / 3) * 11}" width="9" height="6" style="fill:var(--s-card)" opacity=".8"/>`).join('')
+const drawings = {
+    tee: '<path d="M34 14 18 22 6 40l14 8 6-10v48h48V38l6 10 14-8-12-18-16-8c-2 7-8 11-16 11s-14-4-16-11z"/>',
+    hoodie: '<path d="M36 16c2-8 26-8 28 0l14 8 12 22-12 6-6-10v46H28V42l-6 10-12-6 12-22z"/><path d="M40 18c0 10 20 10 20 0" fill="none" style="stroke:var(--s-card)" stroke-width="3"/>',
+    jacket: '<path d="M38 12h24l18 10 10 60H74V44l-4 44H30l-4-44v38H10l10-60z"/><path d="M50 22v66" style="stroke:var(--s-card)" stroke-width="3"/>',
+    sneaker: '<path d="M8 58c2-10 6-16 14-16l14-2c6 8 16 12 28 12l18 6c8 2 12 8 12 14v6H8z"/><path d="M8 72h88v6H8z" style="fill:var(--s-card)" opacity=".6"/>',
+    cap: '<path d="M18 62c0-22 14-34 32-34s32 12 32 34z"/><path d="M50 62h44c0 6-6 10-14 10H50z"/>',
+    bag: '<rect x="22" y="30" width="56" height="60" rx="12"/><path d="M38 30c0-16 24-16 24 0" fill="none" stroke="currentColor" stroke-width="6"/><rect x="34" y="54" width="32" height="18" rx="4" style="fill:var(--s-card)" opacity=".5"/>',
+    hotel: `<path d="M18 92V20l32-10 32 10v72z"/>${windows}<rect x="42" y="80" width="16" height="12" style="fill:var(--s-card)"/>`,
+    bed: '<path d="M8 74V30h8v26h18v-8c0-5 3-8 8-8h12v16h30c5 0 8 3 8 8v10h-8v-6H16v6z"/><circle cx="26" cy="46" r="7"/>',
+}
+const views = ['', 'rotate(-12deg)', 'scale(1.3)', 'scaleX(-1)']
+const art = (kind, hue, view = '') => `<div class="art" style="--art:hsl(${hue} 55% 48%)"><svg viewBox="0 0 100 100" fill="currentColor"${view ? ` style="transform:${view}"` : ''}>${drawings[kind]}</svg></div>`
+
+
+function arrive(record, signal, frame, look, tools, markup, wire, load = true) {
+    const main = browse(look, frame, load ? skeleton() : '', true)
+    frame.querySelector('.account').innerHTML = tools
+    mark(record, frame.querySelectorAll('header [data-mark]'))
+    const show = () => {
+        main.innerHTML = markup()
+        wire(main)
+        mark(record, main.querySelectorAll('[data-mark]'))
+    }
+    if (load) {
+        delay(record, signal, show)
+    } else {
+        show()
+    }
+}
+
+
+function leave(record, signal, frame, then) {
+    const site = frame.querySelector('.site')
+    const main = site.querySelector(':scope > main')
+    if (main.classList.contains('leaving')) {
+        return
+    }
+    frame.querySelector('.backdrop')?.remove()
+    main.className = 'wide leaving'
+    main.innerHTML = skeleton()
+    site.scrollTop = 0
+    delay(record, signal, then)
+}
+
+
+function refresh(record, signal, container, render) {
+    const token = String(Number(container.dataset.token ?? 0) + 1)
+    container.dataset.token = token
+    container.innerHTML = Math.random() < 0.4 ? '<div class="spinner"></div>' : skeleton()
+    delay(record, signal, () => {
+        if (container.dataset.token !== token) {
+            return false
+        }
+        render()
+    })
+}
+
+
+const reviewTopics = [
+    ['Интернет-магазины', '🛍', ['Корзинка', 'Маркетон', 'Покупайка', 'Сундучок', 'Витрина 24', 'Хватайка', 'Базарчик', 'Лавка Онлайн']],
+    ['Доставка еды', '🍲', ['Вкусновоз', 'Супчик', 'Еда Плюс', 'Пицца Сразу', 'Обед Экспресс', 'Котелок', 'Самобранка', 'Ложкин']],
+    ['Банки', '🏦', ['Монетбанк', 'Рублика', 'Копилка Банк', 'Северный Капитал', 'Финпорт', 'Банк Опора', 'Грошик', 'Казна Банк']],
+    ['Связь и интернет', '📶', ['Волна Телеком', 'Сигналка', 'Дальсвязь', 'Антеннка', 'Провод Плюс', 'Эфирика', 'Сота Мобайл', 'Мачта']],
+    ['Бытовая техника', '🔌', ['Теплодом', 'Аквалюкс Про', 'Вихрь Техно', 'Домовёнок', 'Пылесосыч', 'Гудок', 'Холодок', 'Искорка']],
+    ['Путешествия', '✈', ['Чемоданчик', 'Турист Онлайн', 'Крыло Авиа', 'Перелётка', 'Отпуск Сразу', 'Маршрутик', 'Компас Тур', 'Бережок']],
+]
+const opinions = [
+    [5, 'Всё быстро и вежливо', 'Оформил вечером, утром уже всё было готово. Позвонили заранее и всё объяснили.'],
+    [4, 'В целом хорошо', 'Пару раз были задержки, но поддержка быстро всё решила.'],
+    [2, 'Долго ждал ответа', 'Поддержка отвечала три дня, вопрос решили не до конца.'],
+    [1, 'Не рекомендую', 'Деньги вернули только через две недели после обращения.'],
+    [5, 'Пользуюсь несколько лет', 'Ни разу не подвели, приложение удобное и понятное.'],
+    [3, 'Нормально, но дорого', 'Качество хорошее, но цены могли бы быть и пониже.'],
+    [4, 'Приятно удивили', 'За задержку сами извинились и дали скидку на следующий раз.'],
+    [2, 'Неудобный сайт', 'Нужную кнопку искал минут десять, личный кабинет запутанный.'],
+    [5, 'Рекомендую друзьям', 'Всё чётко, как обещали. Отдельное спасибо оператору.'],
+    [1, 'Испорченное впечатление', 'Дважды перенесли сроки и ничего не сообщили.'],
+]
+const reviewTabs = ['Все отзывы', 'Положительные', 'Отрицательные', 'О компании']
+const gradeWords = ['Ужасно', 'Плохо', 'Нормально', 'Хорошо', 'Отлично']
+const starWord = count => plural(count, 'звезду', 'звезды', 'звёзд')
+const reviewTools = '<button data-mark="Войти">Войти</button><button class="primary" data-mark="Написать отзыв">Написать отзыв</button>'
+
+
+const opinionCard = ([grade, title, text]) => `<div class="opinion"><div class="who"><span class="ava" style="background:hsl(${integer(0, 359)} 45% 50%)">${pick([...men, ...women])[0]}</span><div><b>${pick([...men, ...women])}</b><p class="muted">${integer(1, 28)} ${pick(monthsGenitive)}</p></div></div>${starLine(grade)}<b>${title}</b><p>${text}</p><button data-mark="Полезно">Полезно · ${integer(0, 60)}</button></div>`
+
+
+function reviewHome(look, company, topic, viaSearch) {
+    const everyone = reviewTopics.flatMap(([title, , names]) => names.map(name => [name, title]))
+    const instruction = viaSearch
+        ? `Сайт отзывов «${look.name}»: найдите компанию «${company}» через поиск — начните вводить название и выберите её в подсказках`
+        : `Сайт отзывов «${look.name}»: откройте категорию «${topic}»`
+    return web('review', 'home', instruction, look, ({record, signal, done, frame, say}) => {
+        Object.assign(record.meta, {route: viaSearch ? 'search' : 'category', took: null, wrong: 0})
+        const go = took => {
+            record.meta.took = took
+            leave(record, signal, frame, done)
+        }
+        arrive(record, signal, frame, look, reviewTools, () => `
+            <section class="hero"><h1>Отзывы о компаниях и сервисах</h1><p>${integer(2, 9)} ${integer(100, 999)} отзывов от покупателей и клиентов.</p><div class="finder"><input data-mark="Поиск компании" placeholder="Название компании" autocomplete="off" spellcheck="false"><button class="primary" data-mark="Найти">Найти</button></div></section>
+            <h2>Категории</h2><div class="topics">${reviewTopics.map(([title, sign, names]) => `<button data-topic="${title}" data-mark="${title}"><i>${sign}</i><b>${title}</b><small>${names.length * integer(30, 300)} компаний</small></button>`).join('')}</div>
+            <h2>Свежие отзывы</h2><div class="cards">${sample(opinions, 3).map(opinionCard).join('')}</div>`, main => {
+            const input = main.querySelector('.finder input')
+            const lookup = suggest(input, everyone.map(([name]) => name), everyone.map(([, title]) => title), signal, index => {
+                if (everyone[index][0] === company) {
+                    go('search')
+                } else {
+                    record.meta.wrong++
+                    say(`Это другая компания. ${instruction}`)
+                }
+            })
+            main.querySelector('.finder .primary').addEventListener('click', () => {
+                input.focus()
+                lookup()
+            })
+            main.querySelector('.topics').addEventListener('click', e => {
+                const tile = e.target.closest('[data-topic]')
+                if (tile?.dataset.topic === topic && !viaSearch) {
+                    go('category')
+                } else if (tile) {
+                    record.meta.wrong++
+                }
+            })
+        })
+    })
+}
+
+
+function reviewTopic(look, company, topic, names) {
+    return web('review', 'category', `Категория «${topic}»: найдите в списке «${company}» и откройте страницу компании`, look, ({record, signal, done, frame}) => {
+        record.meta.wrong = 0
+        arrive(record, signal, frame, look, reviewTools, () => `${crumbs(['Главная', 'Категории', topic])}<h1>${topic}</h1><p class="muted">Рейтинг компаний по отзывам клиентов</p><div class="addresses">${shuffle(names).map(name => {
+            const grade = uniform(2.4, 4.9)
+            return `<div class="firm"><div class="who"><span class="ava" style="background:hsl(${integer(0, 359)} 50% 45%)">${name[0]}</span><div><a data-firm="${name}" data-mark="${name}">${name}</a><p>${starLine(grade)} ${grade.toFixed(1)} · ${integer(12, 2400)} отзывов</p></div></div><button data-firm="${name}" data-mark="Отзывы: ${name}">Читать отзывы</button></div>`
+        }).join('')}</div>`, main => {
+            main.addEventListener('click', e => {
+                const firm = e.target.closest('[data-firm]')
+                if (firm?.dataset.firm === company) {
+                    leave(record, signal, frame, done)
+                } else if (firm) {
+                    record.meta.wrong++
+                }
+            })
+        }, false)
+    })
+}
+
+
+function reviewCompany(look, company, topic) {
+    const tab = pick(reviewTabs.slice(1))
+    const grade = uniform(3, 4.8)
+    const shares = [integer(40, 70), integer(10, 25), integer(5, 12), integer(3, 9), integer(2, 9)]
+    const flip = Math.random() < 0.5
+    const top = Math.random() < 0.5
+    return web('review', 'company', `Страница «${company}»: откройте вкладку «${tab}», затем нажмите «Оставить отзыв»`, look, ({record, signal, done, frame, say}) => {
+        Object.assign(record.meta, {tab, flip, top, switches: 0, early: 0})
+        let opened = false
+        const write = '<button class="primary" data-act="write" data-mark="Оставить отзыв">Оставить отзыв</button>'
+        const pane = label => label === 'О компании'
+            ? `<div class="plate wide"><h2>О компании</h2><p>«${company}» работает с ${integer(2005, 2020)} года. Категория: ${topic.toLowerCase()}. Компания отвечает на отзывы в среднем за ${integer(1, 5)} дня.</p><p class="muted">Сайт: ${company.toLowerCase().replace(/\s/g, '')}.ru · Телефон: 8 800 ${integer(100, 999)}-${integer(10, 99)}-${integer(10, 99)}</p></div>`
+            : sample(opinions.filter(([value]) => label === 'Все отзывы' || (label === 'Положительные' ? value >= 4 : value <= 2)), 4).map(opinionCard).join('')
+        arrive(record, signal, frame, look, reviewTools, () => `${crumbs(['Главная', topic, company])}<div class="columns${flip ? ' flip' : ''}"><div class="side"><div class="plate wide"><div class="verdict"><span class="grade">${grade.toFixed(1)}</span><div>${starLine(grade)}<p class="muted">${integer(80, 3000)} отзывов</p></div></div><div class="bars">${shares.map((share, index) => `<div><span>${5 - index}</span><i style="--w:${share}%"></i><span>${share}%</span></div>`).join('')}</div>${top ? '' : write}</div><div class="plate"><b>Ответы компании</b><p class="muted">Отвечает на ${integer(40, 98)}% отзывов</p></div></div><div class="body"><div class="split"><h1>${company}</h1>${top ? write : ''}</div><div class="tabs">${reviewTabs.map(label => `<button data-tab="${label}" data-mark="${label}"${label === 'Все отзывы' ? ' class="current"' : ''}>${label}</button>`).join('')}</div><div class="pane">${pane('Все отзывы')}</div></div></div>`, main => {
+            const box = main.querySelector('.pane')
+            main.addEventListener('click', e => {
+                const button = e.target.closest('[data-tab]')
+                if (button) {
+                    record.meta.switches++
+                    opened ||= button.dataset.tab === tab
+                    for (const other of main.querySelectorAll('[data-tab]')) {
+                        other.classList.toggle('current', other === button)
+                    }
+                    refresh(record, signal, box, () => {
+                        box.innerHTML = pane(button.dataset.tab)
+                    })
+                } else if (e.target.closest('[data-act=write]')) {
+                    if (opened) {
+                        leave(record, signal, frame, done)
+                    } else {
+                        record.meta.early++
+                        say(`Сначала откройте вкладку «${tab}», затем нажмите «Оставить отзыв»`)
+                    }
+                }
+            })
+        }, false)
+    })
+}
+
+
+function reviewForm(look, company, topic) {
+    const stars = integer(1, 5)
+    const now = today()
+    const back = Math.random() < 0.45 || now.getDate() === 1
+    const bought = back ? dateOf(now.getFullYear(), now.getMonth() - 1, integer(1, 28)) : dateOf(now.getFullYear(), now.getMonth(), integer(1, now.getDate() - 1))
+    const flip = Math.random() < 0.5
+    return web('review', 'form', `Новый отзыв о «${company}»: поставьте оценку ${stars} ${starWord(stars)}, напишите любые заголовок и текст отзыва (от 10 символов), выберите дату покупки ${spoken(bought)}, отметьте «Я согласен с правилами публикации» и нажмите «Отправить»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {stars, date: iso(bought), previousMonth: back, flip, given: 0, submits: 0, errors: 0})
+        let picker = null
+        let given = 0
+        arrive(record, signal, frame, look, reviewTools, () => `${crumbs(['Главная', topic, company, 'Новый отзыв'])}<div class="columns${flip ? ' flip' : ''}"><div class="body"><div class="sheet" style="width:100%"><h1>Отзыв о компании «${company}»</h1><div class="field"><span>Ваша оценка</span><div class="stars">${gradeWords.map((word, index) => `<button type="button" data-mark="${index + 1} ${starWord(index + 1)}">★</button>`).join('')}<span></span></div></div>${field('Заголовок', 'Заголовок отзыва', 'maxlength="80"')}${area('Текст отзыва', 'Текст отзыва')}<div class="pair">${field('Достоинства (необязательно)', 'Достоинства')}${field('Недостатки (необязательно)', 'Недостатки')}</div><div class="purchase"></div>${tick('Я согласен с <a data-mark="Правила публикации">правилами публикации</a>', 'Согласие с правилами')}<p class="error"></p><div class="buttons"><button data-mark="Сохранить черновик">Сохранить черновик</button><button class="primary" data-mark="Отправить">Отправить</button></div></div></div><div class="side"><div class="plate"><h2>Как написать полезный отзыв</h2><p class="muted">Расскажите, что понравилось и что нет. Не указывайте телефоны и адреса. Отзыв появится после проверки модератором.</p></div></div></div>`, main => {
+            const sheet = main.querySelector('.sheet')
+            picker = datePicker(record, signal, ['Дата покупки'], {max: now})
+            sheet.querySelector('.purchase').replaceWith(picker.element)
+            const row = sheet.querySelector('.stars')
+            const buttons = [...row.querySelectorAll('button')]
+            const paint = level => {
+                buttons.forEach((button, index) => button.classList.toggle('lit', index < level))
+                row.querySelector('span').textContent = level ? gradeWords[level - 1] : ''
+            }
+            row.addEventListener('pointerover', e => {
+                const button = e.target.closest('button')
+                if (button) {
+                    paint(buttons.indexOf(button) + 1)
+                }
+            })
+            row.addEventListener('pointerleave', () => paint(given))
+            row.addEventListener('click', e => {
+                const button = e.target.closest('button')
+                if (button) {
+                    given = buttons.indexOf(button) + 1
+                    record.meta.given++
+                    paint(given)
+                }
+            })
+            const input = name => sheet.querySelector(`[data-mark="${name}"]`)
+            const send = sheet.querySelector('button.primary')
+            send.addEventListener('click', () => {
+                record.meta.submits++
+                const chosen = picker.chosen.from
+                const ok = verify([
+                    [row, given === stars, given ? `Поставьте оценку ${stars} ${starWord(stars)}, как в задании` : 'Поставьте оценку'],
+                    [input('Заголовок отзыва'), input('Заголовок отзыва').value.trim() !== '', 'Напишите заголовок'],
+                    [input('Текст отзыва'), input('Текст отзыва').value.trim().length >= 10, 'Текст отзыва — не короче 10 символов'],
+                    [picker.element.querySelector('.datefield'), same(chosen, bought), chosen ? 'Проверьте дату покупки' : 'Укажите дату покупки'],
+                    [sheet.querySelector('.tick'), sheet.querySelector('.tick input').checked, 'Нужно согласиться с правилами публикации'],
+                ], sheet.querySelector('.error'))
+                if (ok) {
+                    busy(record, signal, send, done, true)
+                } else {
+                    record.meta.errors++
+                }
+            })
+        }, false)
+    })
+}
+
+
+function reviewThanks(look, company) {
+    return web('review', 'thanks', `Отзыв отправлен: нажмите «Вернуться к ${company}»`, look, ({record, signal, done, frame}) => {
+        record.meta.wrong = 0
+        arrive(record, signal, frame, look, reviewTools, () => `<div class="sheet" style="margin:0 auto"><div class="done-mark">✓</div><h1>Спасибо, отзыв отправлен на модерацию</h1><p class="muted">Обычно проверка занимает до 24 часов. Мы пришлём письмо, когда отзыв опубликуют.</p><div class="buttons" style="justify-content:flex-start"><button class="primary" data-act="back" data-mark="Вернуться к ${company}">Вернуться к ${company}</button><button data-act="other" data-mark="Мои отзывы">Мои отзывы</button></div></div>`, main => {
+            main.addEventListener('click', e => {
+                const button = e.target.closest('[data-act]')
+                if (button?.dataset.act === 'back') {
+                    leave(record, signal, frame, done)
+                } else if (button) {
+                    record.meta.wrong++
+                }
+            })
+        }, false)
+    })
+}
+
+
+async function review() {
+    const look = {...theme(), nav: sample(['Категории', 'Лучшие компании', 'Новые отзывы', 'Блог', 'Для бизнеса', 'Помощь'], integer(3, 4))}
+    const [topic, , names] = pick(reviewTopics)
+    const company = pick(names)
+    const home = await reviewHome(look, company, topic, Math.random() < 0.5)
+    if (home.meta.took === 'category') {
+        await reviewTopic(look, company, topic, names)
+    }
+    await reviewCompany(look, company, topic)
+    await reviewForm(look, company, topic)
+    await reviewThanks(look, company)
+}
+
+
+const shopKinds = [['Футболка', 'tee', 'clothes'], ['Худи', 'hoodie', 'clothes'], ['Куртка', 'jacket', 'clothes'], ['Кроссовки', 'sneaker', 'shoes'], ['Кепка', 'cap', 'one'], ['Рюкзак', 'bag', 'one']]
+const shopBrands = ['Тайга', 'Беркут', 'Прибой', 'Грань', 'Полюс', 'Ритмика']
+const shopModels = ['Урбан', 'Лайт', 'Базис', 'Трек', 'Норд', 'Спорт', 'Классик', 'Флекс', 'Вояж', 'Квант']
+const shopColors = [['чёрный', '#23262b'], ['белый', '#f4f4f2'], ['синий', '#2f5fd0'], ['зелёный', '#2f8f5b'], ['бежевый', '#d8c3a0'], ['красный', '#d23c3c'], ['серый', '#8a8f98']]
+const shopSizes = {clothes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'], shoes: ['38', '39', '40', '41', '42', '43', '44'], one: []}
+const shopSorts = ['По популярности', 'Сначала дешевле', 'Сначала дороже', 'По рейтингу']
+const shopWays = [['courier', 'Курьер', '1–2 дня · 299 ₽'], ['point', 'Пункт выдачи', '2–3 дня · бесплатно'], ['locker', 'Постамат', '2–4 дня · 99 ₽']]
+const shopPayments = [['card', 'Картой онлайн', 'Visa, Мир, Mastercard'], ['fast', 'СБП', 'Через приложение банка'], ['cash', 'При получении', 'Картой или наличными']]
+const promoCodes = ['SALE10', 'HELLO10', 'AUTUMN10', 'BONUS10', 'START10']
+
+
+function stock() {
+    const names = sample(shopKinds.flatMap(kind => shopModels.map(model => [kind, model])), 36)
+    return names.map(([[kind, drawing, sizing], model], id) => {
+        const price = integer(9, 120) * 100 - 10
+        return {id, name: `${kind} ${model}`, drawing, sizes: shopSizes[sizing], brand: shopBrands[id % shopBrands.length], price, old: Math.random() < 0.3 ? Math.round(price * uniform(1.15, 1.5) / 100) * 100 - 10 : null, rating: uniform(3.6, 5), reviews: integer(3, 900), colors: sample(shopColors, integer(3, 5)), hue: integer(0, 359), popular: Math.random()}
+    })
+}
+
+
+const goodCard = item => `<div class="good" data-id="${item.id}" data-mark="${item.name}">${art(item.drawing, item.hue)}<b>${item.name}</b><span class="muted">${item.brand}</span><span><strong class="price">${money(item.price)}</strong>${item.old ? `<span class="old">${money(item.old)}</span>` : ''}</span><span class="muted"><span class="score">★</span> ${item.rating.toFixed(1)} · ${item.reviews}</span></div>`
+const shopTools = cart => `<button data-mark="Избранное">♡</button><button class="primary" data-act="cart" data-mark="Корзина">Корзина · ${cart}</button>`
+
+
+function shopCatalog(look, items, goal) {
+    const sort = pick(shopSorts.slice(1))
+    const where = pick(['left', 'right', 'top'])
+    const highest = Math.max(...items.map(item => item.price))
+    return web('shop', 'catalog', `Магазин «${look.name}»: в фильтрах отметьте бренд «${goal.brand}», выберите сортировку «${sort}», затем откройте товар «${goal.name}»`, look, ({record, signal, done, frame, say}) => {
+        Object.assign(record.meta, {brand: goal.brand, sort, product: goal.name, filters: where, changes: 0, early: 0, wrong: 0})
+        const state = {brands: [], sale: false, limit: highest, sort: 'По популярности'}
+        const shown = () => {
+            const list = items.filter(item => (!state.brands.length || state.brands.includes(item.brand)) && (!state.sale || item.old) && item.price <= state.limit)
+            const order = {'По популярности': (a, b) => b.popular - a.popular, 'Сначала дешевле': (a, b) => a.price - b.price, 'Сначала дороже': (a, b) => b.price - a.price, 'По рейтингу': (a, b) => b.rating - a.rating}[state.sort]
+            return (state.brands.length ? list : list.filter(item => item !== goal).slice(0, 12)).sort(order)
+        }
+        const grid = () => {
+            const list = shown()
+            return `<p class="muted">Найдено ${state.brands.length ? list.length : integer(140, 320)} товаров</p><div class="goods">${list.map(goodCard).join('') || '<p class="muted">Ничего не найдено. Измените фильтры.</p>'}</div>`
+        }
+        arrive(record, signal, frame, look, shopTools(0), () => `${crumbs(['Главная', 'Каталог', 'Одежда и обувь'])}<h1>Одежда и обувь</h1><div class="columns${where === 'right' ? ' flip' : where === 'top' ? ' stack' : ''}"><div class="side"><div class="plate"><h2>Бренд</h2>${shopBrands.map(brand => tick(brand, `Бренд ${brand}`)).join('')}</div><div class="plate wide"><h2>Цена до</h2><div class="pricebar" data-mark="Цена до"><i data-mark="Ползунок цены"></i></div><span class="muted limit"></span></div><div class="plate">${tick('Только со скидкой', 'Только со скидкой')}${tick('Есть в магазине', 'Есть в магазине')}</div></div><div class="body"><div class="split"><span class="muted">Сортировка</span><div class="sorter"></div></div><div class="results">${grid()}</div></div></div>`, main => {
+            const results = main.querySelector('.results')
+            const update = () => {
+                record.meta.changes++
+                refresh(record, signal, results, () => {
+                    results.innerHTML = grid()
+                })
+            }
+            const sorter = dropdown('Сортировка', shopSorts, signal)
+            sorter.dataset.value = sorter.firstElementChild.textContent = state.sort
+            main.querySelector('.sorter').replaceWith(sorter)
+            sorter.addEventListener('change', () => {
+                state.sort = sorter.dataset.value
+                update()
+            })
+            main.querySelector('.side').addEventListener('change', e => {
+                const label = e.target.closest('.tick')?.dataset.mark ?? ''
+                if (label.startsWith('Бренд ')) {
+                    const brand = label.slice(6)
+                    state.brands = e.target.checked ? [...state.brands, brand] : state.brands.filter(other => other !== brand)
+                } else if (label === 'Только со скидкой') {
+                    state.sale = e.target.checked
+                }
+                update()
+            })
+            const bar = main.querySelector('.pricebar')
+            const knob = bar.firstElementChild
+            const caption = main.querySelector('.limit')
+            const paint = () => {
+                const share = state.limit / highest * 100
+                knob.style.left = `${share}%`
+                bar.style.setProperty('--fill', `${share}%`)
+                caption.textContent = money(state.limit)
+            }
+            let dragging = false
+            const slide = e => {
+                const rect = bar.getBoundingClientRect()
+                state.limit = Math.max(500, Math.round(Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1) * highest / 100) * 100)
+                paint()
+            }
+            bar.addEventListener('pointerdown', e => {
+                if (e.button === 0) {
+                    dragging = true
+                    bar.setPointerCapture(e.pointerId)
+                    slide(e)
+                }
+            })
+            bar.addEventListener('pointermove', e => dragging && slide(e))
+            bar.addEventListener('pointerup', () => {
+                if (dragging) {
+                    dragging = false
+                    update()
+                }
+            })
+            paint()
+            results.addEventListener('click', e => {
+                const card = e.target.closest('.good')
+                if (!card) {
+                    return
+                }
+                if (Number(card.dataset.id) !== goal.id) {
+                    record.meta.wrong++
+                    say(`Это другой товар. В фильтрах отметьте бренд «${goal.brand}», выберите сортировку «${sort}» и откройте «${goal.name}»`)
+                } else if (state.sort !== sort) {
+                    record.meta.early++
+                    say(`Сначала выберите сортировку «${sort}», затем откройте «${goal.name}»`)
+                } else {
+                    leave(record, signal, frame, done)
+                }
+            })
+        })
+    })
+}
+
+
+function productPage(item, chosen) {
+    const flip = chosen.flip
+    return `${crumbs(['Главная', 'Каталог', item.name])}<div class="showcase${flip ? ' flip' : ''}"><div class="gallery">${art(item.drawing, item.hue, views[chosen.photo])}<div class="thumbs">${views.map((view, index) => `<button type="button" data-photo="${index}" data-mark="Фото ${index + 1}"${index === chosen.photo ? ' class="chosen"' : ''}>${art(item.drawing, item.hue, view)}</button>`).join('')}</div></div><div class="buybox"><span class="muted">${item.brand}</span><h1>${item.name}</h1><span>${starLine(item.rating)} ${item.rating.toFixed(1)} · <a data-mark="Отзывы о товаре">${item.reviews} отзывов</a></span><span><strong class="price">${money(item.price)}</strong>${item.old ? `<span class="old">${money(item.old)}</span>` : ''}</span><div class="field"><span>Цвет: <b class="color-name">${chosen.color ?? 'не выбран'}</b></span><div class="swatches colors">${item.colors.map(([name, hex]) => `<button type="button" class="dot${name === chosen.color ? ' chosen' : ''}" style="background:${hex}" data-color="${name}" data-mark="Цвет ${name}" title="${name}"></button>`).join('')}</div></div>${item.sizes.length ? `<div class="field"><span>Размер</span><div class="swatches sizes">${item.sizes.map(size => `<button type="button" data-size="${size}" data-mark="Размер ${size}"${size === chosen.size ? ' class="chosen"' : ''}>${size}</button>`).join('')}</div><a class="link" data-mark="Таблица размеров">Таблица размеров</a></div>` : ''}<div class="field"><span>Количество</span>${stepper('Количество', chosen.qty, 1, 10)}</div><p class="error"></p><div class="buttons"><button class="primary" data-act="add" data-mark="В корзину">В корзину</button><button data-mark="В избранное">♡ В избранное</button></div><p class="muted">Доставка от 1 дня · Примерка перед покупкой · Возврат 14 дней</p></div></div><div class="tabs"><button class="current" data-mark="Описание">Описание</button><button data-mark="Характеристики">Характеристики</button><button data-mark="Отзывы">Отзывы</button></div><p>${item.name} от бренда ${item.brand}: удобная посадка, прочные швы и материалы, которые не теряют вид после стирок.</p>`
+}
+
+
+function shopProduct(look, goal, chosen) {
+    const color = pick(goal.colors)[0]
+    const size = goal.sizes.length ? pick(goal.sizes) : null
+    const qty = integer(2, 3)
+    const photo = integer(2, 4)
+    return web('shop', 'product', `Товар «${goal.name}»: посмотрите ${photo}-е фото, выберите цвет «${color}»${size ? `, размер ${size}` : ''}, количество ${qty} и нажмите «В корзину»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {color, size, qty, photo, photos: 0, submits: 0, errors: 0})
+        arrive(record, signal, frame, look, shopTools(2), () => productPage(goal, chosen), main => {
+            const gallery = main.querySelector('.gallery')
+            steppers(main, (_, value) => {
+                chosen.qty = value
+            })
+            main.addEventListener('click', e => {
+                const thumb = e.target.closest('[data-photo]')
+                const swatch = e.target.closest('[data-color]')
+                const sizing = e.target.closest('[data-size]')
+                if (thumb) {
+                    record.meta.photos++
+                    chosen.photo = Number(thumb.dataset.photo)
+                    gallery.firstElementChild.replaceWith(html(art(goal.drawing, goal.hue, views[chosen.photo])))
+                    for (const other of gallery.querySelectorAll('[data-photo]')) {
+                        other.classList.toggle('chosen', other === thumb)
+                    }
+                } else if (swatch) {
+                    chosen.color = swatch.dataset.color
+                    main.querySelector('.color-name').textContent = chosen.color
+                    for (const other of main.querySelectorAll('[data-color]')) {
+                        other.classList.toggle('chosen', other === swatch)
+                    }
+                } else if (sizing) {
+                    chosen.size = sizing.dataset.size
+                    for (const other of main.querySelectorAll('[data-size]')) {
+                        other.classList.toggle('chosen', other === sizing)
+                    }
+                } else if (e.target.closest('[data-act=add]')) {
+                    record.meta.submits++
+                    const button = e.target.closest('[data-act=add]')
+                    const ok = verify([
+                        [main.querySelector('.colors'), chosen.color === color, chosen.color ? `Нужен цвет «${color}»` : 'Выберите цвет'],
+                        ...size ? [[main.querySelector('.sizes'), chosen.size === size, chosen.size ? `Нужен размер ${size}` : 'Выберите размер']] : [],
+                        [main.querySelector('.stepper'), chosen.qty === qty, `Укажите количество ${qty}`],
+                    ], main.querySelector('.error'))
+                    if (ok) {
+                        busy(record, signal, button, done)
+                    } else {
+                        record.meta.errors++
+                    }
+                }
+            })
+        }, false)
+    })
+}
+
+
+function shopCart(look, goal, chosen, items) {
+    const others = sample(items.filter(item => item !== goal), 2)
+    const [gone, more] = others
+    const raise = Math.random() < 0.5
+    const code = Math.random() < 0.6 ? pick(promoCodes) : null
+    const asks = [`удалите «${gone.name}»`, ...raise ? [`увеличьте количество «${more.name}» до 2`] : [], ...code ? [`введите промокод ${code} и нажмите «Применить»`] : []]
+    return web('shop', 'cart', `Корзина: ${asks.join(', ')}, затем нажмите «Оформить заказ»`, look, ({record, signal, done, frame, say}) => {
+        Object.assign(record.meta, {removed: gone.name, raise, promo: Boolean(code), removals: 0, restores: 0, applies: 0, errors: 0})
+        const lines = [{item: goal, qty: chosen.qty, note: [chosen.color, chosen.size].filter(Boolean).join(', ')}, ...others.map(item => ({item, qty: 1, note: item.colors[0][0]}))]
+        const state = {discount: false, open: true}
+        const total = () => lines.filter(line => !line.gone).reduce((sum, line) => sum + line.item.price * line.qty, 0)
+        const count = () => lines.filter(line => !line.gone).reduce((sum, line) => sum + line.qty, 0)
+        const lineHtml = (line, index) => line.gone
+            ? `<div class="cartline gone"><span>«${line.item.name}» удалён</span><button data-restore="${index}" data-mark="Вернуть ${line.item.name}">Вернуть</button></div>`
+            : `<div class="cartline">${art(line.item.drawing, line.item.hue)}<div><b>${line.item.name}</b><p class="muted">${line.note} · ${money(line.item.price)}</p></div><div class="split">${stepper(`Количество ${line.item.name}`, line.qty, 1, 10).replace('class="stepper"', `class="stepper" data-line="${index}"`)}<button data-remove="${index}" data-mark="Удалить ${line.item.name}">Удалить</button></div></div>`
+        const summary = () => {
+            const sum = total()
+            const cut = state.discount ? Math.round(sum / 10) : 0
+            return `<div class="split"><span>Товары, ${count()} шт.</span><span>${money(sum)}</span></div>${cut ? `<div class="split"><span>Скидка по промокоду</span><span>−${money(cut)}</span></div>` : ''}<div class="split"><span>Доставка</span><span class="muted">при оформлении</span></div><div class="split"><b>Итого</b><strong class="price">${money(sum - cut)}</strong></div>`
+        }
+        const drawer = () => {
+            const box = frame.appendChild(html(`<div class="backdrop toside"><div class="cartbox"><button class="close" data-act="close" data-mark="Закрыть корзину">×</button><h2>Корзина</h2><div class="lines">${lines.map(lineHtml).join('')}</div><div class="field"><span>Промокод</span><div class="finder"><input data-mark="Промокод" autocomplete="off" autocapitalize="characters" spellcheck="false"><button data-act="apply" data-mark="Применить">Применить</button></div><p class="muted promo-note"></p></div><div class="totals">${summary()}</div><p class="error"></p><button class="primary" data-act="checkout" data-mark="Оформить заказ">Оформить заказ</button><a class="link" data-act="close" data-mark="Продолжить покупки">Продолжить покупки</a></div></div>`))
+            mark(record, box.querySelectorAll('[data-mark]'))
+            const redraw = () => {
+                box.querySelector('.lines').innerHTML = lines.map(lineHtml).join('')
+                box.querySelector('.totals').innerHTML = summary()
+                frame.querySelector('header [data-act=cart]').textContent = `Корзина · ${count()}`
+            }
+            steppers(box, (stepperBox, value) => {
+                lines[stepperBox.dataset.line].qty = value
+                redraw()
+            })
+            box.addEventListener('click', e => {
+                const remove = e.target.closest('[data-remove]')
+                const restore = e.target.closest('[data-restore]')
+                const act = e.target.closest('[data-act]')?.dataset.act
+                if (remove) {
+                    record.meta.removals++
+                    lines[remove.dataset.remove].gone = true
+                    redraw()
+                } else if (restore) {
+                    record.meta.restores++
+                    lines[restore.dataset.restore].gone = false
+                    redraw()
+                } else if (act === 'close' || e.target === box) {
+                    box.remove()
+                } else if (act === 'apply') {
+                    record.meta.applies++
+                    const input = box.querySelector('[data-mark=Промокод]')
+                    const note = box.querySelector('.promo-note')
+                    busy(record, signal, e.target.closest('[data-act]'), () => {
+                        state.discount = Boolean(code) && input.value.trim().toUpperCase() === code
+                        note.textContent = state.discount ? 'Промокод применён: скидка 10%' : 'Промокод не найден'
+                        redraw()
+                    })
+                } else if (act === 'checkout') {
+                    const ok = verify([
+                        [box.querySelector('.lines'), lines[0].qty > 0 && !lines[0].gone && lines[1].gone && !lines[2].gone, `Удалите из корзины только «${gone.name}»`],
+                        ...raise ? [[box.querySelector('.lines'), lines[2].qty === 2, `Увеличьте количество «${more.name}» до 2`]] : [],
+                        ...code ? [[box.querySelector('.finder'), state.discount, `Примените промокод ${code}`]] : [],
+                    ], box.querySelector('.error'))
+                    if (ok) {
+                        leave(record, signal, frame, done)
+                    } else {
+                        record.meta.errors++
+                    }
+                }
+            })
+        }
+        arrive(record, signal, frame, look, shopTools(count()), () => productPage(goal, chosen), main => {
+            frame.querySelector('header [data-act=cart]').addEventListener('click', () => {
+                if (!frame.querySelector('.backdrop')) {
+                    drawer()
+                    say(`Корзина: ${asks.join(', ')}, затем нажмите «Оформить заказ»`)
+                }
+            })
+            drawer()
+        }, false)
+    })
+}
+
+
+function shopCheckout(look, goal, chosen) {
+    const now = today()
+    const ahead = Math.random() < 0.5 || now.getDate() > 24
+    const when = ahead ? dateOf(now.getFullYear(), now.getMonth() + 1, integer(1, 14)) : dateOf(now.getFullYear(), now.getMonth(), integer(now.getDate() + 2, monthDays(now.getFullYear(), now.getMonth())))
+    const [way, wayLabel] = pick(shopWays)
+    const [payment, paymentLabel] = pick(shopPayments)
+    const flip = Math.random() < 0.5
+    const below = Math.random() < 0.5
+    return web('shop', 'checkout', `Оформление заказа: введите любой адрес (город, улица и дом), выберите дату доставки ${spoken(when)}, способ «${wayLabel}», оплату «${paymentLabel}» и нажмите «Подтвердить заказ»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {date: iso(when), nextMonth: when.getMonth() !== now.getMonth(), way, payment, flip, below, submits: 0, errors: 0})
+        const confirm = '<button class="primary" data-act="confirm" data-mark="Подтвердить заказ">Подтвердить заказ</button>'
+        arrive(record, signal, frame, look, shopTools(3), () => `${crumbs(['Корзина', 'Оформление заказа'])}<h1>Оформление заказа</h1><div class="columns${flip ? ' flip' : ''}"><div class="body"><div class="sheet" style="width:100%"><h2>Адрес доставки</h2>${field('Город', 'Город доставки')}${field('Улица и дом', 'Улица и дом')}<div class="pair">${field('Квартира (необязательно)', 'Квартира')}${field('Подъезд (необязательно)', 'Подъезд')}</div><h2>Когда доставить</h2><div class="when"></div><h2>Способ доставки</h2><div class="variants ways">${shopWays.map(([value, title, note]) => variant('way', value, title, note)).join('')}</div><h2>Оплата</h2><div class="variants payments">${shopPayments.map(([value, title, note]) => variant('payment', value, title, note)).join('')}</div>${area('Комментарий курьеру (необязательно)', 'Комментарий курьеру', 2)}<p class="error"></p>${below ? confirm : ''}</div></div><div class="side"><div class="plate wide"><h2>Ваш заказ</h2><div class="who">${art(goal.drawing, goal.hue).replace('class="art"', 'class="art tiny"')}<div><b>${goal.name}</b><p class="muted">${chosen.qty} шт. · ${money(goal.price * chosen.qty)}</p></div></div><p class="muted">и ещё 1 товар</p><div class="split"><b>Итого</b><strong class="price">${money(goal.price * chosen.qty + integer(10, 50) * 100)}</strong></div>${below ? '' : confirm}<p class="muted">Нажимая кнопку, вы соглашаетесь с условиями покупки.</p></div></div></div>`, main => {
+            const picker = datePicker(record, signal, ['Дата доставки'], {min: addDays(now, 1), max: addDays(now, 45)})
+            main.querySelector('.when').replaceWith(picker.element)
+            const input = name => main.querySelector(`[data-mark="${name}"]`)
+            const value = name => main.querySelector(`input[name=${name}]:checked`)?.value
+            const button = main.querySelector('[data-act=confirm]')
+            button.addEventListener('click', () => {
+                record.meta.submits++
+                const chosenDate = picker.chosen.from
+                const ok = verify([
+                    [input('Город доставки'), input('Город доставки').value.trim() !== '', 'Укажите город'],
+                    [input('Улица и дом'), input('Улица и дом').value.trim() !== '', 'Укажите улицу и дом'],
+                    [picker.element.querySelector('.datefield'), same(chosenDate, when), chosenDate ? `Нужна дата доставки ${spoken(when)}` : 'Выберите дату доставки'],
+                    [main.querySelector('.ways'), value('way') === way, value('way') ? `Нужен способ «${wayLabel}»` : 'Выберите способ доставки'],
+                    [main.querySelector('.payments'), value('payment') === payment, value('payment') ? `Нужна оплата «${paymentLabel}»` : 'Выберите способ оплаты'],
+                ], main.querySelector('.error'))
+                if (ok) {
+                    busy(record, signal, button, done, true)
+                } else {
+                    record.meta.errors++
+                }
+            })
+        }, false)
+    })
+}
+
+
+function shopDone(look) {
+    const goal = pick(['Продолжить покупки', 'Мои заказы'])
+    const number = integer(100000, 999999)
+    return web('shop', 'success', `Заказ оформлен: нажмите «${goal}»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {goal, wrong: 0})
+        arrive(record, signal, frame, look, shopTools(0), () => `<div class="sheet" style="margin:0 auto"><div class="done-mark">✓</div><h1>Заказ №${number} оформлен</h1><p class="muted">Мы отправили письмо с деталями заказа. Отследить доставку можно в разделе «Мои заказы».</p><div class="buttons" style="justify-content:flex-start">${shuffle(['Продолжить покупки', 'Мои заказы']).map(label => `<button${label === 'Продолжить покупки' ? ' class="primary"' : ''} data-label="${label}" data-mark="${label}">${label}</button>`).join('')}</div></div>`, main => {
+            main.addEventListener('click', e => {
+                const button = e.target.closest('[data-label]')
+                if (button?.dataset.label === goal) {
+                    leave(record, signal, frame, done)
+                } else if (button) {
+                    record.meta.wrong++
+                }
+            })
+        }, false)
+    })
+}
+
+
+async function shop() {
+    const look = {...theme(), nav: sample(['Женщинам', 'Мужчинам', 'Детям', 'Обувь', 'Аксессуары', 'Распродажа'], integer(3, 5))}
+    const items = stock()
+    const goal = pick(items)
+    const chosen = {color: null, size: null, qty: 1, photo: 0, flip: Math.random() < 0.3}
+    await shopCatalog(look, items, goal)
+    await shopProduct(look, goal, chosen)
+    await shopCart(look, goal, chosen, items)
+    await shopCheckout(look, goal, chosen)
+    await shopDone(look)
+}
+
+
+const hotelNames = ['Северная звезда', 'Волжский берег', 'Старый город', 'Панорама', 'Сосновый бор', 'Причал', 'Уютный двор', 'Маяк', 'Вершина', 'Тихая гавань', 'Купеческий дом', 'Набережная', 'Белые ночи', 'Садовая 12', 'Огни города']
+const hotelFeatures = ['Завтрак включён', 'Бесплатная отмена', 'Бассейн', 'Парковка', 'Рядом с центром']
+const roomKinds = [['Стандарт', 18, 'двуспальная кровать'], ['Улучшенный', 24, 'двуспальная кровать, вид на город'], ['Семейный', 32, 'две комнаты, диван'], ['Студия', 28, 'кухня, двуспальная кровать'], ['Люкс', 45, 'гостиная, ванна']]
+const arrivals = ['14:00–16:00', '16:00–18:00', '18:00–20:00', 'После 20:00']
+const bookingSorts = ['Сначала популярные', 'Сначала дешевле', 'По рейтингу', 'По расстоянию']
+const adultsText = count => `${count} ${plural(count, 'взрослый', 'взрослых', 'взрослых')}`
+const kidsText = count => `${count} ${plural(count, 'ребёнок', 'ребёнка', 'детей')}`
+const guestsText = (adults, kids) => `${adultsText(adults)}${kids ? `, ${kidsText(kids)}` : ''}`
+const bookingTools = '<button data-mark="Мои бронирования">Мои бронирования</button><button class="primary" data-mark="Войти">Войти</button>'
+
+
+function trip() {
+    const now = today()
+    const far = Math.random() < 0.4
+    const start = far ? dateOf(now.getFullYear(), now.getMonth() + 2, integer(1, 20)) : addDays(now, integer(3, Math.max(4, monthDays(now.getFullYear(), now.getMonth() + 1) + monthDays(now.getFullYear(), now.getMonth()) - now.getDate() - 6)))
+    const nights = integer(2, 5)
+    const filter = pick(hotelFeatures)
+    const hotels = sample(hotelNames, 10).map((name, index) => {
+        const features = sample(hotelFeatures.filter(feature => feature !== filter), integer(1, 2))
+        return {name, stars: integer(3, 5), rating: uniform(7, 9.7), distance: uniform(0.3, 8), price: integer(25, 120) * 100, hue: integer(0, 359), features: index < 4 ? [...features, filter] : features}
+    })
+    const goal = hotels[0]
+    return {
+        city: pick(cities),
+        far,
+        checkin: start,
+        checkout: addDays(start, nights),
+        nights,
+        adults: integer(1, 3),
+        kids: pick([0, 0, 1, 2]),
+        filter,
+        hotels: shuffle(hotels),
+        goal,
+        room: pick(roomKinds)[0],
+        breakfast: Math.random() < 0.5,
+        arrival: pick(arrivals),
+        code: `${pick(['А', 'В', 'К', 'М', 'Т'])}${integer(10000, 99999)}`,
+    }
+}
+
+
+function bookingSearch(look, plan) {
+    const tall = Math.random() < 0.4
+    return web('booking', 'search', `Бронирование на «${look.name}»: в поле «Город» начните вводить «${plan.city}» и выберите его в подсказках; заезд ${spoken(plan.checkin)}, выезд ${spoken(plan.checkout)}; гости: ${guestsText(plan.adults, plan.kids)}; нажмите «Найти»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {city: plan.city, checkin: iso(plan.checkin), checkout: iso(plan.checkout), farMonth: plan.far, adults: plan.adults, kids: plan.kids, tall, picks: 0, wrong: 0, submits: 0, errors: 0})
+        arrive(record, signal, frame, look, bookingTools, () => `<section class="hero"><h1>Отели и апартаменты по всей России</h1><p>Более ${integer(20, 90)} 000 вариантов, оплата при заселении.</p><div class="searchbar${tall ? ' tall' : ''}"><div class="field"><span>Город</span><div class="finder"><input data-mark="Город" placeholder="Куда едете?" autocomplete="off" spellcheck="false"></div></div><div class="dates"></div><div class="field"><span>Гости</span><div class="picker"><button type="button" class="datefield" data-act="guests" data-mark="Гости">${guestsText(2, 0)}</button><div class="popover guests" hidden><div class="split"><span>Взрослые</span>${stepper('Взрослые', 2, 1, 6)}</div><div class="split"><span>Дети</span>${stepper('Дети', 0, 0, 4)}</div><button class="primary" data-act="ready" data-mark="Готово">Готово</button></div></div></div><button class="primary" data-act="find" data-mark="Найти">Найти</button></div><p class="error"></p></section><h2>Популярные направления</h2><div class="cards">${sample(cities, 4).map(city => `<div class="offer">${art('hotel', integer(0, 359))}<b>${city}</b><span class="muted">от ${money(integer(18, 60) * 100)} за ночь</span></div>`).join('')}</div>`, main => {
+            const bar = main.querySelector('.searchbar')
+            const input = bar.querySelector('[data-mark=Город]')
+            let city = null
+            suggest(input, cities, cities.map(() => 'Россия'), signal, index => {
+                record.meta.picks++
+                city = cities[index]
+                input.value = city
+                if (city !== plan.city) {
+                    record.meta.wrong++
+                }
+            })
+            input.addEventListener('input', () => {
+                city = null
+            })
+            const picker = datePicker(record, signal, ['Заезд', 'Выезд'], {count: 2, min: today()})
+            bar.querySelector('.dates').replaceWith(picker.element)
+            const guests = bar.querySelector('[data-act=guests]')
+            const pop = guests.nextElementSibling
+            const counts = () => [...pop.querySelectorAll('.stepper')].map(box => Number(box.dataset.value))
+            steppers(pop, () => {
+                guests.textContent = guestsText(...counts())
+            })
+            addEventListener('pointerdown', e => guests.parentElement.contains(e.target) || (pop.hidden = true), {signal})
+            bar.addEventListener('click', e => {
+                const act = e.target.closest('[data-act]')?.dataset.act
+                if (act === 'guests') {
+                    pop.hidden = !pop.hidden
+                    if (!pop.hidden) {
+                        place(pop)
+                    }
+                } else if (act === 'ready') {
+                    pop.hidden = true
+                } else if (act === 'find') {
+                    record.meta.submits++
+                    const [adults, kids] = counts()
+                    const {from, to} = picker.chosen
+                    const ok = verify([
+                        [input, city === plan.city || input.value.trim().toLowerCase() === plan.city.toLowerCase(), 'Выберите город из подсказок'],
+                        [picker.element, same(from, plan.checkin) && same(to, plan.checkout), from && to ? 'Проверьте даты заезда и выезда' : 'Выберите даты заезда и выезда'],
+                        [guests, adults === plan.adults && kids === plan.kids, 'Проверьте число гостей'],
+                    ], main.querySelector('.hero .error'))
+                    if (ok) {
+                        busy(record, signal, e.target.closest('[data-act]'), done, true)
+                    } else {
+                        record.meta.errors++
+                    }
+                }
+            })
+        })
+    })
+}
+
+
+function bookingResults(look, plan) {
+    const where = pick(['left', 'right', 'top'])
+    return web('booking', 'results', `Отели в городе ${plan.city}: отметьте фильтр «${plan.filter}» и нажмите «Подробнее» у отеля «${plan.goal.name}»`, look, ({record, signal, done, frame, say}) => {
+        Object.assign(record.meta, {filter: plan.filter, hotel: plan.goal.name, filters: where, changes: 0, wrong: 0})
+        const state = {features: [], stars: [], sort: bookingSorts[0]}
+        const list = () => {
+            const order = {'Сначала популярные': () => 0, 'Сначала дешевле': (a, b) => a.price - b.price, 'По рейтингу': (a, b) => b.rating - a.rating, 'По расстоянию': (a, b) => a.distance - b.distance}[state.sort]
+            const found = plan.hotels.filter(hotel => state.features.every(feature => hotel.features.includes(feature)) && (!state.stars.length || state.stars.includes(hotel.stars)) && (state.features.includes(plan.filter) || hotel !== plan.goal)).sort(order)
+            return `<p class="muted">${found.length} ${plural(found.length, 'вариант', 'варианта', 'вариантов')} · ${plan.nights} ${plural(plan.nights, 'ночь', 'ночи', 'ночей')}</p>${found.map(hotel => `<div class="stay">${art('hotel', hotel.hue)}<div><a data-hotel="${hotel.name}" data-mark="${hotel.name}">Отель «${hotel.name}»</a><span class="score">${'★'.repeat(hotel.stars)}</span><span class="muted">${hotel.distance.toFixed(1)} км от центра</span><span>${hotel.features.map(feature => `<span class="pill">${feature}</span>`).join(' ')}</span></div><div><span><strong class="rate">${hotel.rating.toFixed(1)}</strong></span><span><strong class="price">${money(hotel.price * plan.nights)}</strong><br><span class="muted">за ${plan.nights} ${plural(plan.nights, 'ночь', 'ночи', 'ночей')}</span></span><button class="primary" data-hotel="${hotel.name}" data-mark="Подробнее ${hotel.name}">Подробнее</button></div></div>`).join('') || '<p class="muted">Нет вариантов. Измените фильтры.</p>'}`
+        }
+        arrive(record, signal, frame, look, bookingTools, () => `${crumbs(['Главная', plan.city, 'Отели'])}<div class="split"><h1>${plan.city}: отели</h1><span class="muted">${dotted(plan.checkin)} — ${dotted(plan.checkout)} · ${guestsText(plan.adults, plan.kids)}</span></div><div class="columns${where === 'right' ? ' flip' : where === 'top' ? ' stack' : ''}"><div class="side"><div class="plate"><h2>Удобства</h2>${hotelFeatures.map(feature => tick(feature, feature)).join('')}</div><div class="plate"><h2>Звёзды</h2>${[3, 4, 5].map(stars => tick(`${stars} ★`, `Звёзд: ${stars}`)).join('')}</div></div><div class="body"><div class="split"><span class="muted">Сортировка</span><div class="sorter"></div></div><div class="results">${list()}</div></div></div>`, main => {
+            const results = main.querySelector('.results')
+            const update = () => {
+                record.meta.changes++
+                refresh(record, signal, results, () => {
+                    results.innerHTML = list()
+                })
+            }
+            const sorter = dropdown('Сортировка', bookingSorts, signal)
+            sorter.dataset.value = sorter.firstElementChild.textContent = state.sort
+            main.querySelector('.sorter').replaceWith(sorter)
+            sorter.addEventListener('change', () => {
+                state.sort = sorter.dataset.value
+                update()
+            })
+            main.querySelector('.side').addEventListener('change', () => {
+                const checked = [...main.querySelectorAll('.side .tick')].filter(label => label.querySelector('input').checked).map(label => label.dataset.mark)
+                state.features = checked.filter(label => hotelFeatures.includes(label))
+                state.stars = checked.filter(label => label.startsWith('Звёзд: ')).map(label => Number(label.slice(7)))
+                update()
+            })
+            results.addEventListener('click', e => {
+                const hotel = e.target.closest('[data-hotel]')
+                if (hotel?.dataset.hotel === plan.goal.name) {
+                    leave(record, signal, frame, done)
+                } else if (hotel) {
+                    record.meta.wrong++
+                    say(`Это другой отель. Отметьте фильтр «${plan.filter}» и нажмите «Подробнее» у отеля «${plan.goal.name}»`)
+                }
+            })
+        }, false)
+    })
+}
+
+
+function bookingRoom(look, plan) {
+    const hotel = plan.goal
+    return web('booking', 'room', `Отель «${hotel.name}»: у номера «${plan.room}» отметьте «${plan.breakfast ? 'С завтраком' : 'Без питания'}» и нажмите «Выбрать»`, look, ({record, signal, done, frame, say}) => {
+        Object.assign(record.meta, {room: plan.room, breakfast: plan.breakfast, photos: 0, wrong: 0, errors: 0})
+        const rooms = shuffle(roomKinds)
+        arrive(record, signal, frame, look, bookingTools, () => `${crumbs(['Главная', plan.city, 'Отели', hotel.name])}<div class="split"><div><h1>Отель «${hotel.name}»</h1><span class="score">${'★'.repeat(hotel.stars)}</span> <span class="muted">${plan.city}, ${hotel.distance.toFixed(1)} км от центра</span></div><strong class="rate">${hotel.rating.toFixed(1)}</strong></div><div class="showcase"><div class="gallery">${art('hotel', hotel.hue)}<div class="thumbs">${views.map((view, index) => `<button type="button" data-photo="${index}" data-mark="Фото ${index + 1}"${index ? '' : ' class="chosen"'}>${art(index % 2 ? 'bed' : 'hotel', hotel.hue + index * 40, view)}</button>`).join('')}</div></div><div class="buybox"><h2>Об отеле</h2><p>Отель в ${hotel.distance < 2 ? 'историческом центре' : 'тихом районе'}: ресепшен круглосуточно, Wi-Fi во всех номерах, ${hotel.features.join(', ').toLowerCase()}.</p><div>${hotel.features.map(feature => `<span class="pill">${feature}</span>`).join(' ')}</div><p class="muted">${dotted(plan.checkin)} — ${dotted(plan.checkout)} · ${guestsText(plan.adults, plan.kids)}</p></div></div><h2>Номера</h2><div class="cards">${rooms.map(([name, size, beds], index) => `<div class="offer" data-room="${name}">${art('bed', hotel.hue + index * 30)}<b>${name}</b><span class="muted">${size} м² · ${beds}</span>${tick(`Без питания · ${money(hotel.price * plan.nights + index * 900)}`, `${name}: без питания`, 'radio', `meal-${index}`).replace('<input', '<input checked value="no"')}${tick(`С завтраком · ${money(hotel.price * plan.nights + index * 900 + 700 * plan.nights)}`, `${name}: с завтраком`, 'radio', `meal-${index}`).replace('<input', '<input value="yes"')}<p class="error"></p><button class="primary" data-act="choose" data-mark="Выбрать ${name}">Выбрать</button></div>`).join('')}</div>`, main => {
+            const gallery = main.querySelector('.gallery')
+            main.addEventListener('click', e => {
+                const thumb = e.target.closest('[data-photo]')
+                const choose = e.target.closest('[data-act=choose]')
+                if (thumb) {
+                    record.meta.photos++
+                    gallery.firstElementChild.replaceWith(html(thumb.firstElementChild.outerHTML))
+                    for (const other of gallery.querySelectorAll('[data-photo]')) {
+                        other.classList.toggle('chosen', other === thumb)
+                    }
+                } else if (choose) {
+                    const card = choose.closest('[data-room]')
+                    if (card.dataset.room !== plan.room) {
+                        record.meta.wrong++
+                        say(`Это другой номер. У номера «${plan.room}» отметьте «${plan.breakfast ? 'С завтраком' : 'Без питания'}» и нажмите «Выбрать»`)
+                        return
+                    }
+                    const meal = card.querySelector('input:checked').value === 'yes'
+                    if (verify([[card, meal === plan.breakfast, plan.breakfast ? 'Отметьте «С завтраком»' : 'Отметьте «Без питания»']], card.querySelector('.error'))) {
+                        busy(record, signal, choose, done, true)
+                    } else {
+                        record.meta.errors++
+                    }
+                }
+            })
+        }, false)
+    })
+}
+
+
+function bookingGuest(look, plan) {
+    const flip = Math.random() < 0.5
+    const below = Math.random() < 0.5
+    return web('booking', 'guest', `Данные гостя: введите выдуманные имя, фамилию и email, выберите время заезда «${plan.arrival}», отметьте согласие с условиями бронирования и нажмите «Забронировать»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {arrival: plan.arrival, flip, below, submits: 0, errors: 0})
+        const book = '<button class="primary" data-act="book" data-mark="Забронировать">Забронировать</button>'
+        arrive(record, signal, frame, look, bookingTools, () => `${crumbs(['Главная', plan.city, plan.goal.name, 'Бронирование'])}<h1>Бронирование</h1><div class="columns${flip ? ' flip' : ''}"><div class="body"><div class="sheet" style="width:100%"><h2>Данные гостя</h2><div class="pair">${field('Имя', 'Имя гостя')}${field('Фамилия', 'Фамилия гостя')}</div>${field('Электронная почта', 'Email гостя', 'type="email" inputmode="email"')}${field('Телефон (необязательно)', 'Телефон гостя', 'type="tel" inputmode="tel"')}<div class="field"><span>Время заезда</span><div class="arrival"></div></div>${area('Пожелания (необязательно)', 'Пожелания', 2)}${tick('Я принимаю <a data-mark="Условия бронирования">условия бронирования</a> и правила отеля', 'Согласие с условиями')}<p class="error"></p>${below ? book : ''}</div></div><div class="side"><div class="plate wide">${art('hotel', plan.goal.hue)}<b>Отель «${plan.goal.name}»</b><span class="muted">Номер «${plan.room}» · ${plan.breakfast ? 'с завтраком' : 'без питания'}</span><span>${dotted(plan.checkin)} — ${dotted(plan.checkout)}</span><span class="muted">${plan.nights} ${plural(plan.nights, 'ночь', 'ночи', 'ночей')} · ${guestsText(plan.adults, plan.kids)}</span><div class="split"><b>Итого</b><strong class="price">${money(plan.goal.price * plan.nights + (plan.breakfast ? 700 * plan.nights : 0))}</strong></div>${below ? '' : book}<span class="muted">Оплата при заселении</span></div></div></div>`, main => {
+            const time = dropdown('Время заезда', arrivals, signal)
+            main.querySelector('.arrival').replaceWith(time)
+            const input = name => main.querySelector(`[data-mark="${name}"]`)
+            const button = main.querySelector('[data-act=book]')
+            button.addEventListener('click', () => {
+                record.meta.submits++
+                const ok = verify([
+                    [input('Имя гостя'), input('Имя гостя').value.trim() !== '', 'Введите имя'],
+                    [input('Фамилия гостя'), input('Фамилия гостя').value.trim() !== '', 'Введите фамилию'],
+                    [input('Email гостя'), emailPattern.test(input('Email гостя').value.trim()), 'Введите адрес почты, например name@mail.ru'],
+                    [time, time.dataset.value === plan.arrival, time.dataset.value ? `Нужно время заезда «${plan.arrival}»` : 'Выберите время заезда'],
+                    [main.querySelector('.sheet .tick'), main.querySelector('.sheet .tick input').checked, 'Нужно принять условия бронирования'],
+                ], main.querySelector('.error'))
+                if (ok) {
+                    busy(record, signal, button, done, true)
+                } else {
+                    record.meta.errors++
+                }
+            })
+        }, false)
+    })
+}
+
+
+function bookingDone(look, plan) {
+    const goal = pick(['Мои бронирования', 'На главную'])
+    return web('booking', 'confirmed', `Бронирование подтверждено: нажмите «${goal}»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {goal, wrong: 0})
+        arrive(record, signal, frame, look, bookingTools, () => `<div class="sheet" style="margin:0 auto"><div class="done-mark">✓</div><h1>Бронирование подтверждено</h1><p>Номер брони <b>${plan.code}</b></p><p class="muted">Отель «${plan.goal.name}», ${plan.city} · ${dotted(plan.checkin)} — ${dotted(plan.checkout)}. Подтверждение отправлено на почту.</p><div class="buttons" style="justify-content:flex-start">${['Мои бронирования', 'Добавить в календарь', 'На главную'].map(label => `<button${label === 'Мои бронирования' ? ' class="primary"' : ''} data-label="${label}" data-mark="${label}">${label}</button>`).join('')}</div></div>`, main => {
+            main.addEventListener('click', e => {
+                const button = e.target.closest('[data-label]')
+                if (button?.dataset.label === goal) {
+                    leave(record, signal, frame, done)
+                } else if (button) {
+                    record.meta.wrong++
+                }
+            })
+        }, false)
+    })
+}
+
+
+async function booking() {
+    const look = {...theme(), nav: sample(['Отели', 'Апартаменты', 'Авиабилеты', 'Ж/д билеты', 'Туры', 'Акции'], integer(3, 5))}
+    const plan = trip()
+    await bookingSearch(look, plan)
+    await bookingResults(look, plan)
+    await bookingRoom(look, plan)
+    await bookingGuest(look, plan)
+    await bookingDone(look, plan)
+}
+
+
+const helpTopics = [
+    ['Заказы', '📦', ['Как отследить заказ', 'Как изменить заказ', 'Как отменить заказ', 'Заказ пришёл не полностью', 'Где посмотреть историю заказов']],
+    ['Доставка', '🚚', ['Сроки доставки', 'Как изменить адрес доставки', 'Курьер не приехал', 'Доставка в пункт выдачи', 'Сколько стоит доставка']],
+    ['Оплата', '💳', ['Способы оплаты', 'Не проходит оплата картой', 'Как получить чек', 'Оплата бонусами', 'Деньги списались дважды']],
+    ['Возврат', '↩', ['Как вернуть товар', 'Сроки возврата денег', 'Возврат товара с браком', 'Какие товары нельзя вернуть', 'Обмен на другой размер']],
+    ['Аккаунт', '👤', ['Как сменить пароль', 'Не приходит код для входа', 'Как удалить аккаунт', 'Как изменить почту', 'Вход через другие сервисы']],
+    ['Бонусы и акции', '🎁', ['Как работают бонусы', 'Где найти промокод', 'Промокод не применяется', 'Когда сгорают бонусы', 'Подарочные сертификаты']],
+]
+const helpParagraphs = [
+    'Обычно всё решается за несколько минут в личном кабинете. Откройте раздел «Мои заказы», выберите нужный заказ и нажмите кнопку справа от него.',
+    'Если кнопки нет, значит, заказ уже передан в службу доставки. В этом случае изменения возможны только через поддержку.',
+    'Мы отвечаем на обращения в течение 24 часов, в выходные — до двух рабочих дней. Статус обращения виден в разделе «Мои обращения».',
+    'Деньги возвращаются тем же способом, которым был оплачен заказ. Банку может понадобиться до 10 рабочих дней, чтобы зачислить их на карту.',
+    'Сохраняйте чек и упаковку до конца гарантийного срока: они понадобятся, если товар придётся вернуть или обменять.',
+    'Если вы оформляли заказ без регистрации, укажите в обращении номер заказа и почту, на которую пришло подтверждение.',
+]
+const ticketThemes = ['Заказ не пришёл', 'Возврат денег', 'Проблема с оплатой', 'Повреждённый товар', 'Вход в аккаунт', 'Другое']
+const supportTools = '<button data-mark="Мои обращения">Мои обращения</button><button class="primary" data-mark="Войти">Войти</button>'
+
+
+function supportHome(look, topic, article, viaSearch) {
+    const word = article.split(' ').sort((a, b) => b.length - a.length)[0].toLowerCase()
+    const titles = helpTopics.flatMap(([title, , items]) => items.map(item => [item, title]))
+    const instruction = viaSearch
+        ? `Центр помощи «${look.name}»: в поиске начните вводить «${word}» и откройте статью «${article}» из подсказок`
+        : `Центр помощи «${look.name}»: откройте раздел «${topic}»`
+    return web('support', 'home', instruction, look, ({record, signal, done, frame, say}) => {
+        Object.assign(record.meta, {route: viaSearch ? 'search' : 'topic', took: null, wrong: 0})
+        const go = took => {
+            record.meta.took = took
+            leave(record, signal, frame, done)
+        }
+        const popular = shuffle([article, ...sample(titles.map(([title]) => title).filter(title => title !== article), 4)])
+        arrive(record, signal, frame, look, supportTools, () => `<section class="hero"><h1>Чем мы можем помочь?</h1><div class="finder"><input data-mark="Поиск по справке" placeholder="Опишите вопрос" autocomplete="off" spellcheck="false"><button class="primary" data-mark="Найти">Найти</button></div></section><h2>Разделы справки</h2><div class="topics">${helpTopics.map(([title, sign, items]) => `<button data-topic="${title}" data-mark="${title}"><i>${sign}</i><b>${title}</b><small>${items.length} ${plural(items.length, 'статья', 'статьи', 'статей')}</small></button>`).join('')}</div><h2>Популярные вопросы</h2><div class="links">${popular.map(title => `<a data-article="${title}" data-mark="${title}">${title}</a>`).join('')}</div>`, main => {
+            const input = main.querySelector('.finder input')
+            const lookup = suggest(input, titles.map(([title]) => title), titles.map(([, title]) => title), signal, index => {
+                if (titles[index][0] === article) {
+                    go('search')
+                } else {
+                    record.meta.wrong++
+                    say(`Это другая статья. ${instruction}`)
+                }
+            })
+            main.querySelector('.finder .primary').addEventListener('click', () => {
+                input.focus()
+                lookup()
+            })
+            main.addEventListener('click', e => {
+                const tile = e.target.closest('[data-topic]')
+                const link = e.target.closest('[data-article]')
+                if (tile?.dataset.topic === topic && !viaSearch) {
+                    go('topic')
+                } else if (link?.dataset.article === article) {
+                    go('popular')
+                } else if (tile || link) {
+                    record.meta.wrong++
+                }
+            })
+        })
+    })
+}
+
+
+function supportTopic(look, topic, article) {
+    return web('support', 'topic', `Раздел «${topic}»: откройте статью «${article}»`, look, ({record, signal, done, frame}) => {
+        record.meta.wrong = 0
+        const items = helpTopics.find(([title]) => title === topic)[2]
+        arrive(record, signal, frame, look, supportTools, () => `${crumbs(['Помощь', topic])}<div class="columns"><div class="side"><div class="navlist">${helpTopics.map(([title]) => `<button data-mark="Раздел ${title}"${title === topic ? ' class="current"' : ''}>${title}</button>`).join('')}</div></div><div class="body"><h1>${topic}</h1><div class="links">${shuffle(items).map(title => `<a data-article="${title}" data-mark="${title}">${title}</a>`).join('')}</div></div></div>`, main => {
+            main.addEventListener('click', e => {
+                const link = e.target.closest('[data-article]')
+                if (link?.dataset.article === article) {
+                    leave(record, signal, frame, done)
+                } else if (link) {
+                    record.meta.wrong++
+                }
+            })
+        }, false)
+    })
+}
+
+
+function supportArticle(look, topic, article) {
+    return web('support', 'article', `Статья «${article}» не решила вопрос: внизу статьи нажмите «Не помогло», затем «Написать в поддержку»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {helpful: 0, early: 0})
+        const items = helpTopics.find(([title]) => title === topic)[2]
+        const paragraphs = sample(helpParagraphs, 5)
+        arrive(record, signal, frame, look, supportTools, () => `${crumbs(['Помощь', topic, article])}<div class="columns${Math.random() < 0.5 ? ' flip' : ''}"><div class="body"><h1>${article}</h1><p class="muted">Обновлено ${integer(1, 28)} ${pick(monthsGenitive)} · ${integer(2, 6)} мин чтения</p>${paragraphs.slice(0, 4).map(text => `<p>${text}</p>`).join('')}<h2>Что ещё может помочь</h2><p>${paragraphs[4]}</p><div class="plate wide feedback"><b>Статья помогла?</b><div class="buttons" style="justify-content:flex-start"><button data-act="yes" data-mark="Да">Да</button><button data-act="no" data-mark="Не помогло">Не помогло</button></div></div></div><div class="side"><div class="plate"><b>В этом разделе</b><div class="links">${items.map(title => `<a data-mark="${title}"${title === article ? ' class="current"' : ''}>${title}</a>`).join('')}</div></div></div></div>`, main => {
+            const box = main.querySelector('.feedback')
+            box.addEventListener('click', e => {
+                const act = e.target.closest('[data-act]')?.dataset.act
+                if (act === 'yes') {
+                    record.meta.helpful++
+                    box.querySelector('b').textContent = 'Спасибо за оценку!'
+                } else if (act === 'no' && !box.querySelector('[data-act=write]')) {
+                    box.querySelector('b').textContent = 'Жаль, что статья не помогла'
+                    box.append(html('<p class="muted">Напишите нам — специалист ответит в течение дня.</p>'), html('<div class="buttons" style="justify-content:flex-start"><button class="primary" data-act="write" data-mark="Написать в поддержку">Написать в поддержку</button><button data-mark="Открыть чат">Открыть чат</button></div>'))
+                    mark(record, box.querySelectorAll('[data-mark]'))
+                } else if (act === 'write') {
+                    leave(record, signal, frame, done)
+                }
+            })
+        }, false)
+    })
+}
+
+
+function supportContact(look, topic, article) {
+    const subject = pick(ticketThemes)
+    const order = String(integer(100000, 999999))
+    return web('support', 'contact', `Форма обращения: выберите тему «${subject}», введите номер заказа ${order}, опишите проблему (любой текст от 10 символов), отметьте согласие на обработку данных и нажмите «Отправить»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {subject, attach: 0, submits: 0, errors: 0})
+        arrive(record, signal, frame, look, supportTools, () => `${crumbs(['Помощь', topic, article, 'Обращение'])}<div class="columns${Math.random() < 0.5 ? ' flip' : ''}"><div class="body"><div class="sheet" style="width:100%"><h1>Написать в поддержку</h1><div class="field"><span>Тема обращения</span><div class="theme"></div></div>${field('Номер заказа', 'Номер заказа', 'inputmode="numeric" maxlength="12"')}${area('Сообщение', 'Сообщение', 5)}<div class="split"><button data-act="attach" data-mark="Прикрепить файл">📎 Прикрепить файл</button><span class="muted">До 5 файлов, JPG или PDF</span></div>${tick('Согласен на обработку персональных данных', 'Согласие на обработку данных')}<p class="error"></p><button class="primary" data-act="send" data-mark="Отправить">Отправить</button></div></div><div class="side"><div class="plate"><h2>Другие способы связи</h2><button data-mark="Чат с поддержкой">Чат с поддержкой</button><p class="muted">Телефон: 8 800 ${integer(100, 999)}-${integer(10, 99)}-${integer(10, 99)}, с 8 до 22</p></div></div></div>`, main => {
+            const select = dropdown('Тема обращения', ticketThemes, signal)
+            main.querySelector('.theme').replaceWith(select)
+            const input = name => main.querySelector(`[data-mark="${name}"]`)
+            main.querySelector('[data-act=attach]').addEventListener('click', () => record.meta.attach++)
+            const button = main.querySelector('[data-act=send]')
+            button.addEventListener('click', () => {
+                record.meta.submits++
+                const ok = verify([
+                    [select, select.dataset.value === subject, select.dataset.value ? `Нужна тема «${subject}»` : 'Выберите тему'],
+                    [input('Номер заказа'), input('Номер заказа').value.replace(/\D/g, '') === order, `Введите номер заказа ${order}`],
+                    [input('Сообщение'), input('Сообщение').value.trim().length >= 10, 'Сообщение — не короче 10 символов'],
+                    [main.querySelector('.sheet .tick'), main.querySelector('.sheet .tick input').checked, 'Нужно согласие на обработку данных'],
+                ], main.querySelector('.error'))
+                if (ok) {
+                    busy(record, signal, button, done, true)
+                } else {
+                    record.meta.errors++
+                }
+            })
+        }, false)
+    })
+}
+
+
+function supportDone(look) {
+    const goal = pick(['Мои обращения', 'Вернуться в центр помощи'])
+    return web('support', 'ticket', `Обращение создано: нажмите «${goal}»`, look, ({record, signal, done, frame}) => {
+        Object.assign(record.meta, {goal, wrong: 0})
+        arrive(record, signal, frame, look, supportTools, () => `<div class="sheet" style="margin:0 auto"><div class="done-mark">✓</div><h1>Обращение №${integer(10000, 99999)} создано</h1><p class="muted">Ответ придёт на почту в течение 24 часов. Статус можно отслеживать в разделе «Мои обращения».</p><div class="buttons" style="justify-content:flex-start">${['Мои обращения', 'Вернуться в центр помощи'].map(label => `<button${label === 'Мои обращения' ? ' class="primary"' : ''} data-label="${label}" data-mark="${label}">${label}</button>`).join('')}</div></div>`, main => {
+            main.addEventListener('click', e => {
+                const button = e.target.closest('[data-label]')
+                if (button?.dataset.label === goal) {
+                    leave(record, signal, frame, done)
+                } else if (button) {
+                    record.meta.wrong++
+                }
+            })
+        }, false)
+    })
+}
+
+
+async function support() {
+    const look = {...theme(), nav: sample(['Магазин', 'Доставка', 'Акции', 'Помощь', 'Контакты'], integer(3, 4))}
+    const [topic, , items] = pick(helpTopics)
+    const article = pick(items)
+    const home = await supportHome(look, topic, article, Math.random() < 0.4)
+    if (home.meta.took === 'topic') {
+        await supportTopic(look, topic, article)
+    }
+    await supportArticle(look, topic, article)
+    await supportContact(look, topic, article)
+    await supportDone(look)
+}
+
+
+const accountSections = [['personal', 'Личные данные'], ['notifications', 'Уведомления'], ['addresses', 'Адреса'], ['security', 'Безопасность'], ['orders', 'Мои заказы']]
+const notifyGroups = [['Заказы и доставка', ['Email', 'Push', 'SMS']], ['Акции и скидки', ['Email', 'Push', 'SMS']], ['Новости сервиса', ['Email', 'Push']], ['Отзывы и вопросы', ['Email', 'Push']]]
+const streets = ['Садовая', 'Лесная', 'Школьная', 'Центральная', 'Молодёжная', 'Полевая', 'Набережная', 'Заречная', 'Солнечная', 'Цветочная']
+
+
+function account() {
+    const female = Math.random() < 0.5
+    const first = pick(female ? women : men)
+    const now = today()
+    return {
+        section: 'personal',
+        first,
+        last: `${pick(surnames)}${female ? 'а' : ''}`,
+        gender: female ? 'female' : 'male',
+        birthday: dateOf(integer(1975, 2004), integer(0, 11), integer(1, 28)),
+        now,
+        flip: Math.random() < 0.3,
+        mail: `${pick(['a', 'k', 'm', 's'])}•••@${pick(['mail.ru', 'yandex.ru', 'gmail.com'])}`,
+        switches: Object.fromEntries(notifyGroups.flatMap(([group, channels]) => channels.map(channel => [`${group}: ${channel}`, Math.random() < 0.5]))),
+        addresses: sample(streets, 3).map(street => `${pick(cities)}, ул. ${street}, д. ${integer(1, 60)}, кв. ${integer(1, 200)}`),
+    }
+}
+
+
+const notifySection = state => notifyGroups.map(([group, channels]) => `<div class="plate wide"><h2>${group}</h2>${channels.map(channel => setting(channel, '', switcher(state.switches[`${group}: ${channel}`], 'switch', `${group}: ${channel}`))).join('')}</div>`).join('') + '<div class="buttons" style="justify-content:flex-start"><button class="primary" data-act="saveNotify" data-mark="Сохранить уведомления">Сохранить</button></div>'
+const accountPages = {
+    personal: state => `<h2>Личные данные</h2><div class="sheet" style="width:100%"><div class="pair">${field('Имя', 'Имя', `value="${state.first}"`)}${field('Фамилия', 'Фамилия', `value="${state.last}"`)}</div><div class="birthday"></div><div class="field"><span>Пол</span><div class="ticks">${tick('Мужской', 'Мужской', 'radio', 'gender').replace('<input', `<input value="male"${state.gender === 'male' ? ' checked' : ''}`)}${tick('Женский', 'Женский', 'radio', 'gender').replace('<input', `<input value="female"${state.gender === 'female' ? ' checked' : ''}`)}</div></div>${field('Телефон', 'Телефон', 'value="+7 9•• •••-••-12" disabled')}<p class="error"></p><div class="buttons" style="justify-content:flex-start"><button class="primary" data-act="savePersonal" data-mark="Сохранить изменения">Сохранить изменения</button></div></div>`,
+    notifications: state => `<h2>Уведомления</h2><p class="muted">Выберите, о чём и как вам сообщать.</p>${notifySection(state)}`,
+    addresses: state => `<h2>Адреса доставки</h2><div class="addresses">${state.addresses.map((address, index) => `<div class="address"><span>${address}</span><div class="buttons"><button data-mark="Изменить адрес ${index + 1}">Изменить</button><button data-act="removeAddress" data-index="${index}" data-mark="Удалить адрес ${index + 1}">Удалить</button></div></div>`).join('') || '<p class="muted">Нет сохранённых адресов</p>'}</div><button data-mark="Добавить адрес">+ Добавить адрес</button>`,
+    security: state => `<h2>Безопасность</h2><div class="plate wide">${setting('Электронная почта', state.mail, '<button data-act="changeMail" data-mark="Изменить почту">Изменить</button>')}${setting('Пароль', 'Изменён 3 месяца назад', '<button data-mark="Изменить пароль">Изменить</button>')}${setting('Вход по коду из SMS', 'Дополнительная защита аккаунта', switcher(false, 'switch', 'Вход по коду'))}</div>`,
+    orders: () => `<h2>Мои заказы</h2>${Array.from({length: 3}, () => `<div class="address"><span>Заказ №${integer(100000, 999999)} · ${pick(goods)}</span><span class="pill">${pick(orderStatuses)}</span></div>`).join('')}`,
+}
+
+
+function accountPage(record, signal, frame, look, state, load, setup) {
+    arrive(record, signal, frame, look, `<button class="user" data-mark="Профиль"><i>${state.first[0]}${state.last[0]}</i><span>${state.first} ${state.last}</span> ▾</button>`, () => `${crumbs(['Главная', 'Личный кабинет'])}<h1>Личный кабинет</h1><div class="columns${state.flip ? ' flip' : ''}"><div class="side"><div class="navlist">${accountSections.map(([id, label]) => `<button data-section="${id}" data-mark="${label}"${id === state.section ? ' class="current"' : ''}>${label}</button>`).join('')}</div></div><div class="body">${accountPages[state.section](state)}</div></div>`, main => {
+        const body = main.querySelector('.body')
+        main.querySelector('.navlist').addEventListener('click', e => {
+            const button = e.target.closest('[data-section]')
+            if (!button || button.dataset.section === state.section) {
+                return
+            }
+            state.section = button.dataset.section
+            for (const other of main.querySelectorAll('[data-section]')) {
+                other.classList.toggle('current', other === button)
+            }
+            refresh(record, signal, body, () => {
+                body.innerHTML = accountPages[state.section](state)
+                body.dispatchEvent(new Event('render'))
+                mark(record, body.querySelectorAll('[data-mark]'))
+            })
+        })
+        setup(body)
+        body.addEventListener('render', () => {
+            const slot = body.querySelector('.birthday')
+            if (slot) {
+                slot.replaceWith(datePicker(record, signal, ['Дата рождения'], {value: state.birthday, max: state.now}).element)
+            }
+        })
+        body.dispatchEvent(new Event('render'))
+    }, load)
+}
+
+
+function profileStep(look, state, step, instruction, meta, setup, load = false) {
+    return web('profile', step, instruction, look, ({record, signal, done, frame, say}) => {
+        Object.assign(record.meta, {wrong: 0}, meta)
+        const finish = text => {
+            toast(frame, look, signal, text)
+            later(signal, 1200, done)
+        }
+        accountPage(record, signal, frame, look, state, load, body => setup({record, signal, frame, body, finish, say}))
+    })
+}
+
+
+function removeAddress(look, state) {
+    const address = pick(state.addresses)
+    return profileStep(look, state, 'addresses', `Откройте раздел «Адреса», удалите адрес «${address.split(', ').slice(1, 3).join(', ')}» и подтвердите удаление`, {address: state.addresses.indexOf(address), cancels: 0}, ({record, signal, frame, body, finish}) => {
+        body.addEventListener('click', e => {
+            const button = e.target.closest('[data-act=removeAddress]')
+            if (!button) {
+                return
+            }
+            const chosen = state.addresses[button.dataset.index]
+            confirmBox(frame, look, 'Удалить адрес?', `${chosen} пропадёт из списка адресов доставки.`, 'Удалить', () => record.meta.cancels++, (ok, close) => busy(record, signal, ok, () => {
+                close()
+                state.addresses.splice(state.addresses.indexOf(chosen), 1)
+                if (state.section === 'addresses') {
+                    body.innerHTML = accountPages.addresses(state)
+                    mark(record, body.querySelectorAll('[data-mark]'))
+                }
+                if (chosen === address) {
+                    finish('Адрес удалён')
+                } else {
+                    record.meta.wrong++
+                    toast(frame, look, signal, 'Адрес удалён')
+                }
+            }))
+            mark(record, frame.querySelectorAll('.modal [data-mark]'))
+        })
+    })
+}
+
+
+function changeMail(look, state) {
+    return profileStep(look, state, 'security', 'Откройте раздел «Безопасность» и смените почту: нажмите «Изменить» у почты, введите любую новую почту и любой пароль, нажмите «Сохранить» и подтвердите смену', {opens: 0, submits: 0, errors: 0, cancels: 0}, ({record, signal, frame, body, finish}) => {
+        body.addEventListener('click', e => {
+            if (!e.target.closest('[data-act=changeMail]') || frame.querySelector('.backdrop')) {
+                return
+            }
+            record.meta.opens++
+            const dialog = frame.appendChild(html(`<div class="backdrop"><div class="modal"><button class="close" data-mark="Закрыть окно">×</button><h2>Смена почты</h2><p class="muted">Сейчас: ${state.mail}</p>${field('Новая почта', 'Новая почта', 'type="email" inputmode="email"')}${secret('Текущий пароль', 'Текущий пароль')}<p class="error"></p><div class="buttons"><button data-mark="Отмена">Отмена</button><button class="primary" data-mark="Сохранить почту">Сохранить</button></div></div></div>`))
+            mark(record, dialog.querySelectorAll('[data-mark]'))
+            dialog.addEventListener('click', event => {
+                const button = event.target.closest('button')
+                if (dialog.querySelector('.busy') || button?.classList.contains('eye')) {
+                    return
+                }
+                if (button?.classList.contains('primary')) {
+                    record.meta.submits++
+                    const mail = dialog.querySelector('[data-mark="Новая почта"]')
+                    const password = dialog.querySelector('[data-mark="Текущий пароль"]')
+                    if (!verify([[mail, emailPattern.test(mail.value.trim()), 'Введите адрес почты, например name@mail.ru'], [password, password.value !== '', 'Введите пароль']], dialog.querySelector('.error'))) {
+                        record.meta.errors++
+                        return
+                    }
+                    busy(record, signal, button, () => {
+                        dialog.remove()
+                        confirmBox(frame, look, 'Подтвердите смену почты', 'На новый адрес придёт письмо со ссылкой. Старый адрес перестанет работать после подтверждения.', 'Подтвердить', () => record.meta.cancels++, (ok, close) => busy(record, signal, ok, () => {
+                            close()
+                            finish('Письмо отправлено на новый адрес')
+                        }))
+                        mark(record, frame.querySelectorAll('.modal [data-mark]'))
+                    })
+                } else if (button || event.target === dialog) {
+                    record.meta.cancels++
+                    dialog.remove()
+                }
+            })
+        })
+    })
+}
+
+
+async function cabinet() {
+    const look = {...theme(), nav: sample(['Каталог', 'Доставка', 'Акции', 'Помощь', 'Магазины'], integer(3, 4))}
+    const state = account()
+    const birthday = addDays(state.birthday, (Math.random() < 0.5 ? -1 : 1) * integer(6, 40))
+    const gender = state.gender === 'male' ? 'female' : 'male'
+    const genderLabel = gender === 'male' ? 'Мужской' : 'Женский'
+    await profileStep(look, state, 'personal', `Личный кабинет «${look.name}»: смените имя на любое другое, поставьте дату рождения ${spoken(birthday, true)}, пол «${genderLabel}» и нажмите «Сохранить изменения»`, {birthday: iso(birthday), otherMonth: birthday.getMonth() !== state.birthday.getMonth(), gender, submits: 0, errors: 0}, ({record, signal, body, finish}) => {
+        let picker = null
+        body.addEventListener('render', () => {
+            const slot = body.querySelector('.birthday')
+            if (slot) {
+                picker = datePicker(record, signal, ['Дата рождения'], {value: state.birthday, max: state.now})
+                slot.replaceWith(picker.element)
+            }
+        })
+        body.addEventListener('click', e => {
+            const button = e.target.closest('[data-act=savePersonal]')
+            if (!button) {
+                return
+            }
+            record.meta.submits++
+            const name = body.querySelector('[data-mark=Имя]')
+            const sex = body.querySelector('input[name=gender]:checked')?.value
+            const ok = verify([
+                [name, name.value.trim() !== '' && name.value.trim() !== state.first, 'Введите новое имя'],
+                [picker.element.querySelector('.datefield'), same(picker.chosen.from, birthday), `Нужна дата рождения ${spoken(birthday, true)}`],
+                [body.querySelector('.ticks'), sex === gender, `Отметьте пол «${genderLabel}»`],
+            ], body.querySelector('.error'))
+            if (ok) {
+                busy(record, signal, button, () => {
+                    state.birthday = birthday
+                    state.gender = gender
+                    finish('Изменения сохранены')
+                })
+            } else {
+                record.meta.errors++
+            }
+        })
+    }, true)
+
+    const keys = Object.keys(state.switches)
+    const changes = sample(keys, 3)
+    const wanted = {...state.switches, ...Object.fromEntries(changes.map(key => [key, !state.switches[key]]))}
+    const asked = changes.map(key => {
+        const [group, channel] = key.split(': ')
+        return `${wanted[key] ? 'включите' : 'выключите'} «${channel}» в группе «${group}»`
+    }).join(', ')
+    await profileStep(look, state, 'notifications', `Откройте раздел «Уведомления», ${asked} и нажмите «Сохранить»`, {changes, saves: 0, mismatches: 0}, ({record, signal, frame, body, finish, say}) => {
+        body.addEventListener('click', e => {
+            const button = e.target.closest('[data-act=saveNotify]')
+            if (!button) {
+                return
+            }
+            record.meta.saves++
+            for (const toggle of body.querySelectorAll('.switch')) {
+                state.switches[toggle.dataset.mark] = toggle.classList.contains('checked')
+            }
+            busy(record, signal, button, () => {
+                if (keys.every(key => state.switches[key] === wanted[key])) {
+                    finish('Настройки уведомлений сохранены')
+                } else {
+                    record.meta.mismatches++
+                    toast(frame, look, signal, 'Настройки уведомлений сохранены')
+                    say(`Сохранено, но не всё как в задании: ${asked} и снова нажмите «Сохранить»`)
+                }
+            })
+        })
+    })
+
+    for (const step of shuffle([removeAddress, changeMail])) {
+        await step(look, state)
+    }
+}
+
 const readingIntro = ['Прочитайте короткий текст в своём темпе, затем ответьте на вопрос по нему.']
 const wheelHint = either('Прокручивайте колесом мыши или двумя пальцами на тачпаде, как обычно на сайтах.', 'Листайте пальцем, как привыкли.')
 const briefHint = 'Что сделать, написано в полосе над страницей сайта. Сайт иногда «думает» — подождите, как на обычном сайте.'
@@ -3303,6 +4846,27 @@ const widgetSection = {
     intro: ['То, что встречается на каждом сайте: баннер cookie, всплывающее окно, «Я не робот», подсказки, вопросы и ответы, вкладки.', briefHint],
 }
 
+const reviewSection = {
+    title: 'Отзывы', run: review,
+    intro: ['Сайт отзывов: найдите компанию, откройте её страницу и оставьте отзыв — оценка звёздами, текст и дата покупки в календаре.', briefHint, fakeData],
+}
+const shopSection = {
+    title: 'Магазин', run: shop,
+    intro: ['Интернет-магазин: фильтры каталога, карточка товара, корзина и оформление заказа с датой доставки в календаре.', briefHint, fakeData],
+}
+const bookingSection = {
+    title: 'Бронирование', run: booking,
+    intro: ['Бронирование отеля: город с подсказками, даты заезда и выезда в календаре, гости, выбор отеля и номера, данные гостя.', briefHint, fakeData],
+}
+const supportSection = {
+    title: 'Поддержка', run: support,
+    intro: ['Центр помощи: найдите статью, а когда она «не поможет» — напишите в поддержку через форму обращения.', briefHint, fakeData],
+}
+const profileSection = {
+    title: 'Личный кабинет', run: cabinet,
+    intro: ['Настройки аккаунта: личные данные с датой рождения, уведомления, адреса и смена почты. Разделы — в меню сбоку.', briefHint, fakeData],
+}
+
 const plan = [
     {
         title: either('Клики', 'Касания'), run: () => clicks(18, allBins, either([16, 80], [28, 60]), ['click']),
@@ -3313,6 +4877,11 @@ const plan = [
         intro: ['Заполните форму заказа. Рядом с каждым полем написано, что ввести или выбрать.', 'Введённый текст не сохраняется.'],
     },
     signupSection,
+    {
+        title: 'Цели: разброс', run: () => clicks(18, allBins, either([12, 96], [24, 72]), ['click', 'click', 'click', 'click', 'dblclick']),
+        intro: ['Снова цели по одной: от совсем мелких до крупных, рядом и далеко.', either('Синие — обычный клик левой кнопкой, фиолетовые — двойной.', 'Синие — одно касание, фиолетовые — два быстрых касания.')],
+    },
+    reviewSection,
     {
         title: 'Лента', run: () => sequence([() => feed('down', 'short'), () => feed('down', 'medium'), () => feed('up', 'medium')]),
         intro: ['Лента постов на несколько экранов. Найдите выделенный пост — он ниже или выше по странице — и нажмите на него.', wheelHint],
@@ -3325,8 +4894,13 @@ const plan = [
         title: 'Близкие цели', run: () => clicks(22, [0, 1, 2], either([8, 28], [20, 40]), ['click']),
         intro: [`Теперь цели мелкие и появляются недалеко ${either('от курсора', 'от предыдущей')}: короткие точные движения.`],
     },
+    shopSection,
     loginSection,
-    {title: 'Чтение', run: () => reading(article), intro: readingIntro},
+    {
+        title: 'Цели: крупные', run: () => clicks(16, either([2, 3, 4, 5], [1, 2, 3, 4]), either([32, 120], [40, 90]), ['click']),
+        intro: [`Крупные цели на среднем и большом расстоянии ${either('от курсора', 'от предыдущей')}. Двигайтесь в обычном темпе.`],
+    },
+    bookingSection,
     {
         title: 'Чат', run: () => sequence([() => nested('short', 'up'), () => nested('medium'), () => nested('huge', 'up')]),
         intro: ['Окно сообщений с прокруткой. Иногда нужно листать вниз, иногда вверх — к старым сообщениям. Нажмите на выделенную строку.', wheelHint],
@@ -3337,14 +4911,20 @@ const plan = [
     },
     widgetSection,
     {
+        title: 'Цели: точность', run: () => clicks(20, [0, 1, 2, 3], either([10, 36], [18, 40]), ['click', 'click', 'click', 'rightclick']),
+        intro: ['Небольшие цели недалеко друг от друга.', either('Синие — обычный клик, жёлтые — клик правой кнопкой.', 'Синие — одно касание, жёлтые — нажмите и подержите полсекунды.')],
+    },
+    supportSection,
+    {
         title: 'Дальние цели', run: () => clicks(18, either([4, 5, 6], [3, 4]), either([12, 64], [28, 56]), ['click']),
         intro: [`Цели будут появляться далеко ${either('от курсора', 'от предыдущей')}: в другом конце экрана, сверху и снизу.`],
     },
-    {
-        title: 'Метро', run: () => windowReading(metro),
-        intro: ['Текст в небольшом окне с прокруткой. Прочитайте его в своём темпе, прокручивая окно, затем ответьте на вопрос.', wheelHint],
-    },
     panelSection,
+    profileSection,
+    {
+        title: 'Цели: вперемешку', run: () => clicks(18, either([3, 4, 5, 6], [2, 3, 4]), either([14, 64], [26, 60]), ['click', 'click', 'dblclick', 'rightclick']),
+        intro: ['Дальние цели всех видов вперемешку.', either('Синие — обычный клик, фиолетовые — двойной, жёлтые — правой кнопкой.', 'Синие — одно касание, фиолетовые — два касания, жёлтые — долгое нажатие.')],
+    },
     {
         title: 'Флажки и список', run: () => sequence([checkboxes, select]),
         intro: ['Отметьте нужные флажки, затем выберите город в выпадающем списке.'],
@@ -3363,6 +4943,10 @@ const plan = [
     },
     recoverSection,
     {
+        title: 'Цели: средние', run: () => clicks(20, [1, 2, 3, 4], either([16, 56], [24, 52]), ['click', 'click', 'click', 'click', 'dblclick']),
+        intro: [`Цели среднего размера на среднем расстоянии ${either('от курсора', 'от предыдущей')}.`, either('Синие — обычный клик, фиолетовые — двойной.', 'Синие — одно касание, фиолетовые — два быстрых касания.')],
+    },
+    {
         title: 'Прокрутка', run: () => sequence([scrollList, () => nested('short'), () => nested('long'), sideways]),
         intro: ['Несколько заданий с прокруткой: список заказов, окно сообщений и ряд карточек, который листается вбок.', `Список заказов отсортирован по номеру. ${either('Прокручивайте как привыкли: колесом, тачпадом или полосой прокрутки.', 'Листайте пальцем, как привыкли.')}`],
     },
@@ -3370,6 +4954,7 @@ const plan = [
         title: 'Перетаскивание', run: () => sequence([slider, cargo, cargo]),
         intro: [`${either('Зажмите левую кнопку мыши', 'Прижмите пальцем')} и тяните: ползунок — до нужного значения, блок — в пунктирную рамку.`],
     },
+    {title: 'Чтение', run: () => reading(article), intro: readingIntro},
     {
         title: 'Разделы', run: () => waypoints(6),
         intro: ['Длинная страница с пронумерованными разделами. Внизу экрана написано, на заголовок какого раздела нажать: то ниже, то выше по странице.', wheelHint],
@@ -3377,6 +4962,10 @@ const plan = [
     {
         title: 'Мелкие цели', run: () => clicks(15, allBins, either([8, 14], [12, 20]), ['click']),
         intro: ['Очень маленькие цели в разных местах экрана. Не торопитесь.'],
+    },
+    {
+        title: 'Метро', run: () => windowReading(metro),
+        intro: ['Текст в небольшом окне с прокруткой. Прочитайте его в своём темпе, прокручивая окно, затем ответьте на вопрос.', wheelHint],
     },
     {
         title: 'Длинная лента', run: () => sequence([() => feed('down', 'long'), () => feed('up', 'long')]),
@@ -3406,6 +4995,11 @@ const bonus = [
     [3, recoverSection],
     [4, panelSection],
     [4, widgetSection],
+    [3, reviewSection],
+    [4, shopSection],
+    [3, bookingSection],
+    [3, supportSection],
+    [3, profileSection],
     [1, {title: either('Клики', 'Касания'), run: () => clicks(12, allBins, either([16, 80], [28, 60]), ['click'])}],
     [1, {title: 'Близкие цели', run: () => clicks(15, [0, 1, 2], either([8, 28], [20, 40]), ['click'])}],
     [1, {title: 'Дальние цели', run: () => clicks(12, either([4, 5, 6], [3, 4]), either([12, 64], [28, 56]), ['click'])}],
@@ -3528,9 +5122,6 @@ async function main() {
             break
         }
         await enter(step, step.intro)
-    }
-    if (remaining()) {
-        await enter({title: 'Дополнительные задания', run: () => read('Дополнительные задания', [`Основные задания пройдены. До конца экзамена ещё ${clock(remaining())} — дальше случайные задания из разных блоков.`, 'Отчёт можно будет скачать, когда пройдёт 20 минут и закончится текущий блок.'], 'Продолжить')})
     }
     let step = null
     while (remaining()) {
