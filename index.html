@@ -6,122 +6,161 @@
 <title>Lordium — Экзамен</title>
 <style>
   :root{
-    --bg:#0b0f14; --panel:#111823; --panel2:#0e141d; --field:#0b1119; --border:#1e2a38;
-    --text:#c7d2df; --dim:#7c8aa0; --faint:#55627a;
-    --accent:#38bdf8; --accent2:#22d3ee;
-    --good:#34d399; --bad:#f87171; --warn:#fbbf24; --mod:#c084fc;
+    color-scheme:dark;
+    --bg:#0b0e14; --panel:#131924; --panel2:#0f141c; --field:#0a0e15; --button:#1a2231; --border:#27313f; --line:#1c2431; --thumb:#36445a;
+    --text:#cfd8e3; --strong:#f3f6fa; --dim:#8a96a8; --faint:#5e6a7c;
+    --accent:#4d8dff; --accent2:#2ec4ee; --accent-hover:#6aa0ff; --on-accent:#06101f; --accent-soft:rgba(77,141,255,.14); --accent-line:rgba(77,141,255,.45);
+    --good:#36d399; --good-soft:rgba(54,211,153,.1); --bad:#ff6b6b; --warn:#f5b73b; --warn-soft:rgba(245,183,59,.16); --mod:#a98bff;
+    --t-click:#4d8dff; --on-click:#06101f; --t-double:#a98bff; --on-double:#120a2a; --t-right:#f5b73b; --on-right:#2a1b00;
+    --grid:rgba(255,255,255,.05);
+    --shadow:0 10px 30px rgba(0,0,0,.45);
     --mono:'SF Mono','Cascadia Code','JetBrains Mono',Consolas,'Liberation Mono',monospace;
     --bar:32px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      color-scheme:light;
+      --bg:#eef1f5; --panel:#fff; --panel2:#f3f5f9; --field:#f6f8fb; --button:#f7f8fb; --border:#d5dbe5; --line:#e6eaf0; --thumb:#b9c2d0;
+      --text:#222a36; --strong:#0f141b; --dim:#5a6577; --faint:#8b95a5;
+      --accent:#2458e5; --accent2:#0a9bd1; --accent-hover:#1b49c7; --on-accent:#fff; --accent-soft:rgba(36,88,229,.1); --accent-line:rgba(36,88,229,.35);
+      --good:#0f9f6e; --good-soft:rgba(15,159,110,.1); --bad:#d7333c; --warn:#9a5a00; --warn-soft:rgba(228,160,20,.18); --mod:#6d3fe0;
+      --t-click:#2458e5; --on-click:#fff; --t-double:#7c4dff; --on-double:#fff; --t-right:#f3b32a; --on-right:#2a1b00;
+      --grid:rgba(20,30,50,.09);
+      --shadow:0 8px 24px rgba(20,30,50,.08);
+    }
   }
   *{box-sizing:border-box}
   [hidden]{display:none !important}
   html,body{margin:0; height:100%; overscroll-behavior:none}
   body{background:var(--bg); color:var(--text); font:13px/1.55 var(--mono); overflow:hidden; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; touch-action:manipulation; -webkit-tap-highlight-color:transparent}
-  #bar{position:fixed; z-index:30; inset:0 0 auto; height:var(--bar); display:flex; align-items:center; gap:12px; padding:0 12px; background:var(--panel); border-bottom:1px solid var(--border); font-size:12px; white-space:nowrap}
-  #section{color:#fff; font-weight:bold}
-  #counter{color:var(--dim)}
-  #remaining{color:var(--accent2)}
-  #notice{color:var(--warn)}
-  #bar button{padding:3px 8px; font-size:11px}
-  #bar a{color:var(--faint); text-decoration:none}
-  #bar a:hover{color:var(--accent)}
-  .progress{flex:1; height:6px; background:var(--field); border-radius:3px; overflow:hidden}
-  .progress > i{display:block; height:100%; width:0; background:var(--accent); transition:width .25s}
+  button:focus-visible, a:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  #bar{position:fixed; z-index:30; inset:0 0 auto; height:var(--bar); display:flex; align-items:center; gap:10px; padding:0 12px; background:var(--panel); border-bottom:1px solid var(--border); font-size:12px; white-space:nowrap}
+  #section{position:relative; flex:0 1 auto; min-width:0; padding-left:16px; overflow:hidden; text-overflow:ellipsis; color:var(--strong); font-weight:bold}
+  #section::before{content:''; position:absolute; left:0; top:50%; width:8px; height:8px; margin-top:-4px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+  #counter{flex:none; padding:0 8px; border-radius:999px; background:var(--panel2); border:1px solid var(--line); color:var(--dim); font-size:11px; line-height:18px}
+  #counter:empty{display:none}
+  .spacer{flex:1}
+  #remaining{flex:none; color:var(--strong)}
+  #notice{flex:none; padding:0 9px; border-radius:999px; background:var(--warn-soft); color:var(--warn); font-size:11px; line-height:20px}
+  #bar button{flex:none; padding:3px 9px; border-radius:999px; background:transparent; font-size:11px; transition:background-color .12s, border-color .12s}
+  #bar button:hover{background:var(--accent-soft)}
+  #bar button svg{vertical-align:-1px}
+  #bar button.on{background:var(--accent)}
+  #bar a{flex:none; padding:4px 12px; border-radius:999px; background:var(--accent); color:var(--on-accent); font-weight:bold; text-decoration:none}
+  #bar a:hover{background:var(--accent-hover)}
+  .progress{position:absolute; left:0; right:0; bottom:-1px; height:2px; background:var(--line)}
+  .progress > i{display:block; height:100%; width:0; background:linear-gradient(90deg, var(--accent), var(--accent2)); transition:width .25s}
   #stage{position:fixed; inset:0}
-  .screen{position:absolute; inset:var(--bar) 0 0; display:flex; padding:24px; overflow-y:auto}
-  .card{position:relative; margin:auto; width:min(680px,100%); padding:20px 22px; display:flex; flex-direction:column; gap:12px; background:var(--panel); border:1px solid var(--border); border-radius:8px}
-  .card h2{margin:0; font-size:15px; color:#fff}
+  .screen{position:absolute; inset:var(--bar) 0 0; display:flex; padding:24px; overflow-y:auto; background-image:radial-gradient(var(--grid) 1px, transparent 1.5px); background-size:22px 22px}
+  .card{position:relative; margin:auto; width:min(680px,100%); padding:20px 22px; display:flex; flex-direction:column; gap:12px; background:var(--panel); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow)}
+  .card::before{content:''; position:absolute; inset:-1px -1px auto; height:3px; border-radius:14px 14px 0 0; background:linear-gradient(90deg, var(--accent), var(--accent2))}
+  .card h2{margin:0; font-size:15px; color:var(--strong)}
   .card p{margin:0}
   b{color:var(--warn); font-weight:normal}
   .hint{color:var(--dim)}
   .actions{display:flex; justify-content:flex-end; align-items:center; gap:12px}
   .msg{flex:1; color:var(--bad)}
   .float{position:absolute}
-  .tip{position:absolute; top:calc(var(--bar) + 14px); left:50%; transform:translateX(-50%); padding:8px 14px; background:var(--panel); border:1px solid var(--border); border-radius:6px; color:#fff}
-  button{font:12px var(--mono); background:#16202e; color:var(--text); border:1px solid var(--border); border-radius:5px; padding:6px 12px; cursor:pointer}
-  button:hover{border-color:var(--accent); color:#fff}
-  button.on{background:var(--accent); color:#04121a; border-color:var(--accent); font-weight:bold}
+  .tip{position:absolute; top:calc(var(--bar) + 14px); left:50%; transform:translateX(-50%); padding:8px 14px; background:var(--panel); border:1px solid var(--border); border-radius:999px; color:var(--strong); box-shadow:var(--shadow)}
+  button{font:12px var(--mono); background:var(--button); color:var(--text); border:1px solid var(--border); border-radius:8px; padding:6px 12px; cursor:pointer}
+  button:where(:not(:disabled)):hover{border-color:var(--accent); color:var(--strong); background:var(--accent-soft)}
+  button.on{background:var(--accent); color:var(--on-accent); border-color:var(--accent); font-weight:bold}
+  button.on:where(:not(:disabled)):hover{background:var(--accent-hover); border-color:var(--accent-hover); color:var(--on-accent)}
   button.big{font-size:14px; padding:10px 18px}
   button:disabled{opacity:.4; cursor:not-allowed}
-  input,textarea{font:13px var(--mono); background:var(--field); color:#e6eef8; border:1px solid var(--border); border-radius:5px; padding:6px 9px; outline:none; user-select:text}
-  input:focus,textarea:focus{border-color:var(--accent)}
+  input,textarea{font:13px var(--mono); background:var(--field); color:var(--strong); border:1px solid var(--border); border-radius:8px; padding:6px 9px; outline:none; user-select:text}
+  input::placeholder,textarea::placeholder{color:var(--faint)}
+  input:focus,textarea:focus{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
   textarea{width:100%; resize:none}
-  .wrong{outline:1px solid var(--bad); outline-offset:3px; border-radius:5px}
+  .wrong{outline:1px solid var(--bad); outline-offset:3px; border-radius:8px}
   .form{display:grid; grid-template-columns:auto 1fr; gap:10px 16px; align-items:center}
   .form > span{color:var(--dim)}
   .choices{display:flex; flex-wrap:wrap; gap:6px}
-  .chip{display:inline-flex; align-items:center; gap:6px; padding:5px 11px; border:1px solid var(--border); border-radius:20px; color:var(--dim); cursor:pointer}
-  .chip:has(input:checked){border-color:var(--accent); color:var(--accent)}
+  .chip{display:inline-flex; align-items:center; gap:6px; padding:5px 11px; background:var(--button); border:1px solid var(--border); border-radius:20px; color:var(--dim); cursor:pointer}
+  .chip:hover{border-color:var(--accent); color:var(--text)}
+  .chip:has(input:checked){border-color:var(--accent); background:var(--accent-soft); color:var(--accent)}
+  .chip:has(input:focus-visible){box-shadow:0 0 0 3px var(--accent-soft)}
   .chip input{margin:0; accent-color:var(--accent)}
   .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
   .answers{display:grid; grid-template-columns:1fr 1fr; gap:10px}
   .answers button{padding:12px}
-  .phrase{padding:8px 10px; border:1px dashed var(--accent); border-radius:5px; color:var(--accent)}
-  .countdown{font-size:48px; color:#fff; text-align:center}
-  .spinner{width:28px; height:28px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite}
+  .phrase{padding:8px 10px; border:1px dashed var(--accent); border-radius:8px; background:var(--accent-soft); color:var(--strong)}
+  .countdown{font-size:48px; color:var(--accent); text-align:center}
+  .summary{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:10px}
+  .summary > div{padding:12px 14px; background:var(--field); border:1px solid var(--line); border-radius:10px}
+  .summary span{display:block; font-size:11px; color:var(--dim)}
+  .summary strong{display:block; margin-top:2px; font-size:22px; line-height:1.3; color:var(--strong)}
+  .spinner{width:28px; height:28px; border:3px solid var(--line); border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
-  .target{position:absolute; display:flex; align-items:center; justify-content:center; overflow:hidden; background:var(--accent); color:#04121a; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer}
+  .target{position:absolute; display:flex; align-items:center; justify-content:center; overflow:hidden; background:var(--t-click); color:var(--on-click); border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer}
   .target.circle{border-radius:50%}
-  .target.double{background:var(--mod)}
-  .target.right{background:var(--warn)}
+  .target.double{background:var(--t-double); color:var(--on-double)}
+  .target.right{background:var(--t-right); color:var(--on-right)}
   .dropdown{position:relative; width:280px}
   .form .dropdown{width:auto}
-  .dropdown .current{padding:6px 9px; background:var(--field); border:1px solid var(--border); border-radius:5px; cursor:pointer}
+  .dropdown .current{padding:6px 9px; background:var(--field); border:1px solid var(--border); border-radius:8px; cursor:pointer}
+  .dropdown .current:hover{border-color:var(--accent)}
   .dropdown .current::after{content:'▾'; float:right; color:var(--dim)}
-  .dropdown .options{position:absolute; z-index:5; inset:100% 0 auto; margin-top:2px; max-height:200px; overflow-y:auto; background:var(--panel); border:1px solid var(--accent); border-radius:5px; box-shadow:0 6px 20px rgba(0,0,0,.5)}
+  .dropdown .options{position:absolute; z-index:5; inset:100% 0 auto; margin-top:2px; max-height:200px; overflow-y:auto; background:var(--panel); border:1px solid var(--accent); border-radius:8px; box-shadow:var(--shadow)}
   .dropdown .options > div{padding:5px 10px; cursor:pointer}
-  .dropdown .options > div:hover{background:var(--accent); color:#04121a}
-  .menubar ul{list-style:none; margin:0; padding:4px 0; background:var(--panel); border:1px solid var(--border); border-radius:5px}
-  .menubar > ul{display:flex; padding:0}
+  .dropdown .options > div:hover{background:var(--accent); color:var(--on-accent)}
+  .menubar ul{list-style:none; margin:0; padding:4px 0; background:var(--panel); border:1px solid var(--border); border-radius:8px}
+  .menubar > ul{display:flex; padding:0; box-shadow:var(--shadow)}
   .menubar li{position:relative; padding:6px 14px; white-space:nowrap; cursor:pointer}
-  .menubar ul ul{visibility:hidden; position:absolute; z-index:5; left:100%; top:-5px; min-width:170px; box-shadow:0 6px 20px rgba(0,0,0,.5); transition:visibility 0s .25s}
+  .menubar > ul > li{border-radius:7px}
+  .menubar ul ul{visibility:hidden; position:absolute; z-index:5; left:100%; top:-5px; min-width:170px; box-shadow:var(--shadow); transition:visibility 0s .25s}
   .menubar > ul > li > ul{left:0; top:100%}
-  .menubar li.open{background:#16202e}
-  .menubar li.open > span{color:#fff}
+  .menubar li.open{background:var(--accent-soft)}
+  .menubar li.open > span{color:var(--strong)}
   .menubar li.open > ul{visibility:visible; z-index:6; transition-delay:0s}
   @media (hover:hover){
     .target:hover{filter:brightness(1.25)}
-    .menubar li:hover{background:#16202e}
-    .menubar li:hover > span{color:#fff}
+    .menubar li:hover{background:var(--accent-soft)}
+    .menubar li:hover > span{color:var(--strong)}
     .menubar li:hover > ul{visibility:visible; z-index:6; transition-delay:0s}
     .menubar ul ul li:hover > ul{transition-delay:.15s}
+    .list .item:hover{background:var(--panel2)}
+    .scroller .row:hover, .tile:hover{background:var(--panel2)}
+    .scroller .goal:hover{background:var(--accent-hover)}
+    .post:hover{border-color:var(--accent-line)}
+    .page h3:hover{color:var(--accent)}
   }
   .menubar ul ul li.sub > span::after{content:' ▸'; color:var(--dim)}
-  .list{overflow-y:auto; overscroll-behavior:contain; background:var(--panel); border:1px solid var(--border); border-radius:6px}
-  .list .item{display:flex; align-items:center; gap:12px; padding:8px 12px; border-bottom:1px solid var(--border)}
-  .list .item span:first-child{flex:1; color:#fff}
+  .list{overflow-y:auto; overscroll-behavior:contain; background:var(--panel); border:1px solid var(--border); border-radius:10px; box-shadow:var(--shadow)}
+  .list .item{display:flex; align-items:center; gap:12px; padding:8px 12px; border-bottom:1px solid var(--line)}
+  .list .item span:first-child{flex:1; color:var(--strong)}
   .list .status{width:100px; color:var(--dim)}
   .slider{height:28px; cursor:pointer; touch-action:none}
-  .slider::before{content:''; position:absolute; inset:12px 0 auto; height:4px; border-radius:2px; background:var(--border)}
-  .slider .handle{position:absolute; top:3px; width:22px; height:22px; margin-left:-11px; border-radius:50%; background:var(--accent)}
-  .cargo{width:64px; height:64px; display:flex; align-items:center; justify-content:center; background:var(--accent); color:#04121a; border-radius:6px; font-weight:bold; cursor:grab; touch-action:none}
-  .slot{width:88px; height:88px; border:2px dashed var(--good); border-radius:8px}
+  .slider::before{content:''; position:absolute; inset:12px 0 auto; height:4px; border-radius:2px; background:linear-gradient(90deg, var(--accent) var(--fill, 0%), var(--border) 0)}
+  .slider .handle{position:absolute; top:3px; width:22px; height:22px; margin-left:-11px; border-radius:50%; background:var(--panel); border:3px solid var(--accent); box-shadow:0 2px 8px rgba(0,0,0,.35)}
+  .cargo{width:64px; height:64px; display:flex; align-items:center; justify-content:center; background:var(--t-click); color:var(--on-click); border-radius:10px; font-weight:bold; cursor:grab; touch-action:none; box-shadow:var(--shadow)}
+  .slot{width:88px; height:88px; border:2px dashed var(--good); border-radius:12px; background:var(--good-soft)}
   .paged, .paged body{height:auto}
   .paged body{overflow:visible}
   .paged #stage{position:static; height:auto !important}
   .paged .tip{position:fixed; top:auto; bottom:14px; pointer-events:none}
   .page{max-width:640px; margin:0 auto; padding:calc(var(--bar) + 24px) 24px 64px}
-  .page h1{margin:0 0 12px; font-size:18px; color:#fff}
-  .page h3{margin:28px 0 8px; font-size:15px; color:#fff; cursor:pointer}
+  .page h1{margin:0 0 12px; font-size:18px; color:var(--strong)}
+  .page h3{margin:28px 0 8px; font-size:15px; color:var(--strong); cursor:pointer}
   .page p{margin:0 0 10px}
   .page .actions{margin-top:24px}
-  .banner{margin:12px 0; padding:10px 14px; background:var(--panel); border:1px solid var(--border); border-radius:6px; color:#fff}
-  .scroller{overflow:auto; overscroll-behavior:contain; background:var(--field); border:1px solid var(--border); border-radius:6px}
-  .scroller .row{padding:8px 12px; border-bottom:1px solid var(--border); cursor:pointer}
-  .scroller .goal{background:var(--accent); color:#04121a; font-weight:bold}
+  .banner{margin:12px 0; padding:10px 14px; background:var(--accent-soft); border:1px solid var(--accent-line); border-radius:10px; color:var(--strong)}
+  .scroller{overflow:auto; overscroll-behavior:contain; background:var(--field); border:1px solid var(--border); border-radius:10px}
+  .scroller .row{padding:8px 12px; border-bottom:1px solid var(--line); cursor:pointer}
+  .scroller .goal{background:var(--accent); color:var(--on-accent); font-weight:bold}
   .scroller.wide{display:flex; gap:10px; padding:10px; overflow-y:hidden}
-  .tile{flex:0 0 120px; height:110px; display:flex; align-items:center; justify-content:center; text-align:center; background:var(--panel); border:1px solid var(--border); border-radius:6px; cursor:pointer}
+  .tile{flex:0 0 120px; height:110px; display:flex; align-items:center; justify-content:center; text-align:center; background:var(--panel); border:1px solid var(--border); border-radius:10px; cursor:pointer}
   .scroller.thick::-webkit-scrollbar{width:16px; height:16px}
-  .scroller.thick::-webkit-scrollbar-thumb{background:#2b3a4e; border:3px solid var(--field); border-radius:8px}
+  .scroller.thick::-webkit-scrollbar-thumb{background:var(--thumb); border:3px solid var(--field); border-radius:8px}
   .scroller.thick::-webkit-scrollbar-track{background:var(--field)}
   .scroller.prose{padding:12px 16px}
   .scroller.prose p{margin:0 0 10px}
-  .post{margin:0 0 12px; padding:10px 14px; background:var(--panel); border:1px solid var(--border); border-radius:6px; cursor:pointer}
+  .post{margin:0 0 12px; padding:10px 14px; background:var(--panel); border:1px solid var(--border); border-radius:10px; cursor:pointer}
   .post p:first-child{color:var(--dim)}
   .post p:last-child{margin:0}
-  .post.goal{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent); color:#fff}
+  .post.goal{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent); background:var(--accent-soft); color:var(--strong)}
   .web{position:absolute; inset:var(--bar) 0 0; display:flex; flex-direction:column}
-  .brief{flex:none; padding:7px 14px; background:var(--panel2); border-bottom:1px solid var(--border); color:#fff; text-align:center}
+  .brief{flex:none; padding:7px 14px; background:var(--accent-soft); border-bottom:1px solid var(--accent-line); color:var(--strong); text-align:center}
   .frame{position:relative; flex:1; min-height:0; overflow:hidden; background:var(--s-bg); color:var(--s-text); font:14px/1.5 var(--s-font)}
   .frame b{color:inherit; font-weight:600}
   .frame a{color:var(--s-brand); cursor:pointer; text-decoration:underline; text-underline-offset:2px}
@@ -138,6 +177,9 @@
   .frame input{width:100%; padding:9px 12px}
   .frame input:focus{border-color:var(--s-brand); box-shadow:0 0 0 3px color-mix(in srgb, var(--s-brand) 25%, transparent)}
   .frame input:disabled{opacity:.6}
+  .frame input::placeholder{color:var(--s-dim); opacity:.8}
+  .frame .close:hover, .frame .eye:hover{color:var(--s-strong); opacity:1}
+  .frame :focus-visible{outline-color:var(--s-brand)}
   .frame .wrong{outline:2px solid #e5484d; outline-offset:2px; border-radius:var(--s-radius)}
   .frame .spinner{margin:auto; border-color:var(--s-line); border-top-color:var(--s-brand)}
   .muted{color:var(--s-dim)}
@@ -190,6 +232,7 @@
   .done-mark{width:56px; height:56px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:color-mix(in srgb, var(--s-brand) 18%, transparent); color:var(--s-brand); font-size:28px}
   .frame .dropdown{width:auto}
   .frame .dropdown .current{padding:9px 12px; background:var(--s-field); border-color:var(--s-line); border-radius:var(--s-radius)}
+  .frame .dropdown .current:hover{border-color:var(--s-brand)}
   .frame .dropdown .options{background:var(--s-card); border-color:var(--s-line)}
   .frame .dropdown .options > div:hover{background:var(--s-brand); color:var(--s-on-brand)}
   .backdrop{position:absolute; inset:0; z-index:10; display:flex; padding:16px; overflow-y:auto; background:rgba(10,14,20,.5)}
@@ -315,8 +358,8 @@
   .mobile .screen{padding:10px}
   .mobile .card{padding:16px}
   .mobile .page{padding:calc(var(--bar) + 12px) 14px 48px}
-  .mobile .form:not(.report){grid-template-columns:1fr; gap:6px}
-  .mobile .form:not(.report) > span:not([id], :first-child){margin-top:6px}
+  .mobile .form{grid-template-columns:1fr; gap:6px}
+  .mobile .form > span:not([id], :first-child){margin-top:6px}
   .mobile input, .mobile textarea{font-size:16px}
   .mobile .chip{padding:8px 12px}
   .mobile .answers{grid-template-columns:1fr}
@@ -324,7 +367,7 @@
   .mobile .menubar li{padding:10px 14px}
   .mobile .menubar ul ul ul{left:16px; top:100%}
   .mobile .menubar > ul > li:last-child > ul{left:auto; right:0}
-  .mobile .tip{width:max-content; max-width:calc(100% - 20px); text-align:center}
+  .mobile .tip{width:max-content; max-width:calc(100% - 20px); text-align:center; border-radius:12px}
   .mobile .list .item{padding:10px 12px}
   .mobile .slider .handle{top:-2px; width:32px; height:32px; margin-left:-16px}
 </style>
@@ -334,11 +377,12 @@
 <div id="bar">
   <span id="section"></span>
   <span id="counter"></span>
+  <span class="spacer"></span>
   <div class="progress"><i id="progress"></i></div>
   <span id="remaining"></span>
   <span id="notice" hidden>окно теряло фокус — лучше пройти задание заново</span>
-  <button id="restart">↻<span> задание заново</span></button>
-  <button id="fullscreen" hidden>⛶<span> полный экран</span></button>
+  <button id="restart"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 6a4.5 4.5 0 1 1-1.3-3.2"/><path d="M10.5 1v2.5H8"/></svg><span> задание заново</span></button>
+  <button id="fullscreen" hidden><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4V1h3M8 1h3v3M11 8v3H8M4 11H1V8"/></svg><span> полный экран</span></button>
   <a id="export" href="#" hidden>сохранить отчёт</a>
 </div>
 <script>
@@ -518,6 +562,9 @@ function describe(element) {
 
 function onDiscrete(e) {
     if ((e.type === 'blur' || e.type === 'focus') && e.target !== window) {
+        return
+    }
+    if (e.type === 'scroll' && e.target instanceof Element && e.target.matches('input, textarea')) {
         return
     }
     const mouse = e instanceof MouseEvent
@@ -951,7 +998,7 @@ function snapshot(record) {
     const rects = [{tag: 'document', text: '', rect: [0, 0, innerWidth, innerHeight], scroll: metrics(document.scrollingElement)}]
     for (const element of document.querySelectorAll(layoutSelector)) {
         const rect = element.getBoundingClientRect()
-        if (!rect.width || !rect.height || !element.checkVisibility({visibilityProperty: true})) {
+        if (!rect.width || !rect.height || !element.checkVisibility({visibilityProperty: true}) || element.closest('[data-private]')) {
             continue
         }
         const entry = {tag: describe(element), text: element.textContent.trim().slice(0, 80), rect: [px(rect.x), px(rect.y), px(rect.width), px(rect.height)]}
@@ -1255,7 +1302,7 @@ function setup() {
             <p>20 минут простых заданий: клики по целям, формы, чтение, ожидание, меню, прокрутка, перетаскивание и действия на сайтах — регистрация, вход, панель управления. Работайте в обычном темпе, как на любом сайте: не нужно спешить или целиться идеально.</p>
             <p class="hint">Если основные задания закончатся раньше, дальше пойдут дополнительные. Отчёт можно скачать, когда пройдёт 20 минут и закончится текущий блок.</p>
             <p class="hint">В формах вводите выдуманные данные: имя, почту, пароль — любые. Введённый текст не сохраняется. Ничего никуда не отправляется: в конце вы сами скачаете отчёт.</p>
-            <p class="hint">Если отвлеклись — «↻ задание заново» вверху.${document.fullscreenEnabled ? ' Вышли из полноэкранного режима — верните кнопкой «⛶».' : ''}</p>
+            <p class="hint">Если отвлеклись — «задание заново» вверху.${document.fullscreenEnabled ? ' Вышли из полноэкранного режима — верните кнопкой «полный экран» вверху.' : ''}</p>
             <div class="form">
                 <span>Чем вы пользуетесь</span><div class="choices">${chips('device', devices, 'radio', either(null, 'touchscreen'))}</div>
                 <span>Ведущая рука</span><div class="choices">${chips('hand', hands, 'radio')}</div>
@@ -1639,6 +1686,7 @@ function slider() {
         let dragging = false
         const show = () => {
             handle.style.left = `${value}%`
+            track.style.setProperty('--fill', `${value}%`)
             tip.querySelector('span').textContent = value
         }
         const move = e => {
@@ -2003,13 +2051,29 @@ const providers = ['КлючID', 'Облако ID', 'Портал Плюс', 'С
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 
+function luminance(hue, saturation, lightness) {
+    const chroma = (1 - Math.abs(2 * lightness - 1)) * saturation
+    const second = chroma * (1 - Math.abs((hue / 60) % 2 - 1))
+    const base = lightness - chroma / 2
+    const sector = [[chroma, second, 0], [second, chroma, 0], [0, chroma, second], [0, second, chroma], [second, 0, chroma], [chroma, 0, second]][Math.floor(hue / 60) % 6]
+    const linear = value => value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4
+    return sector.map(value => linear(value + base)).reduce((sum, value, index) => sum + value * [0.2126, 0.7152, 0.0722][index], 0)
+}
+
+
 function theme() {
     const hue = integer(0, 359)
     const dark = Math.random() < 0.25
     const colored = Math.random() < 0.3
     const card = dark ? `hsl(${hue} 14% 13%)` : '#fff'
+    const saturation = integer(55, 85)
+    let lightness = dark ? integer(58, 66) : integer(36, 46)
+    const contrast = () => dark ? (luminance(hue, saturation / 100, lightness / 100) + 0.05) / 0.0546 : 1.05 / (luminance(hue, saturation / 100, lightness / 100) + 0.05)
+    while (contrast() < 4.5 && lightness > 20 && lightness < 80) {
+        lightness += dark ? 2 : -2
+    }
     const vars = {
-        brand: `hsl(${hue} ${integer(55, 85)}% ${dark ? integer(58, 66) : integer(36, 46)}%)`,
+        brand: `hsl(${hue} ${saturation}% ${lightness}%)`,
         'on-brand': dark ? '#0b0f14' : '#fff',
         bg: dark ? `hsl(${hue} 16% 9%)` : pick(['#fff', `hsl(${hue} 35% 97%)`, '#f3f4f6']),
         card,
@@ -2031,7 +2095,7 @@ function theme() {
     return {
         name,
         domain,
-        vars: Object.entries(vars).map(([key, value]) => `--s-${key}:${value}`).join(';'),
+        vars: [...Object.entries(vars).map(([key, value]) => `--s-${key}:${value}`), `color-scheme:${dark ? 'dark' : 'light'}`].join(';'),
         header: `${pick(['nav-left', 'nav-center', 'nav-right', 'logo-center'])}${colored ? ' colored' : ''}`,
         colored,
         layout: pick(['center', 'top', 'left', 'right']),
@@ -2916,7 +2980,7 @@ function editOrder(record, signal, frame, order, saved) {
 
 
 function desk(record, signal, frame, look, state, emit) {
-    frame.innerHTML = `<div class="app${look.flip ? ' flip' : ''}"><aside${look.colored ? ' class="colored"' : ''}><div class="logo"><i>${look.name[0]}</i>${look.name}</div>${state.sections.map(([id, label, icon]) => `<button data-act="page:${id}" data-mark="${label}"><span>${icon}</span>${label}</button>`).join('')}</aside><header><button class="burger" data-act="drawer" data-mark="Меню">☰</button><div class="search drop"><input data-mark="Поиск" placeholder="Поиск клиентов и заказов" autocomplete="off" spellcheck="false"><div class="pop" hidden></div></div><span class="spacer"></span><div class="drop"><button class="bell" data-act="menu" data-mark="Уведомления"></button><div class="pop notes" hidden></div></div><div class="drop"><button class="user" data-act="menu" data-mark="Профиль"><i>${initials(state.user)}</i><span>${state.user}</span> ▾</button><div class="pop" hidden><button data-act="profile" data-mark="Мой профиль">Мой профиль</button><button data-act="page:settings" data-mark="Настройки">Настройки</button><button data-act="help" data-mark="Помощь">Помощь</button><button data-act="logout" data-mark="Выйти">Выйти</button></div></div></header><main></main></div>`
+    frame.innerHTML = `<div class="app${look.flip ? ' flip' : ''}"><aside${look.colored ? ' class="colored"' : ''}><div class="logo"><i>${look.name[0]}</i>${look.name}</div>${state.sections.map(([id, label, icon]) => `<button data-act="page:${id}" data-mark="${label}"><span>${icon}</span>${label}</button>`).join('')}</aside><header><button class="burger" data-act="drawer" data-mark="Меню">☰</button><div class="search drop"><input data-mark="Поиск" placeholder="Поиск клиентов и заказов" autocomplete="off" spellcheck="false"><div class="pop" hidden data-private></div></div><span class="spacer"></span><div class="drop"><button class="bell" data-act="menu" data-mark="Уведомления"></button><div class="pop notes" hidden></div></div><div class="drop"><button class="user" data-act="menu" data-mark="Профиль"><i>${initials(state.user)}</i><span>${state.user}</span> ▾</button><div class="pop" hidden><button data-act="profile" data-mark="Мой профиль">Мой профиль</button><button data-act="page:settings" data-mark="Настройки">Настройки</button><button data-act="help" data-mark="Помощь">Помощь</button><button data-act="logout" data-mark="Выйти">Выйти</button></div></div></header><main></main></div>`
     const app = frame.firstElementChild
     const main = app.querySelector('main')
     const notes = app.querySelector('.notes')
@@ -3087,7 +3151,8 @@ function desk(record, signal, frame, look, state, emit) {
             }
             const people = state.customers.map((name, index) => [name, index]).filter(([name]) => name.toLowerCase().includes(text)).slice(0, 5)
             const orders = state.orders.filter(order => String(order.number).includes(text)).slice(0, 4)
-            results.innerHTML = [...people.map(([name, index]) => `<button data-act="customer:${index}" data-mark="${name}"><span>${name}</span><small class="muted">клиент</small></button>`), ...orders.map(order => `<button data-act="order:${order.number}" data-mark="Заказ №${order.number}"><span>Заказ №${order.number}</span><small class="muted">${order.customer}</small></button>`)].join('') || '<p class="muted">Ничего не найдено</p>'
+            const found = [...people.map(([name, index]) => [`customer:${index}`, name, 'клиент']), ...orders.map(order => [`order:${order.number}`, `Заказ №${order.number}`, order.customer])]
+            results.innerHTML = found.map(([act, text, note], index) => `<button data-act="${act}" data-mark="Результат ${index + 1}"><span>${text}</span><small class="muted">${note}</small></button>`).join('') || '<p class="muted">Ничего не найдено</p>'
         }))
     })
 }
@@ -3391,10 +3456,10 @@ function finale() {
     const questions = passed.filter(record => record.kind === 'question')
     const box = card(`
         <h2>Экзамен окончен</h2>
-        <div class="form report">
-            <span>Время</span><span>${clock((performance.now() - examStart) / 1000)}</span>
-            <span>Пройдено заданий</span><span>${passed.length}</span>
-            <span>Ответы на вопросы</span><span>${questions.filter(record => record.meta.correct).length} из ${questions.length}</span>
+        <div class="summary">
+            <div><span>Время</span><strong>${clock((performance.now() - examStart) / 1000)}</strong></div>
+            <div><span>Пройдено заданий</span><strong>${passed.length}</strong></div>
+            <div><span>Ответы на вопросы</span><strong>${questions.filter(record => record.meta.correct).length} из ${questions.length}</strong></div>
         </div>
         <p class="hint">Отчёт содержит ответы и ход выполнения заданий: действия и ${either('движение курсора', 'касания экрана')}, без введённого текста.</p>
         <p class="hint">Скачается файл ${reportName} — отправьте именно его, не распаковывая. Сохраните или отправьте его до закрытия вкладки, иначе отчёт пропадёт.</p>
@@ -3407,16 +3472,36 @@ function measureHz(duration) {
     return new Promise(resolve => {
         const stamps = []
         const tick = time => {
+            if (document.visibilityState !== 'visible' || !document.hasFocus()) {
+                resolve(null)
+                return
+            }
             stamps.push(time)
             if (time - stamps[0] < duration) {
                 requestAnimationFrame(tick)
                 return
             }
-            const deltas = stamps.slice(1).map((value, index) => value - stamps[index]).sort((a, b) => a - b)
-            resolve(Math.round(10000 / deltas[deltas.length >> 1]) / 10)
+            const deltas = stamps.slice(1).map((value, index) => value - stamps[index]).filter(delta => delta <= 100).sort((a, b) => a - b)
+            const hz = deltas.length >= 10 ? Math.round(10000 / deltas[deltas.length >> 1]) / 10 : null
+            resolve(hz >= 20 && hz <= 500 ? hz : null)
         }
         requestAnimationFrame(tick)
     })
+}
+
+
+async function updateHz() {
+    while (displayHz === null) {
+        const hz = await measureHz(2000)
+        if (hz !== null) {
+            displayHz = hz
+            if ($('hz')) {
+                $('hz').textContent = `${hz} Гц`
+            }
+            return
+        }
+        await new Promise(resolve => setTimeout(resolve, 1000))
+    }
 }
 
 
@@ -3433,6 +3518,11 @@ async function enter(step, intro) {
 async function main() {
     section = {title: 'Начало'}
     examStart = (await setup()).tEnd
+    measureHz(2000).then(hz => {
+        if (hz !== null) {
+            displayHz = hz
+        }
+    })
     for (const step of plan) {
         if (!remaining()) {
             break
@@ -3477,12 +3567,7 @@ $('export').addEventListener('click', e => {
     e.preventDefault()
     download()
 })
-measureHz(2000).then(hz => {
-    displayHz = hz
-    if ($('hz')) {
-        $('hz').textContent = `${hz} Гц`
-    }
-})
+updateHz()
 setInterval(updateBar, 250)
 main()
 </script>
